@@ -10,8 +10,9 @@ need to know anything about Hugo, git or HTML.
 - **The site** is plain HTML/CSS/images built by Hugo - no server-side
   code, no cookies, no tracking, fonts self-hosted.
 
-Open decisions: deployment (GitHub Actions -> GitHub Pages), repo owner
-(personal account vs. an organisation for the foundation), the domain.
+Published with GitHub Actions on GitHub Pages ("Publishing" below), for
+now at `https://ne-o.github.io/zukunft-fuer-kinder/` until the domain moves.
+**Setting up a computer to work on the site: [DEVELOPMENT.md](DEVELOPMENT.md).**
 
 ## Editing (CMS)
 Sveltia CMS, configured in `static/admin/config.yml`:
@@ -22,10 +23,12 @@ Sveltia CMS, configured in `static/admin/config.yml`:
   in the project's "Berichte und Downloads" list.
 - **Weitere Seiten**, **Nepal-Besuch 2016 (Unterseiten)**, **English pages**.
 
-Login: "Sign in with token" - one fine-grained GitHub token per editor,
-limited to this repository, permission "Contents: Read and write". No
-OAuth app, so no server-side login helper. Tokens expire; renew them in
-time.
+Login: "Sign in with token" - each editor is a collaborator on this repo
+and uses their own **classic** GitHub token: fine-grained tokens can't be
+used for someone else's personal repository. Scope `public_repo` should be
+enough for a public repository (narrower than `repo`; to be confirmed with
+the first editor), always with an expiry date - renew in time. No OAuth
+app, so no server-side login helper.
 
 Photos are shrunk to WebP in the browser before upload; Hugo creates the
 sizes the pages need. PDFs are published as uploaded.
@@ -52,7 +55,8 @@ empty = text logo), `site_name`, `site_name_small`, `menu` (label + url),
 
 ## Working on the site
 Open this folder in its devcontainer (`.devcontainer/`: Hugo, Python,
-ImageMagick, cwebp, Ghostscript):
+ImageMagick, cwebp, Ghostscript) - from scratch, incl. installing Docker
+and VS Code: [DEVELOPMENT.md](DEVELOPMENT.md).
 
     hugo server --bind 0.0.0.0 --port 1314   # http://localhost:1314, CMS at /admin/
     hugo --gc --minify && python3 tools/check_links.py public

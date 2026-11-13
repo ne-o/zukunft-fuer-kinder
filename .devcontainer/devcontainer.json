@@ -1,0 +1,28 @@
+{
+  "name": "zukunft-fuer-kinder",
+  "build": { "dockerfile": "Dockerfile" },
+  "remoteUser": "user",
+
+  // `hugo server --bind 0.0.0.0 --port 1314` -> http://localhost:1314 (CMS: /admin/)
+  // (1314 instead of Hugo's default 1313, which is often taken already)
+  "forwardPorts": [1314],
+  "portsAttributes": { "1314": { "label": "Hugo preview" } },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "DavidAnson.vscode-markdownlint",
+        "ecmel.vscode-html-css",
+        "github.vscode-github-actions",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-german"
+      ],
+      "settings": {
+        "cSpell.language": "en,de-de",
+        "files.associations": { "layouts/**/*.html": "html" }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+# Text files always with LF line endings, also when cloned on Windows (Git
+# for Windows would otherwise check out CRLF, and inside the Linux
+# devcontainer every file would show as modified). Binary files are
+# detected automatically and left alone.
+* text=auto eol=lf
