@@ -1,0 +1,15 @@
+{{- /*
+  Site path -> URL under baseURL. Content, data/settings.yaml and the CMS
+  write site paths ("/projekte.html", "/downloads/x.pdf"); every template
+  prints them through here, so the site also works below a path, e.g.
+  https://ne-o.github.io/zukunft-fuer-kinder/ ("/x.html" ->
+  "/zukunft-fuer-kinder/x.html"). relURL ignores baseURL's path for input
+  with a leading slash, hence the TrimPrefix. External URLs, "//host",
+  anchors and mailto: are returned unchanged.
+  Usage: href="{{ partial "site-url.html" .url }}"
+*/ -}}
+{{- $u := . -}}
+{{- if and (strings.HasPrefix $u "/") (not (strings.HasPrefix $u "//")) -}}
+  {{- $u = strings.TrimPrefix "/" $u | relURL -}}
+{{- end -}}
+{{- return $u -}}

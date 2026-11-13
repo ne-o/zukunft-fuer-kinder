@@ -1,0 +1,13 @@
+{{ define "main" }}
+<header class="page-header">
+  <div class="container narrow">
+    <p class="kicker">Fehler 404</p>
+    <h1>Diese Seite gibt es nicht (mehr).</h1>
+    <p class="lead">Vielleicht wurde sie umbenannt oder entfernt. Hier geht es weiter:</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="{{ partial "site-url.html" "/" }}">Zur Startseite</a>
+      <a class="btn btn-ghost" href="{{ partial "site-url.html" "/projekte.html" }}">Alle Projekte</a>
+    </div>
+  </div>
+</header>
+{{ end }}

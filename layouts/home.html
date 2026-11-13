@@ -1,0 +1,112 @@
+{{ define "main" }}
+{{- $s := hugo.Data.settings -}}
+
+{{- with .Params.hero }}
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      {{ with .kicker }}<p class="kicker">{{ . }}</p>{{ end }}
+      <h1>{{ .headline }}</h1>
+      {{ with .text }}<p class="lead">{{ . }}</p>{{ end }}
+      <div class="btn-row">
+        {{- range .buttons }}
+        <a class="btn {{ if .primary }}btn-primary{{ else }}btn-ghost{{ end }}" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>
+        {{- end }}
+      </div>
+    </div>
+    <figure class="hero-media">
+      <div class="hero-blob" aria-hidden="true"></div>
+      {{ partial "img.html" (dict "src" .image "alt" .image_alt "sizes" "(min-width: 60em) 45vw, 100vw" "class" "hero-img" "eager" true) }}
+      {{ with .badge }}<figcaption class="hero-badge">{{ . }}</figcaption>{{ end }}
+    </figure>
+  </div>
+</section>
+{{- end }}
+
+{{- with .Params.mission }}
+<section class="mission">
+  <div class="container narrow">
+    <blockquote>
+      <p>{{ .text }}</p>
+      {{ with .source }}<footer>— {{ . }}</footer>{{ end }}
+    </blockquote>
+  </div>
+</section>
+{{- end }}
+
+{{- with .Params.facts }}
+<section class="facts" aria-label="Die Stiftung in Zahlen">
+  <div class="container facts-grid">
+    {{- range . }}
+    <div class="fact">
+      <span class="fact-value">{{ .value }}</span>
+      <span class="fact-label">{{ .label }}</span>
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- with .Params.cards }}
+<section class="cards-section">
+  <div class="container">
+    {{ with $.Params.cards_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+    <div class="cards">
+      {{- range . }}
+      <article class="card">
+        {{ partial "img.html" (dict "src" .image "alt" .image_alt "sizes" "(min-width: 60em) 30vw, (min-width: 40em) 50vw, 100vw" "class" "card-img") }}
+        <div class="card-body">
+          <h3>{{ .title }}</h3>
+          <p>{{ .text }}</p>
+          {{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default "Mehr erfahren" }}</a>{{ end }}
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{- end }}
+
+{{- with .Params.award }}
+<section class="award">
+  <div class="container narrow award-inner">
+    <svg class="award-icon" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M22 4h20l-6 20h-8z" fill="var(--c-primary)"/>
+      <circle cx="32" cy="40" r="18" fill="var(--c-accent)"/>
+      <circle cx="32" cy="40" r="11" fill="none" stroke="var(--c-primary)" stroke-width="3"/>
+    </svg>
+    <div>
+      <h2>{{ .title }}</h2>
+      <p>{{ .text }}</p>
+    </div>
+  </div>
+</section>
+{{- end }}
+
+{{- with .Params.donate }}
+<section class="donate">
+  <div class="container donate-grid">
+    <div>
+      <h2>{{ .title }}</h2>
+      <p>{{ .text }}</p>
+      {{ with $s.donate_button }}<a class="btn btn-light" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}
+    </div>
+    {{ partial "bank-card.html" . }}
+  </div>
+  {{ with .footnote }}<p class="container donate-footnote">{{ . }}</p>{{ end }}
+</section>
+{{- end }}
+
+{{- with .Params.more }}
+<section class="more">
+  <div class="container">
+    {{ with $.Params.more_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+    <ul class="more-list">
+      {{- range . }}
+      <li><a href="{{ partial "site-url.html" .url }}"><strong>{{ .label }}</strong>{{ with .text }}<span>{{ . }}</span>{{ end }}</a></li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+{{- end }}
+{{ end }}

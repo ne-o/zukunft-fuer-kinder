@@ -1,0 +1,34 @@
+{{- /*
+  Level 1 customization: palette + fonts from data/settings.yaml become CSS
+  variables. Unknown keys fall back to the defaults, so a typo in the
+  settings can't break the site.
+*/ -}}
+{{- $s := hugo.Data.settings -}}
+{{- $p := index hugo.Data.palettes ($s.palette | default "sonne") | default hugo.Data.palettes.sonne -}}
+{{- $fh := index hugo.Data.fonts ($s.heading_font | default "nunito") | default hugo.Data.fonts.system -}}
+{{- $fb := index hugo.Data.fonts ($s.body_font | default "system") | default hugo.Data.fonts.system -}}
+{{- $css := "" -}}
+{{- range $f := uniq (slice $fh $fb) -}}
+  {{- with $f.file -}}
+    {{- $css = printf "%s@font-face{font-family:%q;src:url(%s) format(\"woff2\");font-weight:300 900;font-style:normal;font-display:swap}" $css $f.name (partial "site-url.html" .) -}}
+  {{- end -}}
+{{- end -}}
+{{- $vars := slice
+  (printf "--c-primary:%s" $p.primary)
+  (printf "--c-primary-dark:%s" $p.primary_dark)
+  (printf "--c-on-primary:%s" $p.on_primary)
+  (printf "--c-accent:%s" $p.accent)
+  (printf "--c-accent-soft:%s" $p.accent_soft)
+  (printf "--c-bg:%s" $p.bg)
+  (printf "--c-surface:%s" $p.surface)
+  (printf "--c-text:%s" $p.text)
+  (printf "--c-muted:%s" $p.muted)
+  (printf "--c-border:%s" $p.border)
+  (printf "--font-heading:%s" $fh.stack)
+  (printf "--font-body:%s" $fb.stack)
+-}}
+{{- $css = printf "%s:root{%s}" $css (delimit $vars ";") }}
+  <style>{{ $css | safeCSS }}</style>
+{{- range uniq (slice $fh $fb) }}{{ with .file }}
+  <link rel="preload" href="{{ partial "site-url.html" . }}" as="font" type="font/woff2" crossorigin>
+{{- end }}{{ end }}

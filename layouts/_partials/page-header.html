@@ -1,0 +1,9 @@
+{{- /* Usage: partial "page-header.html" (dict "page" . "kicker" "…") */ -}}
+{{- $p := .page -}}
+<header class="page-header">
+  <div class="container narrow">
+    {{ with .kicker }}<p class="kicker">{{ . }}</p>{{ end }}
+    <h1>{{ $p.Title }}</h1>
+    {{ with $p.Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+  </div>
+</header>

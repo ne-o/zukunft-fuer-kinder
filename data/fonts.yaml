@@ -1,0 +1,19 @@
+# Fonts editors can choose from. All self-hosted (static/fonts/, SIL OFL)
+# - no Google Fonts requests, so nothing to declare under GDPR.
+# When adding one here, also add it to the selects in static/admin/config.yml.
+
+system:
+  label: Systemschrift (schlicht)
+  stack: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+
+nunito:
+  label: Nunito (freundlich, rund)
+  name: Nunito Variable
+  file: /fonts/nunito.woff2
+  stack: '"Nunito Variable", system-ui, -apple-system, "Segoe UI", sans-serif'
+
+lora:
+  label: Lora (klassisch, mit Serifen)
+  name: Lora Variable
+  file: /fonts/lora.woff2
+  stack: '"Lora Variable", Georgia, "Times New Roman", serif'

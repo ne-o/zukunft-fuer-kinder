@@ -1,0 +1,45 @@
+# Tested colour palettes - editors pick one by key in the settings, they
+# can't enter free colours. Contrast checked for: text on bg/surface,
+# on_primary on primary, primary on bg (links/buttons) >= 4.5:1.
+# accent is decorative only (shapes, highlights behind dark text).
+# When adding a palette here, also add it to the select in
+# static/admin/config.yml.
+
+sonne:
+  label: Sonne (warmes Rot, Safran)
+  primary: "#9e2a2f"
+  primary_dark: "#7a1e22"
+  on_primary: "#ffffff"
+  accent: "#f4b73a"
+  accent_soft: "#fbe7bd"
+  bg: "#fbf7f1"
+  surface: "#ffffff"
+  text: "#2a2420"
+  muted: "#665b52"
+  border: "#eadfd2"
+
+himmel:
+  label: Himmel (Blau, Gelb)
+  primary: "#1d5a85"
+  primary_dark: "#14415f"
+  on_primary: "#ffffff"
+  accent: "#f2c14e"
+  accent_soft: "#fcefc7"
+  bg: "#f5f8fb"
+  surface: "#ffffff"
+  text: "#1b2631"
+  muted: "#55626f"
+  border: "#dce5ee"
+
+wald:
+  label: Wald (Grün, Orange)
+  primary: "#2d6a4f"
+  primary_dark: "#1f4d39"
+  on_primary: "#ffffff"
+  accent: "#e9a23b"
+  accent_soft: "#f8e3c2"
+  bg: "#f6f7f2"
+  surface: "#ffffff"
+  text: "#1f2620"
+  muted: "#58635a"
+  border: "#dfe4d8"

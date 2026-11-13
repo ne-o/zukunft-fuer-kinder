@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{ partial "page-header.html" (dict "page" . "kicker" (printf "Projekt · %s · %s" .Params.country (.Date | time.Format "January 2006"))) }}
+<div class="container narrow">
+  {{ with .Params.note }}<p class="notice">{{ . }}</p>{{ end }}
+  {{- with .Params.downloads }}
+  <section class="downloads" aria-labelledby="downloads-title">
+    <h2 id="downloads-title">Berichte und Downloads</h2>
+    <ul>
+      {{- range . }}
+      <li>{{ partial "file-link.html" (dict "url" .file "label" .label) }}</li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  <p class="back-link"><a href="{{ partial "site-url.html" "/projekte.html" }}">← Alle Projekte</a></p>
+</div>
+{{ end }}

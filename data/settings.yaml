@@ -1,0 +1,45 @@
+# Website-Einstellungen (level 1 customization) - edited in the CMS under
+# "Einstellungen > Website-Einstellungen". The theme turns palette and fonts
+# into CSS variables; everything else is used by header, footer and the
+# donation box.
+
+palette: sonne        # key from data/palettes.yaml
+heading_font: nunito  # key from data/fonts.yaml
+body_font: system     # key from data/fonts.yaml
+
+logo: ""              # optional image (assets/images/...); empty = text logo
+site_name: Zukunft für Kinder
+site_name_small: Schönebeck-Stiftung
+
+menu:
+  - label: Unsere Vision
+    url: /unsere-vision.html
+  - label: Projekte
+    url: /projekte.html
+  - label: Fundraising
+    url: /fundraising.html
+  - label: Wir
+    url: /wir.html
+  - label: Kontakt
+    url: /kontakt.html
+
+donate_button:
+  label: Jetzt helfen
+  url: /ihre-hilfe.html
+
+contact:
+  name: Schönebeck Stiftung – Zukunft für Kinder
+  street: Eschenweg 9
+  city: 86836 Untermeitingen
+  email: kontakt@zukunft-fuer-kinder.net
+
+bank:
+  recipient: Stiftung Hilfe mit Plan
+  iban: DE07 7002 0500 3780 6600 66
+  bic: BFSWDE33MUE
+  bank_name: SozialBank AG
+  reference: Spende Schönebeck Stiftung – Zukunft für Kinder
+
+footer_note: >-
+  Treuhänderin der Stiftung ist die Stiftung Hilfe mit Plan.
+  Partner unserer Projekte ist Plan Deutschland.

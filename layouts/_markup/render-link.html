@@ -1,0 +1,7 @@
+{{- /* Markdown links. Links to PDFs get a file icon and their size, so editors
+   only need to link the file. */ -}}
+{{- if strings.HasSuffix (lower .Destination) ".pdf" -}}
+  {{ partial "file-link.html" (dict "url" .Destination "label" .Text) }}
+{{- else -}}
+  <a href="{{ partial "site-url.html" .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text }}</a>
+{{- end -}}

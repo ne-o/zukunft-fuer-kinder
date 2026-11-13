@@ -1,0 +1,13 @@
+{{- /* Markdown images: images in assets/ become responsive WebP, linked to the
+   full-size file - assets/js/lightbox.js opens that link in a lightbox
+   (without JavaScript the link just opens the image). Other images stay as
+   they are. */ -}}
+{{- with resources.Get .Destination -}}
+  {{- /* Same spec as the largest srcset entry in img.html - one file. */ -}}
+  {{- $full := .Resize (printf "%dx webp q78" .Width) -}}
+  <a class="zoom" href="{{ $full.RelPermalink }}" aria-label="{{ with $.PlainText }}{{ . }} – {{ end }}Bild vergrößern">
+  {{- partial "img.html" (dict "src" $.Destination "alt" $.PlainText "sizes" "(min-width: 50em) 40rem, 100vw") -}}
+  </a>
+{{- else -}}
+  <img src="{{ partial "site-url.html" .Destination | safeURL }}" alt="{{ .PlainText }}" loading="lazy">
+{{- end -}}

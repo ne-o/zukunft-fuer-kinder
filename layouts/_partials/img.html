@@ -1,0 +1,24 @@
+{{- /*
+  Responsive image from assets/. Usage:
+  {{ partial "img.html" (dict "src" "images/x.jpg" "alt" "…" "sizes" "(min-width: 60em) 50vw, 100vw" "class" "…" "eager" true) }}
+  Renders WebP in several widths (never upscaled) plus a JPEG fallback.
+*/ -}}
+{{- with resources.Get .src -}}
+  {{- $img := . -}}
+  {{- $srcset := slice -}}
+  {{- range slice 400 640 900 1200 1600 -}}
+    {{- if lt . $img.Width -}}
+      {{- $r := $img.Resize (printf "%dx webp q78" .) -}}
+      {{- $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink .) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $full := $img.Resize (printf "%dx webp q78" $img.Width) -}}
+  {{- $srcset = $srcset | append (printf "%s %dw" $full.RelPermalink $img.Width) -}}
+  {{- $fallback := $img.Resize (printf "%dx jpg q78" (cond (gt $img.Width 900) 900 $img.Width)) -}}
+  <img src="{{ $fallback.RelPermalink }}" srcset="{{ delimit $srcset ", " }}"
+       sizes="{{ $.sizes | default "100vw" }}" width="{{ $img.Width }}" height="{{ $img.Height }}"
+       alt="{{ $.alt }}"{{ with $.class }} class="{{ . }}"{{ end }}
+       {{- if $.eager }} fetchpriority="high"{{ else }} loading="lazy" decoding="async"{{ end }}>
+{{- else -}}
+  {{- warnf "img partial: image %q not found in assets/" .src -}}
+{{- end -}}

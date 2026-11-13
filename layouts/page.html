@@ -1,0 +1,12 @@
+{{ define "main" }}
+{{ partial "page-header.html" (dict "page" .) }}
+<div class="container narrow">
+  {{ with .Params.draft_notice }}<p class="notice">{{ . }}</p>{{ end }}
+  <div class="prose">
+    {{ .Content }}
+  </div>
+  {{ with .Params.parent_page }}
+  <p class="back-link"><a href="{{ partial "site-url.html" . }}">← Zurück zum Reisebericht</a></p>
+  {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,9 @@
+{{- /* Donation account from the settings - one place for start page and "Ihre Hilfe". */ -}}
+{{- with hugo.Data.settings.bank }}
+<dl class="bank-card">
+  <dt>Empfänger</dt><dd>{{ .recipient }}</dd>
+  <dt>IBAN</dt><dd class="mono">{{ .iban }}</dd>
+  <dt>BIC</dt><dd class="mono">{{ .bic }} <span>({{ .bank_name }})</span></dd>
+  <dt>Verwendungszweck</dt><dd>{{ .reference }}</dd>
+</dl>
+{{- end }}

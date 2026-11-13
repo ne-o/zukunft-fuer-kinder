@@ -1,0 +1,279 @@
+# Sveltia CMS configuration - https://github.com/sveltia/sveltia-cms
+# Login: "Sign in with token" - a fine-grained GitHub token per editor,
+# limited to this repo, permission "Contents: Read and write" (see README).
+# No OAuth app, so no server-side helper (Cloudflare Worker) is needed.
+# Locally: open /admin/ in Chrome/Edge and choose "Work with Local
+# Repository" to edit the files in this folder directly.
+
+backend:
+  name: github
+  repo: ne-o/zukunft-fuer-kinder
+  branch: main
+  commit_messages:
+    update: "Inhalt: {{collection}} „{{slug}}“ aktualisiert"
+    uploadMedia: "Bild hochgeladen: {{path}}"
+
+locale: de
+site_url: https://www.zukunft-fuer-kinder.net
+display_url: https://www.zukunft-fuer-kinder.net
+
+# Uploaded images land in assets/ so Hugo can resize them; front matter
+# stores "images/<file>", which the templates resolve via resources.Get.
+media_folder: assets/images
+public_folder: images
+
+# File names of new entries: plain ASCII ("für" -> "fur"), so URLs stay clean.
+slug:
+  encoding: ascii
+  clean_accents: true
+
+media_libraries:
+  stock_assets:
+    providers: []
+  default:
+    config:
+      max_file_size: 15000000
+      # Shrink photos in the browser before they're committed - keeps the
+      # repo small even when editors upload 8 MB phone photos.
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2400
+          height: 2400
+
+collections:
+  - name: settings
+    label: Einstellungen
+    icon: settings
+    editor: { preview: false }
+    files:
+      - name: site
+        label: Website-Einstellungen
+        file: data/settings.yaml
+        fields:
+          - label: Farbschema
+            name: palette
+            widget: select
+            options:
+              - { label: "Sonne (warmes Rot, Safran)", value: sonne }
+              - { label: "Himmel (Blau, Gelb)", value: himmel }
+              - { label: "Wald (Grün, Orange)", value: wald }
+          - label: Schrift für Überschriften
+            name: heading_font
+            widget: select
+            options: &fonts
+              - { label: "Nunito (freundlich, rund)", value: nunito }
+              - { label: "Lora (klassisch, mit Serifen)", value: lora }
+              - { label: "Systemschrift (schlicht)", value: system }
+          - { label: Schrift für Fließtext, name: body_font, widget: select, options: *fonts }
+          - label: Logo
+            name: logo
+            widget: image
+            required: false
+            hint: Leer lassen, um das Text-Logo zu verwenden.
+          - { label: Name (klein, oben), name: site_name_small, widget: string }
+          - { label: Name (groß), name: site_name, widget: string }
+          - label: Menü
+            name: menu
+            widget: list
+            summary: "{{label}}"
+            fields:
+              - { label: Text, name: label, widget: string }
+              - { label: Link, name: url, widget: string, hint: "z. B. /projekte.html" }
+          - label: Spenden-Knopf (oben rechts)
+            name: donate_button
+            widget: object
+            fields:
+              - { label: Text, name: label, widget: string }
+              - { label: Link, name: url, widget: string }
+          - label: Kontakt
+            name: contact
+            widget: object
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Straße, name: street, widget: string }
+              - { label: PLZ und Ort, name: city, widget: string }
+              - { label: E-Mail, name: email, widget: string }
+          - label: Spendenkonto
+            name: bank
+            widget: object
+            fields:
+              - { label: Empfänger, name: recipient, widget: string }
+              - { label: IBAN, name: iban, widget: string }
+              - { label: BIC, name: bic, widget: string }
+              - { label: Bank, name: bank_name, widget: string }
+              - { label: Verwendungszweck, name: reference, widget: string }
+          - { label: Hinweis in der Fußzeile, name: footer_note, widget: text, required: false }
+
+  - name: pages
+    label: Startseite
+    icon: home
+    files:
+      - name: home
+        label: Startseite
+        file: content/_index.md
+        fields:
+          - { label: Titel (intern), name: title, widget: hidden }
+          - { label: Beschreibung für Suchmaschinen, name: description, widget: text }
+          - label: Kopfbereich
+            name: hero
+            widget: object
+            fields:
+              - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
+              - { label: Überschrift, name: headline, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Foto, name: image, widget: image }
+              - { label: Bildbeschreibung (für Blinde und Suchmaschinen), name: image_alt, widget: string }
+              - { label: Hinweis auf dem Foto, name: badge, widget: string, required: false }
+              - label: Knöpfe
+                name: buttons
+                widget: list
+                max: 2
+                summary: "{{label}}"
+                fields:
+                  - { label: Text, name: label, widget: string }
+                  - { label: Link, name: url, widget: string }
+                  - { label: Hervorgehoben, name: primary, widget: boolean, default: false }
+          - label: Leitsatz
+            name: mission
+            widget: object
+            fields:
+              - { label: Text, name: text, widget: text }
+              - { label: Quelle, name: source, widget: string, required: false }
+          - label: Zahlen und Fakten
+            name: facts
+            widget: list
+            max: 4
+            summary: "{{value}} – {{label}}"
+            fields:
+              - { label: Wert, name: value, widget: string }
+              - { label: Beschreibung, name: label, widget: string }
+          - { label: Überschrift der Kacheln, name: cards_title, widget: string }
+          - label: Kacheln
+            name: cards
+            widget: list
+            max: 6
+            summary: "{{title}}"
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Foto, name: image, widget: image }
+              - { label: Bildbeschreibung, name: image_alt, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Linktext, name: link_label, widget: string, required: false }
+              - { label: Link, name: link_url, widget: string, required: false }
+          - label: Auszeichnung
+            name: award
+            widget: object
+            required: false
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+          - label: Spendenbereich
+            name: donate
+            widget: object
+            hint: Die Kontodaten kommen aus den Website-Einstellungen.
+            fields:
+              - { label: Überschrift, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Fußnote, name: footnote, widget: text, required: false }
+          - { label: Überschrift „Aus unserer Arbeit“, name: more_title, widget: string }
+          - label: Links „Aus unserer Arbeit“
+            name: more
+            widget: list
+            summary: "{{label}}"
+            fields:
+              - { label: Titel, name: label, widget: string }
+              - { label: Link, name: url, widget: string }
+              - { label: Kurzbeschreibung, name: text, widget: string, required: false }
+
+  - name: projekte
+    label: Projekte
+    label_singular: Projekt
+    icon: volunteer_activism
+    folder: content/projekte
+    media_folder: /assets/images
+    public_folder: images
+    path: "{{slug}}"
+    slug: "{{fields.title}}"
+    create: true
+    sortable_fields: { fields: [date, title, country], default: { field: date, direction: descending } }
+    summary: "{{date | date('MMM YYYY')}} · {{title}} ({{country}})"
+    description: >-
+      Jedes Projekt erscheint automatisch in der Zeitleiste auf der Projektseite,
+      sortiert nach Datum. Das neueste Projekt wird dort groß hervorgehoben.
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - label: Datum (Projektbeginn bzw. letzte Förderung)
+        name: date
+        widget: datetime
+        time_format: false
+        format: YYYY-MM-DD
+      - { label: Land, name: country, widget: string, hint: "z. B. Nepal" }
+      - { label: Hinweis, name: note, widget: string, required: false, hint: "z. B. „Fortführung von September 2022“" }
+      - { label: Vorschaubild, name: image, widget: image, required: false, hint: "Für die Projektübersicht. Leer = Fläche mit dem Ländernamen." }
+      - label: Berichte und Downloads
+        name: downloads
+        widget: list
+        required: false
+        summary: "{{label}}"
+        hint: Erscheinen als Kasten oben auf der Projektseite, in dieser Reihenfolge.
+        fields:
+          - { label: Titel, name: label, widget: string, hint: "z. B. „2. Zwischenbericht“" }
+          - label: PDF-Datei
+            name: file
+            widget: file
+            # PDFs are served as they are (no processing) - so static/, not assets/
+            media_folder: /static/downloads
+            public_folder: /downloads
+      - label: Ohne eigene Seite
+        name: build
+        widget: object
+        required: false
+        collapsed: true
+        hint: "Nur für Einträge in der Zeitleiste ohne eigene Projektseite: render = never."
+        fields:
+          - { label: Seite erzeugen, name: render, widget: select, options: [always, never], default: always }
+      - { label: Text, name: body, widget: markdown }
+
+  - name: seiten
+    label: Weitere Seiten
+    icon: description
+    files:
+      - { name: projekte, label: "Projekte (Einleitung)", file: content/projekte/_index.md, fields: &page_fields [
+          { label: Titel, name: title, widget: string },
+          { label: Einleitungssatz, name: lead, widget: text, required: false },
+          { label: Text, name: body, widget: markdown } ] }
+      - { name: vision, label: Unsere Vision, file: content/unsere-vision.md, fields: *page_fields }
+      - { name: fundraising, label: Fundraising, file: content/fundraising.md, fields: *page_fields }
+      - { name: hilfe, label: Ihre Hilfe, file: content/ihre-hilfe.md, fields: *page_fields }
+      - { name: wir, label: Wir, file: content/wir.md, fields: *page_fields }
+      - { name: kontakt, label: Kontakt, file: content/kontakt.md, fields: *page_fields }
+      - { name: impressum, label: Impressum, file: content/impressum.md, fields: *page_fields }
+      - { name: datenschutz, label: Datenschutz, file: content/datenschutz.md, fields: *page_fields }
+      - { name: reise, label: Nepal-Besuch 2016, file: content/nepal-besuch-2016.md, fields: *page_fields }
+      - { name: shree, label: Besuch aus Nepal 2019, file: content/impression-shree.md, fields: *page_fields }
+
+  - name: reise-2016
+    label: Nepal-Besuch 2016 (Unterseiten)
+    icon: photo_library
+    folder: content/reise-2016
+    media_folder: /assets/images
+    public_folder: images
+    create: false
+    sortable_fields: { fields: [weight, title], default: { field: weight } }
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - { label: Reihenfolge, name: weight, widget: number }
+      - { label: Text und Fotos, name: body, widget: markdown }
+
+  - name: english
+    label: English pages
+    icon: translate
+    folder: content/english
+    media_folder: /assets/images
+    public_folder: images
+    create: false
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Text, name: body, widget: markdown }

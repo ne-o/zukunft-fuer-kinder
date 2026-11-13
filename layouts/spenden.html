@@ -1,0 +1,10 @@
+{{ define "main" }}
+{{ partial "page-header.html" (dict "page" .) }}
+<div class="container narrow">
+  <section class="donate-box">
+    <h2>Ihre Spende überweisen Sie bitte an:</h2>
+    {{ partial "bank-card.html" . }}
+  </section>
+  <div class="prose">{{ .Content }}</div>
+</div>
+{{ end }}

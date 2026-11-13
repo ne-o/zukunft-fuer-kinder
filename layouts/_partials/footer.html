@@ -1,0 +1,34 @@
+{{- $s := hugo.Data.settings -}}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="footer-brand">{{ $s.site_name_small }} „{{ $s.site_name }}“</p>
+      {{ with $s.footer_note }}<p class="footer-note">{{ . }}</p>{{ end }}
+    </div>
+    {{- with $s.contact }}
+    <div>
+      <h2 class="footer-title">Kontakt</h2>
+      <address>
+        {{ .name }}<br>{{ .street }}<br>{{ .city }}<br>
+        {{- with .email }}
+        <a href="mailto:{{ . }}">{{ . }}</a>
+        {{- end }}
+      </address>
+    </div>
+    {{- end }}
+    {{- with $s.bank }}
+    <div>
+      <h2 class="footer-title">Spendenkonto</h2>
+      <p>{{ .recipient }}<br>IBAN {{ .iban }}<br>BIC {{ .bic }} · {{ .bank_name }}</p>
+    </div>
+    {{- end }}
+  </div>
+  <div class="container footer-bottom">
+    <span>© {{ now.Year }} {{ $s.site_name_small }} „{{ $s.site_name }}“</span>
+    <nav aria-label="Rechtliches">
+      <a href="{{ partial "site-url.html" "/impressum.html" }}">Impressum</a>
+      <a href="{{ partial "site-url.html" "/datenschutz.html" }}">Datenschutz</a>
+      <a href="{{ partial "site-url.html" "/home-engl.html" }}" lang="en">English</a>
+    </nav>
+  </div>
+</footer>

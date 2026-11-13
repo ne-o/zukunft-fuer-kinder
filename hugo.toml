@@ -1,0 +1,70 @@
+baseURL = "https://www.zukunft-fuer-kinder.net/"
+title = "Schönebeck-Stiftung „Zukunft für Kinder“"
+locale = "de-DE"
+defaultContentLanguage = "de"
+
+# Page URLs end in .html (/<slug>.html instead of /<slug>/) - published
+# addresses must keep working, see tools/check_links.py.
+uglyURLs = true
+
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "rss"]
+
+[params]
+description = "Die Schönebeck-Stiftung „Zukunft für Kinder“ fördert seit 2007 Bildung, Gesundheit und Kinderrechte – vor allem in Nepal, gemeinsam mit Plan International."
+
+[imaging]
+resampleFilter = "Lanczos"
+
+[markup.goldmark.renderer]
+# Editors write Markdown, not HTML.
+unsafe = false
+# A line break in the editor is a line break on the page.
+hardWraps = true
+
+# Projects, trip report pages and English pages are served at the root
+# (/<file name>.html) although they live in content subfolders.
+[permalinks.page]
+projekte = "/:contentbasename"
+reise-2016 = "/:contentbasename"
+english = "/:contentbasename"
+
+# Structural settings per page live here, not in the pages' front matter, so
+# saving a page in the CMS can never drop them.
+[[cascade]]
+layout = "kontakt"
+[cascade.target]
+path = "/kontakt"
+
+[[cascade]]
+layout = "spenden"
+[cascade.target]
+path = "/ihre-hilfe"
+
+[[cascade]]
+url = "/projekte.html"
+aliases = ["/laufende-und-abgeschlossene-projekte.html"]
+[cascade.target]
+path = "/projekte"
+
+[[cascade]]
+aliases = ["/wir-auf-amazon-smile.html"]  # removed page, forwards here
+[cascade.target]
+path = "/fundraising"
+
+[[cascade]]
+parent_page = "/nepal-besuch-2016.html"
+[cascade.target]
+path = "/reise-2016/**"
+
+[[cascade]]
+page_lang = "en"
+[cascade.target]
+path = "/english/**"
+
+[[cascade]]
+[cascade.build]
+render = "never"
+[cascade.target]
+path = "{/reise-2016,/english}"
+kind = "section"

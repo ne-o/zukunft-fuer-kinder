@@ -1,0 +1,12 @@
+{{- /* Link to a downloadable file with icon + "(PDF, 1,2 MB)".
+   Usage: partial "file-link.html" (dict "url" "/downloads/x.pdf" "label" "…") */ -}}
+{{- $url := .url -}}
+{{- $ext := path.Ext $url | strings.TrimPrefix "." | upper -}}
+{{- $size := "" -}}
+{{- $file := printf "static%s" $url -}}
+{{- if and (strings.HasPrefix $url "/") (fileExists $file) -}}
+  {{- $mb := div (float (os.Stat $file).Size) 1048576 -}}
+  {{- $size = cond (lt $mb 0.1) "< 0,1 MB" (printf "%s MB" (lang.FormatNumber 1 $mb)) -}}
+{{- end -}}
+<a class="file-link" href="{{ partial "site-url.html" $url | safeURL }}">{{ .label }}</a> <span class="file-meta">({{ $ext }}{{ with $size }}, {{ . }}{{ end }})</span>
+{{- /**/ -}}
