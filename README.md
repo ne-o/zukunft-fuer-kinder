@@ -79,6 +79,26 @@ CMS uploads: photos -> `assets/images/` (converted to WebP, at most
 2400 px), PDFs -> `static/downloads/`. Stock photo services are switched
 off on purpose (licensing); new file names are plain ASCII.
 
+## Publishing (GitHub Pages)
+`.github/workflows/pages.yml` builds and publishes on every push to `main`
+- saving in the CMS is a commit, so edits go live a minute or two later.
+Run it by hand: Actions -> Pages -> Run workflow.
+- **Address:** comes from the repo's Pages settings, passed to Hugo as
+  `--baseURL` - `https://ne-o.github.io/zukunft-fuer-kinder/` until a
+  custom domain is set there. Every other address than
+  `params.production_url` (`hugo.toml`) gets `noindex`, so the test
+  address stays out of search engines.
+- **Hugo version:** `.hugo-version` is the source; CI fails if
+  `.devcontainer/Dockerfile` (`ARG HUGO_VERSION`) differs - bump both.
+- **Checks before deploying** (`tools/check_links.py`): a broken link
+  inside a page stops the deployment (the run fails, GitHub emails whoever
+  made the commit; the site stays as it was). Published URLs that are gone
+  - compared with the sitemap online right now - only warn (annotation in
+  the run): an editor may delete a page on purpose. To keep such a URL
+  working, add an alias in `hugo.toml`. Redirect-only URLs (aliases) aren't
+  in the sitemap, so they aren't covered - don't remove an alias.
+- Resized photos (`resources/_gen`) are cached between runs.
+
 ## Structure
 - `content/` - one Markdown file per page; all page texts and photos are
   front matter fields or Markdown, editable in the CMS.

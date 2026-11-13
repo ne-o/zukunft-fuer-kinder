@@ -1,0 +1,92 @@
+# Build the site with Hugo and publish it on GitHub Pages: on every push to
+# main (saving in the CMS is a commit too) and by hand (Actions tab -> Pages
+# -> Run workflow). Pages must be set to "Source: GitHub Actions".
+#
+# The address comes from the Pages settings (configure-pages): without a
+# custom domain https://ne-o.github.io/zukunft-fuer-kinder/, later the real
+# domain - no change here or in hugo.toml needed when it moves.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push waits instead of cancelling a
+# deployment halfway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    env:
+      TZ: Europe/Berlin
+    steps:
+      - uses: actions/checkout@v7
+
+      - id: pages
+        uses: actions/configure-pages@v6
+
+      - name: Install Hugo extended (version from .hugo-version)
+        run: |
+          set -eu
+          v=$(cat .hugo-version)
+          # The devcontainer pins Hugo too - both must match.
+          if [ -f .devcontainer/Dockerfile ] && ! grep -qx "ARG HUGO_VERSION=$v" .devcontainer/Dockerfile; then
+            echo "::error file=.devcontainer/Dockerfile::ARG HUGO_VERSION differs from .hugo-version ($v)"
+            exit 1
+          fi
+          base="https://github.com/gohugoio/hugo/releases/download/v$v"
+          tgz="hugo_extended_${v}_linux-amd64.tar.gz"
+          cd "$RUNNER_TEMP"
+          curl -fsSLO "$base/$tgz"
+          curl -fsSLO "$base/hugo_${v}_checksums.txt"
+          grep " $tgz\$" "hugo_${v}_checksums.txt" | sha256sum -c -
+          mkdir -p hugo-bin
+          tar -xzf "$tgz" -C hugo-bin hugo
+          echo "$RUNNER_TEMP/hugo-bin" >> "$GITHUB_PATH"
+
+      # Resized photos (~900 files): rebuilt only for new or changed images.
+      - name: Cache processed images
+        uses: actions/cache@v6
+        with:
+          path: resources/_gen
+          key: hugo-gen-${{ hashFiles('.hugo-version') }}-${{ hashFiles('assets/**') }}
+          restore-keys: hugo-gen-${{ hashFiles('.hugo-version') }}-
+
+      - name: Build
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      # Broken links inside the pages stop the deployment. Published URLs
+      # that are gone (compared with the sitemap online right now) only
+      # warn - an editor may delete a page on purpose (README "Publishing").
+      - name: Check links
+        run: |
+          live="$RUNNER_TEMP/live-sitemap.xml"
+          if ! curl -fsSL "${{ steps.pages.outputs.base_url }}/sitemap.xml" -o "$live"; then
+            echo "::notice::No published sitemap yet (first deployment?) - checking links inside the pages only"
+            : > "$live"
+          fi
+          python3 tools/check_links.py --base "${{ steps.pages.outputs.base_path }}/" public "$live"
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

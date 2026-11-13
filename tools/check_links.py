@@ -1,17 +1,18 @@
 """Check a Hugo build for broken links.
 
-    python3 tools/check_links.py [--base /path/] public [published-sitemap.xml]
+    python3 tools/check_links.py [--base /path/] public [published-sitemap.xml ...]
 
 1. Every internal href/src/srcset in the built pages resolves to a file.
    --base: the path the build is served under (baseURL's path, e.g.
    /zukunft-fuer-kinder/ on github.io). Links must stay below it - a
    root-absolute "/x.html" exists in public/ but would 404 there.
-2. Optional: every URL in a sitemap.xml of the published site (e.g. the
-   live one, fetched before deploying) still exists in the new build -
-   published addresses must never break; add an alias in hugo.toml when a
-   page moves or is removed. Checked relative to the build's root,
-   independent of --base.
-Exit code 1 if anything is broken."""
+   Exit code 1 if anything is broken.
+2. Optional: every URL in the given sitemaps of published sites (e.g. the
+   live one, fetched before deploying) still exists in the new build. Only a warning, no exit code:
+   an editor may delete a page on purpose - add an alias in hugo.toml to
+   keep its URL working. Sitemap URLs below --base are taken relative to
+   it, others relative to the build's root.
+In GitHub Actions both are printed as annotations."""
 import os, re, sys, urllib.parse
 from html.parser import HTMLParser
 
@@ -21,6 +22,7 @@ if args[:1] == ["--base"]:
     prefix = "/" + args[1].strip("/") + "/" if args[1].strip("/") else "/"
     args = args[2:]
 root = args[0]
+gh = os.environ.get("GITHUB_ACTIONS") == "true"
 class P(HTMLParser):
     def __init__(self):
         super().__init__(); self.refs = []
@@ -49,11 +51,15 @@ for d, _, files in os.walk(root):
             base = prefix + os.path.relpath(os.path.join(d, fn), root)
             url = urllib.parse.urlparse(urllib.parse.urljoin(base, r)).path
             if not (url + "/").startswith(prefix) or not exists(url[len(prefix) - 1:]):
-                bad += 1; print(f"BROKEN {base}: {r}")
+                bad += 1
+                print(f"::error title=Broken link::{base}: {r}" if gh else f"BROKEN {base}: {r}")
 print(f"{pages} pages checked, {bad} broken internal references")
-if len(args) > 1:
-    olds = re.findall(r"<loc>https?://[^/]+(/[^<]*)</loc>", open(args[1]).read())
-    missing = [u for u in olds if not exists(u)]
-    print(f"published URLs: {len(olds)}, missing: {len(missing)}", *missing, sep="\n  ")
-    bad += len(missing)
+for sm in args[1:]:
+    olds = re.findall(r"<loc>https?://[^/]+(/[^<]*)</loc>", open(sm).read())
+    olds = [u[len(prefix) - 1:] if u.startswith(prefix) else u for u in olds]
+    missing = sorted({u for u in olds if not exists(u)})
+    print(f"{os.path.basename(sm)}: {len(olds)} published URLs, {len(missing)} missing")
+    for u in missing:
+        print(f"::warning title=Published URL gone::{u} - add an alias in hugo.toml to keep it"
+              if gh else f"  MISSING {u}")
 sys.exit(1 if bad else 0)

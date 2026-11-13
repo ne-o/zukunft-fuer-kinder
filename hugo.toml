@@ -1,3 +1,6 @@
+# The real address. CI builds with the address from the GitHub Pages settings
+# (--baseURL); builds for any other address get "noindex" (baseof.html), so
+# a test address like ne-o.github.io never ends up in search engines.
 baseURL = "https://www.zukunft-fuer-kinder.net/"
 title = "Schönebeck-Stiftung „Zukunft für Kinder“"
 locale = "de-DE"
@@ -11,6 +14,7 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term", "rss"]
 
 [params]
+production_url = "https://www.zukunft-fuer-kinder.net/"
 description = "Die Schönebeck-Stiftung „Zukunft für Kinder“ fördert seit 2007 Bildung, Gesundheit und Kinderrechte – vor allem in Nepal, gemeinsam mit Plan International."
 
 [imaging]
