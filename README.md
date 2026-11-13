@@ -5,8 +5,9 @@ built with Hugo, edited in the browser with Sveltia CMS by people who don't
 need to know anything about Hugo, git or HTML.
 
 - **Editors** open `https://www.zukunft-fuer-kinder.net/admin/`, log in
-  with their GitHub token, fill in forms, click "Publish". Every publish
-  is a commit to this repo.
+  with their GitHub token, fill in forms, click "Save". Every save is a
+  commit to this repo. Guide for editors (with screenshots):
+  [German](docs/anleitung-redaktion.md), [English](docs/editor-guide.md).
 - **The site** is plain HTML/CSS/images built by Hugo - no server-side
   code, no cookies, no tracking, fonts self-hosted.
 
@@ -28,7 +29,8 @@ and uses their own **classic** GitHub token: fine-grained tokens can't be
 used for someone else's personal repository. Scope `public_repo` should be
 enough for a public repository (narrower than `repo`; to be confirmed with
 the first editor), always with an expiry date - renew in time. No OAuth
-app, so no server-side login helper.
+app, so no server-side login helper; `auth_methods: [token]` in the CMS
+config hides the "Sign In with GitHub" button.
 
 Photos are shrunk to WebP in the browser before upload; Hugo creates the
 sizes the pages need. PDFs are published as uploaded.

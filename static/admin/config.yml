@@ -1,6 +1,7 @@
 # Sveltia CMS configuration - https://github.com/sveltia/sveltia-cms
-# Login: "Sign in with token" - a fine-grained GitHub token per editor,
-# limited to this repo, permission "Contents: Read and write" (see README).
+# Login: "Sign In Using Access Token" - a classic GitHub token per editor
+# (scope public_repo; fine-grained tokens don't work for collaborators on
+# a personal repo), see README and docs/anleitung-redaktion.md.
 # No OAuth app, so no server-side helper (Cloudflare Worker) is needed.
 # Locally: open /admin/ in Chrome/Edge and choose "Work with Local
 # Repository" to edit the files in this folder directly.
@@ -9,6 +10,9 @@ backend:
   name: github
   repo: ne-o/zukunft-fuer-kinder
   branch: main
+  # Token login only: hides "Sign In with GitHub", which would need an
+  # OAuth app + server-side helper we don't run.
+  auth_methods: [token]
   commit_messages:
     update: "Inhalt: {{collection}} „{{slug}}“ aktualisiert"
     uploadMedia: "Bild hochgeladen: {{path}}"
@@ -72,7 +76,7 @@ collections:
             widget: image
             required: false
             hint: Leer lassen, um das Text-Logo zu verwenden.
-          - { label: Name (klein, oben), name: site_name_small, widget: string }
+          - { label: "Name (klein, oben)", name: site_name_small, widget: string }
           - { label: Name (groß), name: site_name, widget: string }
           - label: Menü
             name: menu
