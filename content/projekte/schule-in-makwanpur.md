@@ -1,11 +1,14 @@
 ---
 title: Bau der „Yug Chetana Namuna School“ in Makwanpur/Nepal
-date: '2008-02-01'
+date: 2008-02-01
 country: Nepal
+note: ''
 image: images/archiv/1428525.webp
+downloads: []
+build: null
 ---
 
-![](images/archiv/1428525.webp)
+![](images/archiv/1428525.webp "Schule in Makwanpur")
 
 **Schulbau in Makwanpur**
 
