@@ -10,6 +10,10 @@ assistant (opencode) and a browser it can drive (step 6). On your computer you
 only install four things: **Git, Docker, VS Code and VS Code's Dev
 Containers extension**. Works on Windows 10/11, macOS and Linux.
 
+**Nothing to install at all:** the same container runs in your browser
+with GitHub Codespaces (free monthly quota on your own GitHub account) -
+[docs/codespaces.md](docs/codespaces.md).
+
 ## 1. Install the tools (once)
 
 ### Windows 10/11
@@ -187,9 +191,11 @@ watch. Neither is needed to work on the site.
 
 **opencode:** starts by itself in a terminal when the project opens in
 the container. The first time, VS Code asks whether to allow "automatic
-tasks" for this folder - **Allow** starts opencode now and on every
-later start, **Disallow** never (change it later: `F1` -> "Tasks: Manage
-Automatic Tasks"). Closed it? `F1` -> "Tasks: Run Task" -> "opencode",
+tasks" - **Allow** starts opencode now and on every later start (note:
+VS Code applies this to all folders you trusted, not just this one),
+**Disallow** never. The question disappears after a few seconds; missed
+it? It's still under the bell (bottom right), or `F1` -> "Tasks: Manage
+Automatic Tasks". Closed opencode? `F1` -> "Tasks: Run Task" -> "opencode",
 or run `opencode` in any VS Code terminal. It starts with **GLM 5.3
 Flash**, free through opencode's own service and without an account.
 Other models: `/models` inside opencode; many need an account with their

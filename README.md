@@ -58,7 +58,8 @@ empty = text logo), `site_name`, `site_name_small`, `menu` (label + url),
 ## Working on the site
 Open this folder in its devcontainer (`.devcontainer/`: Hugo, Python,
 ImageMagick, cwebp, Ghostscript) - from scratch, incl. installing Docker
-and VS Code: [DEVELOPMENT.md](DEVELOPMENT.md).
+and VS Code: [DEVELOPMENT.md](DEVELOPMENT.md). Without installing
+anything, in the browser: [GitHub Codespaces](docs/codespaces.md).
 
     preview   # hugo server on :1314 (http://localhost:1314, CMS at /admin/), right options in Codespaces too
     hugo --gc --minify && python3 tools/check_links.py public

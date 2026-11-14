@@ -57,14 +57,22 @@ if ! curl -fs -o /dev/null http://127.0.0.1:6080/vnc.html; then
         >"$logdir/novnc.log" 2>&1 &
 fi
 
+# New profile: no "Translate this page?" bubble over the German site
+# (--disable-features=Translate doesn't do it in Chromium 157).
+profile="$HOME/.local/share/browser-profile"
+if [ ! -e "$profile/Default/Preferences" ]; then
+    mkdir -p "$profile/Default"
+    echo '{"translate":{"enabled":false}}' > "$profile/Default/Preferences"
+fi
+
 bin=$(ls -d "$PLAYWRIGHT_BROWSERS_PATH"/chromium-*/chrome-linux*/chrome | sort -V | tail -n 1)
 setsid nohup "$bin" \
     --no-sandbox \
     --ozone-platform=x11 \
-    --user-data-dir="$HOME/.local/share/browser-profile" \
+    --user-data-dir="$profile" \
     --remote-debugging-address=127.0.0.1 \
     --remote-debugging-port="$port" \
-    --no-first-run --no-default-browser-check --disable-features=Translate \
+    --no-first-run --no-default-browser-check \
     --window-position=0,0 --window-size="${size/x/,}" \
     "${1:-about:blank}" >"$logdir/chromium.log" 2>&1 &
 
