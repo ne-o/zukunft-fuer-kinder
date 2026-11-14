@@ -17,6 +17,13 @@
 set -e
 port=${BROWSER_CDP_PORT:-9222}
 cdp="http://127.0.0.1:$port"
+# Our own virtual display, not the host's: on Linux hosts VS Code forwards
+# the desktop into the container (DISPLAY, WAYLAND_DISPLAY + socket).
+# x11vnc exits when it sees WAYLAND_DISPLAY ("Wayland sessions are ...
+# only supported via -rawfb"), and Chromium could open on the host's
+# screen instead (tried 2026-11-14).
+unset WAYLAND_DISPLAY
+export XDG_SESSION_TYPE=x11
 export DISPLAY=${BROWSER_DISPLAY:-:99}
 dnum=${DISPLAY#:}
 size=${BROWSER_SIZE:-1600x1000}
@@ -42,7 +49,8 @@ if ! pgrep -x x11vnc >/dev/null; then
     # spins at 100% CPU and never accepts a connection (tried 2026-11-14).
     (ulimit -n 1024
      x11vnc -display "$DISPLAY" -localhost -nopw -forever -shared \
-        -rfbport 5900 -bg -o "$logdir/x11vnc.log" >/dev/null 2>&1)
+        -rfbport 5900 -bg -o "$logdir/x11vnc.log" >/dev/null 2>&1) \
+    || { echo "browser: x11vnc didn't start, see $logdir/x11vnc.log" >&2; exit 1; }
 fi
 if ! curl -fs -o /dev/null http://127.0.0.1:6080/vnc.html; then
     setsid nohup websockify --web /usr/share/novnc 127.0.0.1:6080 127.0.0.1:5900 \
@@ -52,6 +60,7 @@ fi
 bin=$(ls -d "$PLAYWRIGHT_BROWSERS_PATH"/chromium-*/chrome-linux*/chrome | sort -V | tail -n 1)
 setsid nohup "$bin" \
     --no-sandbox \
+    --ozone-platform=x11 \
     --user-data-dir="$HOME/.local/share/browser-profile" \
     --remote-debugging-address=127.0.0.1 \
     --remote-debugging-port="$port" \
