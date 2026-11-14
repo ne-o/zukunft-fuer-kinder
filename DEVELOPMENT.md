@@ -12,7 +12,9 @@ Containers extension**. Works on Windows 10/11, macOS and Linux.
 
 **Nothing to install at all:** the same container runs in your browser
 with GitHub Codespaces (free monthly quota on your own GitHub account) -
-[docs/codespaces.md](docs/codespaces.md).
+[docs/codespaces.md](docs/codespaces.md). One catch there: the AI
+assistant's free model often refuses in a codespace (shared internet
+addresses) - for free AI help, set up locally as described here.
 
 ## 1. Install the tools (once)
 

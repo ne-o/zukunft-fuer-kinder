@@ -9,6 +9,7 @@ Editors don't need any of this - texts, photos and reports are changed in
 the CMS ([editor guide](editor-guide.md)).
 
 ## Contents
+
 1. [What you need, what it costs](#1-what-you-need-what-it-costs)
 2. [Create a codespace](#2-create-a-codespace)
 3. [First start: trust the folder, allow opencode](#3-first-start-trust-the-folder-allow-opencode)
@@ -95,12 +96,26 @@ opencode starts with **GLM 5.3 Flash**, free through opencode's own
 service and without an account. Type your request into the box and press
 Enter. `/models` switches the model; `ctrl+p` shows all commands.
 
-- **"Free usage exceeded"** in red: the free model has run out. In a
-  codespace that happens quickly, presumably because many codespaces
-  share the same internet addresses. Use your own provider account then:
-  `/connect` inside opencode (or `opencode auth login` in a terminal),
-  pick the provider, paste your API key. The key stays in your codespace
-  (see [step 10](#10-privacy-and-security)).
+> **The free model is unreliable in a codespace.** opencode's free tier
+> apparently limits how much can be used from one internet address.
+> Codespaces run in GitHub's cloud and share their addresses with many
+> other users - so the limit can already be used up by others before you
+> start. Then
+> opencode answers with **"Free usage exceeded, subscribe to Go"** in red
+> and keeps retrying. This is not something you or this project can fix.
+> Two ways around it:
+>
+> 1. **Work on your own computer** ([DEVELOPMENT.md](../DEVELOPMENT.md)):
+>    the same container, opencode and free model, but over your own
+>    internet connection, so only your own use counts.
+> 2. **Use your own provider account** in the codespace: `/connect`
+>    inside opencode (or `opencode auth login` in a terminal), pick the
+>    provider, paste your API key - usually paid per use. The key stays
+>    in your codespace (see [step 10](#10-privacy-and-security)).
+>
+> Everything else in the codespace (preview, browser, Git) works without
+> opencode.
+
 - opencode remembers the model you picked last.
 - Closed opencode? `F1` -> "Tasks: Run Task" -> **opencode**, or type
   `opencode` in any terminal.
@@ -226,13 +241,13 @@ usage shows up there with a delay of a few hours, not immediately.
 
 ## 11. Troubleshooting
 
-| Problem | Fix |
-|---|---|
-| Terminal, preview or opencode don't work, "Restricted Mode" at the bottom left | The folder isn't trusted yet: click "Restricted Mode" -> **Trust**. |
-| opencode didn't start | Missed the automatic-tasks message: see [step 3](#3-first-start-trust-the-folder-allow-opencode), or start it with `opencode` in a terminal. |
-| "Free usage exceeded" in opencode | See [step 4](#4-opencode-the-ai-assistant): use your own provider account. |
-| Preview page without styles, links lead nowhere | Start it with `preview`, not plain `hugo server` (it needs the codespace's address). |
-| Preview doesn't update | Reload the tab; if it still doesn't, `Ctrl+C` in the preview terminal and `preview` again. |
-| "Failed to fetch" errors for extensions | An ad or tracking blocker in your browser blocks VS Code's extension marketplace. Allow it for `github.dev`, or use a private window without extensions. The project's own extensions are installed regardless. |
-| Codespace won't start or resume, quota used up | See [step 9](#9-how-much-of-the-free-quota-is-left); wait for next month or delete unused codespaces (storage). |
-| Something's broken in the container itself | `F1` -> "Codespaces: Rebuild Container". Your files in the project folder stay; commit and push first to be safe. |
+| Problem                                                                        | Fix                                                                                                                                                                                                             |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Terminal, preview or opencode don't work, "Restricted Mode" at the bottom left | The folder isn't trusted yet: click "Restricted Mode" -> **Trust**.                                                                                                                                             |
+| opencode didn't start                                                          | Missed the automatic-tasks message: see [step 3](#3-first-start-trust-the-folder-allow-opencode), or start it with `opencode` in a terminal.                                                                    |
+| "Free usage exceeded" in opencode                                              | Free-tier limit for the codespace's shared internet address used up, see [step 4](#4-opencode-the-ai-assistant): work locally ([DEVELOPMENT.md](../DEVELOPMENT.md)) or use your own provider account.        |
+| Preview page without styles, links lead nowhere                                | Start it with `preview`, not plain `hugo server` (it needs the codespace's address).                                                                                                                            |
+| Preview doesn't update                                                         | Reload the tab; if it still doesn't, `Ctrl+C` in the preview terminal and `preview` again.                                                                                                                      |
+| "Failed to fetch" errors for extensions                                        | An ad or tracking blocker in your browser blocks VS Code's extension marketplace. Allow it for `github.dev`, or use a private window without extensions. The project's own extensions are installed regardless. |
+| Codespace won't start or resume, quota used up                                 | See [step 9](#9-how-much-of-the-free-quota-is-left); wait for next month or delete unused codespaces (storage).                                                                                                 |
+| Something's broken in the container itself                                     | `F1` -> "Codespaces: Rebuild Container". Your files in the project folder stay; commit and push first to be safe.                                                                                               |
