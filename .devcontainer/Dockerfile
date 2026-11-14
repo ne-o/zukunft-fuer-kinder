@@ -81,3 +81,13 @@ USER $USERNAME
 # devcontainer.json) so they survive rebuilds. Created here so the volumes
 # start out owned by the user, not root.
 RUN mkdir -p /home/$USERNAME/.local/share/opencode /home/$USERNAME/.config/opencode
+# First-start model: GLM 5.3 Flash, free via opencode's own service (no
+# login). Seeded as the most recently used model (opencode's state file),
+# not as "model" in the config - that would override the user's choice on
+# every start. The state dir is a volume too: Docker copies this file into
+# it once, when the volume is new; after that opencode keeps its own list.
+ARG OPENCODE_FIRST_MODEL=opencode/glm-5.3-flash-free
+RUN mkdir -p /home/$USERNAME/.local/state/opencode \
+    && printf '{"recent":[{"providerID":"%s","modelID":"%s"}],"favorite":[],"variant":{}}\n' \
+        "${OPENCODE_FIRST_MODEL%%/*}" "${OPENCODE_FIRST_MODEL#*/}" \
+        > /home/$USERNAME/.local/state/opencode/model.json

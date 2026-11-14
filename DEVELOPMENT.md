@@ -188,11 +188,13 @@ the container. The first time, VS Code asks whether to allow "automatic
 tasks" for this folder - **Allow** starts opencode now and on every
 later start, **Disallow** never (change it later: `F1` -> "Tasks: Manage
 Automatic Tasks"). Closed it? `F1` -> "Tasks: Run Task" -> "opencode",
-or run `opencode` in any VS Code terminal. The first time, log
-in to an AI provider: `opencode auth login` (or `/connect` inside
-opencode) - some models work without an account, many need one from the
-provider (often paid). Login, settings and past sessions are kept in
-Docker volumes, so they survive "Rebuild Container". Documentation:
+or run `opencode` in any VS Code terminal. It starts with **GLM 5.3
+Flash**, free through opencode's own service and without an account.
+Other models: `/models` inside opencode; many need an account with their
+provider (often paid) - log in with `opencode auth login` (or `/connect`
+inside opencode). opencode remembers the model you picked last. Login,
+settings, past sessions and the chosen model are kept in Docker volumes,
+so they survive "Rebuild Container". Documentation:
 <https://opencode.ai/docs/>, providers: <https://opencode.ai/docs/providers/>.
 
 **The browser:** it runs inside the container, and you see it as a page in

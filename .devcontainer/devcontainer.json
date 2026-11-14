@@ -9,7 +9,9 @@
     "source=${localWorkspaceFolder}/.devcontainer/vscode,target=${containerWorkspaceFolder}/.vscode,type=bind",
     // opencode: login, sessions and settings outside the image (survive a rebuild)
     "source=zfk-opencode-data,target=/home/user/.local/share/opencode,type=volume",
-    "source=zfk-opencode-config,target=/home/user/.config/opencode,type=volume"
+    "source=zfk-opencode-config,target=/home/user/.config/opencode,type=volume",
+    // last used models (first start: GLM 5.3 Flash, seeded in the Dockerfile)
+    "source=zfk-opencode-state,target=/home/user/.local/state/opencode,type=volume"
   ],
 
   // `hugo server --bind 0.0.0.0 --port 1314` -> http://localhost:1314 (CMS: /admin/)
