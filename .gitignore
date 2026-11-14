@@ -2,3 +2,7 @@
 /public/
 /resources/_gen/
 .hugo_build.lock
+
+# VS Code task linked in by the devcontainer in GitHub Codespaces
+# (onCreateCommand in .devcontainer/devcontainer.json)
+/.vscode/tasks.json

@@ -64,7 +64,7 @@ setsid nohup "$bin" \
     --user-data-dir="$HOME/.local/share/browser-profile" \
     --remote-debugging-address=127.0.0.1 \
     --remote-debugging-port="$port" \
-    --no-first-run --no-default-browser-check \
+    --no-first-run --no-default-browser-check --disable-features=Translate \
     --window-position=0,0 --window-size="${size/x/,}" \
     "${1:-about:blank}" >"$logdir/chromium.log" 2>&1 &
 

@@ -21,8 +21,17 @@
   "forwardPorts": [1314, 6080],
   "portsAttributes": {
     "1314": { "label": "Hugo preview" },
-    "6080": { "label": "Browser (noVNC)" }
+    "6080": { "label": "Browser (noVNC)" },
+    // internal: VNC behind noVNC, Chromium's remote control for opencode
+    "5900": { "onAutoForward": "ignore" },
+    "9222": { "onAutoForward": "ignore" }
   },
+
+  // GitHub Codespaces ignores the bind mount below that puts
+  // .devcontainer/vscode/ over .vscode/ (tried 2026-11-14): link the task
+  // file instead where it's missing. Locally the mount is there, so this
+  // does nothing; the link is in .gitignore.
+  "onCreateCommand": "test -e .vscode/tasks.json || ln -s ../.devcontainer/vscode/tasks.json .vscode/tasks.json",
 
   "customizations": {
     "vscode": {
@@ -37,9 +46,10 @@
       ],
       "settings": {
         "cSpell.language": "en,de-de",
-        // don't open the Copilot Chat side bar on first start (opencode is
-        // the assistant here; Copilot stays available via the title bar)
-        "workbench.secondarySideBar.defaultVisibility": "hidden",
+        // opencode is the assistant here: no Copilot chat side bar on first
+        // start, no inline suggestions. (workbench.secondarySideBar.
+        // defaultVisibility has no effect from here - tried 2026-11-14.)
+        "chat.disableAIFeatures": true,
         "files.associations": { "layouts/**/*.html": "html" }
       }
     }
