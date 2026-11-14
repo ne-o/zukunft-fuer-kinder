@@ -1,0 +1,25 @@
+{
+  // Mounted as .vscode/ of the project, inside the devcontainer only
+  // (devcontainer.json "mounts") - so outside the container VS Code
+  // neither asks about nor runs this task.
+  // Starts opencode in a terminal when the project opens (DEVELOPMENT.md,
+  // step 6). VS Code asks once whether to allow automatic tasks; change the
+  // choice later with F1 -> "Tasks: Manage Automatic Tasks".
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "opencode",
+      "type": "process",
+      "command": "opencode",
+      "runOptions": { "runOn": "folderOpen" },
+      "presentation": {
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}

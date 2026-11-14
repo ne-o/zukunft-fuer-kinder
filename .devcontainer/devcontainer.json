@@ -3,8 +3,11 @@
   "build": { "dockerfile": "Dockerfile" },
   "remoteUser": "user",
 
-  // opencode: login, sessions and settings outside the image (survive a rebuild)
   "mounts": [
+    // VS Code settings for the container only (task that starts opencode):
+    // hides the project's .vscode/ (just a README) inside the container
+    "source=${localWorkspaceFolder}/.devcontainer/vscode,target=${containerWorkspaceFolder}/.vscode,type=bind",
+    // opencode: login, sessions and settings outside the image (survive a rebuild)
     "source=zfk-opencode-data,target=/home/user/.local/share/opencode,type=volume",
     "source=zfk-opencode-config,target=/home/user/.config/opencode,type=volume"
   ],
