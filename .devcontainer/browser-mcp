@@ -1,0 +1,7 @@
+#!/bin/bash
+# Playwright MCP server for opencode (registered in opencode.json next to
+# this file): starts the shared browser if needed (`browser`), then
+# attaches to it over CDP - opencode and you (noVNC) see the same tabs.
+set -e
+browser >&2
+exec playwright-mcp --cdp-endpoint "http://127.0.0.1:${BROWSER_CDP_PORT:-9222}" "$@"

@@ -1,0 +1,67 @@
+#!/bin/bash
+# `browser [url]`: Chromium (Playwright's build) inside the container,
+# shared between you and opencode:
+# - you watch and click it in your own browser via noVNC:
+#   http://localhost:6080/vnc.html?autoconnect=1&resize=scale
+#   (port 6080 is forwarded by VS Code)
+# - opencode drives the same session through the Playwright MCP server
+#   (`browser-mcp`), which attaches over CDP on 127.0.0.1:9222.
+# Starts what isn't running yet: virtual display (Xvfb), VNC server, noVNC,
+# Chromium. Already running: opens the URL as a new tab.
+# Profile in ~/.local/share/browser-profile (gone on rebuild).
+# --no-sandbox: Docker's default seccomp profile blocks the user namespaces
+# Chromium's sandbox needs. The container is the only barrier - browse
+# trusted sites.
+# All output goes to stderr/the log: browser-mcp runs this before the MCP
+# server, whose stdout must stay clean.
+set -e
+port=${BROWSER_CDP_PORT:-9222}
+cdp="http://127.0.0.1:$port"
+export DISPLAY=${BROWSER_DISPLAY:-:99}
+dnum=${DISPLAY#:}
+size=${BROWSER_SIZE:-1600x1000}
+logdir=${XDG_CACHE_HOME:-$HOME/.cache}/browser
+mkdir -p "$logdir"
+
+if curl -fs "$cdp/json/version" >/dev/null; then
+    [ -n "$1" ] && curl -fs -X PUT "$cdp/json/new?$1" >/dev/null
+    exit 0
+fi
+
+if [ ! -S "/tmp/.X11-unix/X$dnum" ]; then
+    setsid nohup Xvfb "$DISPLAY" -screen 0 "${size}x24" -nolisten tcp \
+        >"$logdir/xvfb.log" 2>&1 &
+    for _ in $(seq 1 40); do
+        [ -S "/tmp/.X11-unix/X$dnum" ] && break
+        sleep 0.25
+    done
+fi
+if ! pgrep -x x11vnc >/dev/null; then
+    # -localhost: VNC only inside the container; noVNC is the way in.
+    # ulimit: with Docker's default open-files limit (~1 billion) x11vnc
+    # spins at 100% CPU and never accepts a connection (tried 2026-11-14).
+    (ulimit -n 1024
+     x11vnc -display "$DISPLAY" -localhost -nopw -forever -shared \
+        -rfbport 5900 -bg -o "$logdir/x11vnc.log" >/dev/null 2>&1)
+fi
+if ! curl -fs -o /dev/null http://127.0.0.1:6080/vnc.html; then
+    setsid nohup websockify --web /usr/share/novnc 127.0.0.1:6080 127.0.0.1:5900 \
+        >"$logdir/novnc.log" 2>&1 &
+fi
+
+bin=$(ls -d "$PLAYWRIGHT_BROWSERS_PATH"/chromium-*/chrome-linux*/chrome | sort -V | tail -n 1)
+setsid nohup "$bin" \
+    --no-sandbox \
+    --user-data-dir="$HOME/.local/share/browser-profile" \
+    --remote-debugging-address=127.0.0.1 \
+    --remote-debugging-port="$port" \
+    --no-first-run --no-default-browser-check \
+    --window-position=0,0 --window-size="${size/x/,}" \
+    "${1:-about:blank}" >"$logdir/chromium.log" 2>&1 &
+
+for _ in $(seq 1 40); do
+    curl -fs "$cdp/json/version" >/dev/null && exit 0
+    sleep 0.25
+done
+echo "browser: no CDP on $cdp after 10 s, see $logdir/chromium.log" >&2
+exit 1

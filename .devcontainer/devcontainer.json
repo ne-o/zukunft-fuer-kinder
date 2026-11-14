@@ -3,10 +3,21 @@
   "build": { "dockerfile": "Dockerfile" },
   "remoteUser": "user",
 
+  // opencode: login, sessions and settings outside the image (survive a rebuild)
+  "mounts": [
+    "source=zfk-opencode-data,target=/home/user/.local/share/opencode,type=volume",
+    "source=zfk-opencode-config,target=/home/user/.config/opencode,type=volume"
+  ],
+
   // `hugo server --bind 0.0.0.0 --port 1314` -> http://localhost:1314 (CMS: /admin/)
   // (1314 instead of Hugo's default 1313, which is often taken already)
-  "forwardPorts": [1314],
-  "portsAttributes": { "1314": { "label": "Hugo preview" } },
+  // `browser` (also started by opencode's browser tools): watch/click it at
+  // http://localhost:6080/vnc.html?autoconnect=1&resize=scale
+  "forwardPorts": [1314, 6080],
+  "portsAttributes": {
+    "1314": { "label": "Hugo preview" },
+    "6080": { "label": "Browser (noVNC)" }
+  },
 
   "customizations": {
     "vscode": {

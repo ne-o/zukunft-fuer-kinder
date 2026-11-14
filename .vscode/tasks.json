@@ -1,0 +1,27 @@
+{
+  // Starts opencode in a terminal when the project opens in the
+  // devcontainer (DEVELOPMENT.md, step 6). VS Code asks once per project
+  // whether to allow automatic tasks; change the choice later with
+  // F1 -> "Tasks: Manage Automatic Tasks".
+  // Outside the container (no opencode installed) it ends at once and
+  // the terminal closes.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "opencode",
+      "type": "process",
+      "command": "bash",
+      "args": ["-c", "command -v opencode >/dev/null || exit 0; exec opencode"],
+      "windows": { "command": "cmd.exe", "args": ["/d", "/c", "exit 0"] },
+      "runOptions": { "runOn": "folderOpen" },
+      "presentation": {
+        "reveal": "always",
+        "focus": true,
+        "panel": "dedicated",
+        "close": true,
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}
