@@ -14,7 +14,7 @@
     "source=zfk-opencode-state,target=/home/user/.local/state/opencode,type=volume"
   ],
 
-  // `hugo server --bind 0.0.0.0 --port 1314` -> http://localhost:1314 (CMS: /admin/)
+  // `preview` (hugo server --bind 0.0.0.0 --port 1314) -> http://localhost:1314 (CMS: /admin/)
   // (1314 instead of Hugo's default 1313, which is often taken already)
   // `browser` (also started by opencode's browser tools): watch/click it at
   // http://localhost:6080/vnc.html?autoconnect=1&resize=scale
@@ -37,6 +37,9 @@
       ],
       "settings": {
         "cSpell.language": "en,de-de",
+        // don't open the Copilot Chat side bar on first start (opencode is
+        // the assistant here; Copilot stays available via the title bar)
+        "workbench.secondarySideBar.defaultVisibility": "hidden",
         "files.associations": { "layouts/**/*.html": "html" }
       }
     }

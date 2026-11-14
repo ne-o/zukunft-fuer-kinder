@@ -64,6 +64,8 @@ RUN npm install -g --no-fund --no-audit "@playwright/mcp@${PLAYWRIGHT_MCP_VERSIO
     && node "$(npm root -g)/@playwright/mcp/node_modules/playwright/cli.js" install --no-shell chromium \
     && chmod -R a+rX "$PLAYWRIGHT_BROWSERS_PATH"
 COPY --chmod=0755 browser browser-mcp /usr/local/bin/
+# `preview`: hugo server with the right options locally and in Codespaces
+COPY --chmod=0755 preview /usr/local/bin/
 # opencode reads this config in addition to its own: registers the MCP server
 COPY opencode.json /etc/opencode/opencode.json
 ENV OPENCODE_CONFIG=/etc/opencode/opencode.json

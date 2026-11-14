@@ -148,9 +148,11 @@ Step-by-step walkthrough with screenshots:
 
 In a VS Code terminal (inside the container):
 
-    hugo server --bind 0.0.0.0 --port 1314
+    preview
 
-Open <http://localhost:1314>. Changes to files show up in the browser by
+(short for `hugo server` with the right options, also in GitHub
+Codespaces.) Open <http://localhost:1314> - in a Codespace, the address
+it prints (or the "Ports" tab, port 1314). Changes to files show up in the browser by
 themselves; `Ctrl+C` in the terminal stops the preview. If it ever shows
 something older than the files, stop and start it again (README, "When
 the preview needs a restart").
@@ -217,6 +219,6 @@ after "Rebuild Container". It runs without Chromium's security sandbox
 | No "Reopen in Container" offer | Is the Dev Containers extension installed? Did you open the project folder itself (the one containing `.devcontainer/`)? |
 | Port 1314 already in use | Another preview is still running - stop it, or use `--port 1315` and open that address. |
 | `.devcontainer/` was changed (e.g. a new Hugo version) | `F1` -> "Dev Containers: Rebuild Container". |
-| Preview doesn't update when you save a file (seen on Windows/macOS) | Changes on your computer's disk don't always reach the container as events. Start the preview with polling: `hugo server --bind 0.0.0.0 --port 1314 --poll 700ms`. |
+| Preview doesn't update when you save a file (seen on Windows/macOS) | Changes on your computer's disk don't always reach the container as events. Start the preview with polling: `preview --poll 700ms`. |
 | Browser page at port 6080 doesn't load | The browser isn't running yet: run `browser` in a VS Code terminal (or start opencode), then reload. Logs: `~/.cache/browser/` in the container. |
 | Every file shows as modified (Windows) | Line endings: `git add --renormalize .` once; `.gitattributes` keeps them LF from then on. |

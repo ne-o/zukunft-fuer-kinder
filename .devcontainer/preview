@@ -1,0 +1,21 @@
+#!/bin/bash
+# `preview [more hugo server options]`: Hugo's live preview on port 1314,
+# the same command locally and in GitHub Codespaces.
+# - locally: http://localhost:1314 (VS Code forwards the port)
+# - Codespaces: the port is reached through
+#   https://<codespace>-1314.app.github.dev, so Hugo has to build the page
+#   for that address (baseURL without :1314) and send live reload over
+#   https (port 443) - otherwise styles, links and auto-reload break.
+# Extra options go to hugo, e.g. `preview --poll 700ms` when saved files
+# don't show up (folder on a Windows/macOS disk).
+set -e
+port=${PREVIEW_PORT:-1314}
+args=(server --bind 0.0.0.0 --port "$port")
+if [ -n "$CODESPACES" ] && [ -n "$CODESPACE_NAME" ]; then
+    url="https://${CODESPACE_NAME}-${port}.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN:-app.github.dev}/"
+    args+=(--baseURL "$url" --appendPort=false --liveReloadPort=443)
+    echo "preview: $url (Ports tab -> port $port)" >&2
+else
+    echo "preview: http://localhost:$port" >&2
+fi
+exec hugo "${args[@]}" "$@"

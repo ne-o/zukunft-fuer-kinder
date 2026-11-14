@@ -60,7 +60,7 @@ Open this folder in its devcontainer (`.devcontainer/`: Hugo, Python,
 ImageMagick, cwebp, Ghostscript) - from scratch, incl. installing Docker
 and VS Code: [DEVELOPMENT.md](DEVELOPMENT.md).
 
-    hugo server --bind 0.0.0.0 --port 1314   # http://localhost:1314, CMS at /admin/
+    preview   # hugo server on :1314 (http://localhost:1314, CMS at /admin/), right options in Codespaces too
     hugo --gc --minify && python3 tools/check_links.py public
 
 In the preview the CMS can "Work with Local Repository" (Chrome/Edge): it
