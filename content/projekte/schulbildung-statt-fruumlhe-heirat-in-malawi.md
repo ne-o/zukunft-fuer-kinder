@@ -1,6 +1,5 @@
 ---
 title: 18+ Schulbildung statt frühe Heirat in Malawi
-title_en: '18+ School instead of early marriage in Malawi'
 date: '2016-08-01'
 country: Malawi
 note: Fortführung von Februar 2015

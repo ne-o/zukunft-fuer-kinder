@@ -1,6 +1,5 @@
 ---
 title: Berufliche Zukunft und Arbeit für junge Menschen in Nepal
-title_en: 'Careers and work for young people in Nepal'
 current: true
 date: '2024-02-01'
 country: Nepal

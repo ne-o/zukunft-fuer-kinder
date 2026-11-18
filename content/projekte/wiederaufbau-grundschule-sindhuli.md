@@ -1,6 +1,5 @@
 ---
 title: Wiederaufbau einer Grundschule in Sindhuli
-title_en: 'Rebuilding a primary school in Sindhuli'
 date: 2025-03-14
 country: Nepal
 note: In Erinnerung an Herbert Schönebeck

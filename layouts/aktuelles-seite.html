@@ -1,11 +1,14 @@
 {{ define "main" }}
-{{- /* Aktuelles (/fundraising.html): upcoming events (front matter
-   "events"), the posts from content/aktuelles as cards (newest first), then
-   the page text with the older news. */ -}}
+{{- /* Aktuelles (/fundraising.html, /en/news.html): upcoming events (front
+   matter "events"), the posts from content/aktuelles as cards (newest
+   first), then the page text with the older news. English: posts in
+   English where translated, else German; events and older news fall back
+   to the German page when the English one has none. */ -}}
+{{- $de := partial "de-page.html" . -}}
 {{ partial "page-header.html" (dict "page" . "wide" true) }}
 
-{{- with .Params.events }}
-<section class="container events-section">
+{{- with .Params.events | default $de.Params.events }}
+<section class="container events-section"{{ if not $.Params.events }}{{ if ne $de $ }} lang="de"{{ end }}{{ end }}>
   {{ with $.Params.events_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
   <div class="tiles">
     {{- range . }}
@@ -13,26 +16,27 @@
       {{ with .when }}<p class="kicker">{{ . }}</p>{{ end }}
       <h3>{{ .title }}</h3>
       {{ with .text }}<p>{{ . }}</p>{{ end }}
-      {{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default "Mehr erfahren" }}</a>{{ end }}
+      {{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default (T "more_info") }}</a>{{ end }}
     </div>
     {{- end }}
   </div>
 </section>
 {{- end }}
 
-{{- with (site.GetPage "/aktuelles").RegularPages.ByDate.Reverse }}
+{{- with ((index hugo.Sites 0).GetPage "/aktuelles").RegularPages.ByDate.Reverse }}
 <section class="cards-section">
   <div class="container">
     {{ with $.Params.posts_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
     <div class="cards news-cards">
       {{- range . }}
-      <article class="card">
-        {{ with .Params.image }}{{ partial "img.html" (dict "src" . "alt" "" "sizes" "(min-width: 60em) 30vw, (min-width: 40em) 50vw, 100vw" "class" "card-img") }}{{ else }}<div class="img-fallback card-img" aria-hidden="true">{{ .Params.category }}</div>{{ end }}
+      {{- $d := . }}{{ $p := partial "in-lang.html" . }}
+      <article class="card"{{ if ne $p.Language.Lang site.Language.Lang }} lang="de"{{ end }}>
+        {{ with .Params.image }}{{ partial "img.html" (dict "src" . "alt" "" "sizes" "(min-width: 60em) 30vw, (min-width: 40em) 50vw, 100vw" "class" "card-img") }}{{ else }}<div class="img-fallback card-img" aria-hidden="true">{{ partial "category.html" .Params.category }}</div>{{ end }}
         <div class="card-body">
-          <p class="kicker">{{ delimit (slice .Params.category (.Date.Format "2006")) " · " }}</p>
-          <h3>{{ .Title }}</h3>
-          {{ with .Params.lead }}<p>{{ . }}</p>{{ end }}
-          <a class="card-link" href="{{ .RelPermalink }}">Zum Beitrag<span class="visually-hidden">: {{ .Title }}</span></a>
+          <p class="kicker">{{ delimit (slice (partial "category.html" $d.Params.category) ($d.Date.Format "2006")) " · " }}</p>
+          <h3>{{ $p.Title }}</h3>
+          {{ with $p.Params.lead | default $d.Params.lead }}<p>{{ . }}</p>{{ end }}
+          <a class="card-link" href="{{ $p.RelPermalink }}">{{ T "to_post" }}<span class="visually-hidden">: {{ $p.Title }}</span></a>
         </div>
       </article>
       {{- end }}
@@ -41,9 +45,10 @@
 </section>
 {{- end }}
 
-{{- with .Content }}
-<section class="container narrow archive-section">
-  {{ with $.Params.archive_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+{{- $archive := cond (strings.TrimSpace (string .Content)) . $de }}
+{{- with $archive.Content }}
+<section class="container narrow archive-section"{{ if ne $archive $ }} lang="de"{{ end }}>
+  {{ with $archive.Params.archive_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
   <div class="prose">{{ . }}</div>
 </section>
 {{- end }}

@@ -190,9 +190,14 @@ Das Feld **Text** funktioniert wie ein einfaches Textprogramm:
 - **English pages**: Die englischen Seiten haben dieselben Felder wie die
   deutschen. Wenn Sie eine deutsche Hauptseite ändern, denken Sie bitte
   auch an die englische Fassung. Links auf englische Seiten beginnen mit
-  `/en/` (z. B. `/en/how-to-help.html`). Projekte und Beiträge gibt es nur
-  auf Deutsch; für die englische Projektübersicht hat jedes Projekt das
-  Feld **Titel (Englisch)**.
+  `/en/` (z. B. `/en/how-to-help.html`).
+- **Projekte und Beiträge auf Englisch** (freiwillig): Im Eintrag oben
+  zwischen **DE** und **EN** umschalten. Übersetzt werden nur Titel und
+  Text (bei Beiträgen auch Kurzfassung und Bildbeschreibung); Datum, Land,
+  Fotos und PDFs gelten automatisch für beide Sprachen. Neue Einträge sind
+  zunächst nur deutsch; die englische Fassung lässt sich pro Eintrag
+  einschalten. Fehlt sie oder ist der englische Text leer, zeigt die
+  englische Website die deutsche Fassung.
 - **Einstellungen -> Website-Einstellungen** gelten für die **ganze**
   Website: Farbschema, Schriften, Logo, Menü, Spenden-Knopf, Kontakt und
   Spendenkonto. Die Farbschemata sind auf gute Lesbarkeit geprüft. Bitte

@@ -1,6 +1,5 @@
 ---
 title: Zahnbehandlungen und Stipendien in Ghana
-title_en: 'Dental treatment and scholarships in Ghana'
 date: '2012-02-01'
 country: Ghana
 image: images/archiv/1390146711.webp

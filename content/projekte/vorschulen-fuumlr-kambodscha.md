@@ -1,6 +1,5 @@
 ---
 title: Vorschulen für Kambodscha
-title_en: 'Pre-schools for Cambodia'
 date: '2022-09-01'
 country: Kambodscha
 image: images/archiv/kambodscha-vorschulen-f-r-kambodscha-pb-gno0516-image-5.webp

@@ -1,6 +1,5 @@
 ---
 title: Bau der ersten Schule für Frauen in Nepal im Distrikt Makwanpur
-title_en: 'Building the first school for women in Nepal''s Makwanpur district'
 date: '2009-03-01'
 country: Nepal
 image: images/archiv/2940828.webp

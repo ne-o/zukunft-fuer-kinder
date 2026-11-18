@@ -183,9 +183,14 @@ The **Text** field works like a simple word processor:
 - **English pages**: the English pages have the same fields as the
   German ones. When you change a German main page, please remember the
   English version too. Links to English pages start with `/en/` (e.g.
-  `/en/how-to-help.html`). Projects and news exist in German only; for the
-  English project overview, each project has the field **Titel
-  (Englisch)** (English title).
+  `/en/how-to-help.html`).
+- **Projects and news posts in English** (optional): switch between **DE**
+  and **EN** at the top of the entry. Only title and text are translated
+  (for posts also the summary and image description); date, country,
+  photos and PDFs apply to both languages automatically. New entries start
+  German only; the English version can be switched on per entry. If it is
+  missing or its text is empty, the English website shows the German
+  version.
 - **Einstellungen -> Website-Einstellungen** applies to the **whole**
   website: colour scheme, fonts, logo, menu, donate button, contact and
   bank account. The colour schemes are checked for readability. Please

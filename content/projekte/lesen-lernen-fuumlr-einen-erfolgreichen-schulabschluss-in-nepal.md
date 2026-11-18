@@ -1,6 +1,5 @@
 ---
 title: Lesen lernen für einen erfolgreichen Schulabschluss in Nepal
-title_en: 'Learning to read for a successful school career in Nepal'
 date: '2015-02-01'
 country: Nepal
 downloads:

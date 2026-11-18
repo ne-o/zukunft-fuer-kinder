@@ -1,6 +1,5 @@
 ---
 title: Nothilfe „Dürre Ostafrika“
-title_en: 'Emergency aid for the East Africa drought'
 date: '2011-07-01'
 country: Ostafrika
 ---

@@ -1,0 +1,5 @@
+{{- /* A (German) page in the current site language if that translation
+   exists, else the page itself - English texts are optional, German is
+   the fallback. Looked up by path, not via .Translations: entries without
+   a page of their own (build.render never) aren't in .Translations. */ -}}
+{{- return (site.GetPage .Path | default .) -}}

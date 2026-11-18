@@ -5,8 +5,10 @@ baseURL = "https://www.zukunft-fuer-kinder.net/"
 
 # Two languages: German at the root, English below /en/. An English page is
 # the German file with ".en" before ".md" (wir.md -> wir.en.md); Hugo pairs
-# them, so the Deutsch | English switch goes to the matching page. Pages
-# without an English file (projects, news, trip report) exist in German only.
+# them, so the Deutsch | English switch goes to the matching page. English
+# is optional: a project or news post without an English file is listed on
+# the English pages in German; one with an English title but no text shows
+# the German text (layouts/_partials/translated-content.html).
 # Template texts: i18n/de.yaml, i18n/en.yaml.
 defaultContentLanguage = "de"
 # No /de/ -> / redirect page (with uglyURLs it lands in a stray folder).
@@ -82,9 +84,15 @@ languages = ["de"]
 
 [[cascade]]
 layout = "aktuelles-seite"
+[cascade.target]
+path = "/fundraising"
+
+[[cascade]]
 aliases = ["/wir-auf-amazon-smile.html"]  # removed page, forwards here
 [cascade.target]
 path = "/fundraising"
+[cascade.target.sites.matrix]
+languages = ["de"]
 
 [[cascade]]
 parent_page = "/nepal-besuch-2016.html"
@@ -118,6 +126,13 @@ languages = ["en"]
 url = "/en/projects.html"
 [cascade.target]
 path = "/projekte"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/news.html"
+[cascade.target]
+path = "/fundraising"
 [cascade.target.sites.matrix]
 languages = ["en"]
 

@@ -1,0 +1,8 @@
+{{- /* The German version of a page (the page itself on the German site).
+   Front matter that isn't translated (date, country, photo, downloads,
+   category …) lives only in the German file, so templates read it here. */ -}}
+{{- $de := . -}}
+{{- if ne .Language.Lang "de" -}}
+  {{- range .Translations }}{{ if eq .Language.Lang "de" }}{{ $de = . }}{{ end }}{{ end -}}
+{{- end -}}
+{{- return $de -}}

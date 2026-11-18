@@ -18,6 +18,20 @@ backend:
     uploadMedia: "Bild hochgeladen: {{path}}"
 
 locale: de
+
+# Translations for projects and news posts (collections with "i18n: true"):
+# the English version is a second file next to the German one, Hugo style
+# (x.md + x.en.md). English is optional - new entries start German only
+# (initial_locales), English can be switched on per entry. Only fields with
+# "i18n: true" are translated (title, text, …); everything else stays in the
+# German file and the website reads it from there. Missing English text
+# falls back to German on the website.
+i18n:
+  structure: multiple_files
+  locales: [de, en]
+  default_locale: de
+  initial_locales: [de]
+  omit_default_locale_from_file_path: true
 site_url: https://www.zukunft-fuer-kinder.net
 display_url: https://www.zukunft-fuer-kinder.net
 
@@ -241,15 +255,17 @@ collections:
     path: "{{slug}}"
     slug: "{{fields.title}}"
     create: true
+    i18n: true
     sortable_fields: { fields: [date, title, country], default: { field: date, direction: descending } }
     summary: "{{date | date('MMM YYYY')}} · {{title}} ({{country}})"
     description: >-
       Jedes Projekt erscheint automatisch in der Zeitleiste auf der Projektseite,
       sortiert nach Datum. Das als „Aktuelles Projekt“ markierte Projekt wird auf
       der Startseite, der Projektübersicht und der Spendenseite groß gezeigt.
+      Englisch (optional): Titel und Text; ohne englischen Text zeigt die
+      englische Seite den deutschen.
     fields:
-      - { label: Titel, name: title, widget: string }
-      - { label: Titel (Englisch), name: title_en, widget: string, required: false, hint: "Für die englische Projektübersicht. Leer = deutscher Titel. Die Projektseite selbst gibt es nur auf Deutsch." }
+      - { label: Titel, name: title, widget: string, i18n: true }
       - label: Aktuelles Projekt
         name: current
         widget: boolean
@@ -286,7 +302,8 @@ collections:
         hint: "Nur für Einträge in der Zeitleiste ohne eigene Projektseite: render = never."
         fields:
           - { label: Seite erzeugen, name: render, widget: select, options: [always, never], default: always }
-      - { label: Text, name: body, widget: markdown }
+        i18n: duplicate
+      - { label: Text, name: body, widget: markdown, i18n: true, required: false }
 
   - name: aktuelles
     label: Aktuelles (Beiträge)
@@ -298,13 +315,15 @@ collections:
     path: "{{slug}}"
     slug: "{{fields.title}}"
     create: true
+    i18n: true
     sortable_fields: { fields: [date, title], default: { field: date, direction: descending } }
     summary: "{{date | date('MMM YYYY')}} · {{title}}"
     description: >-
       Jeder Beitrag erscheint als Kachel auf der Seite „Aktuelles“, der neueste
-      zuerst, und bekommt eine eigene Seite.
+      zuerst, und bekommt eine eigene Seite. Englisch (optional): Titel,
+      Kurzfassung, Bildbeschreibung und Text; was fehlt, erscheint auf Deutsch.
     fields:
-      - { label: Titel, name: title, widget: string }
+      - { label: Titel, name: title, widget: string, i18n: true }
       - label: Datum
         name: date
         widget: datetime
@@ -312,9 +331,9 @@ collections:
         format: YYYY-MM-DD
         hint: Bestimmt die Reihenfolge; angezeigt wird nur das Jahr.
       - { label: Art, name: category, widget: select, options: [Spendenaktion, Veranstaltung, Aus der Stiftung, Projektbericht, Jahresrückblick] }
-      - { label: Kurzfassung, name: lead, widget: text, hint: "Ein bis zwei Sätze – steht auf der Kachel und oben im Beitrag." }
+      - { label: Kurzfassung, name: lead, widget: text, i18n: true, hint: "Ein bis zwei Sätze – steht auf der Kachel und oben im Beitrag." }
       - { label: Foto, name: image, widget: image, required: false, hint: "Leer = farbige Fläche mit der Art des Beitrags." }
-      - { label: Bildbeschreibung (für Blinde und Suchmaschinen), name: image_alt, widget: string, required: false }
+      - { label: Bildbeschreibung (für Blinde und Suchmaschinen), name: image_alt, widget: string, required: false, i18n: true }
       - label: Erlös für Projekt
         name: project
         widget: relation
@@ -324,7 +343,7 @@ collections:
         display_fields: [title]
         required: false
         hint: Optional – erscheint als Kasten „Der Erlös ist für dieses Projekt bestimmt“.
-      - { label: Text, name: body, widget: markdown }
+      - { label: Text, name: body, widget: markdown, i18n: true, required: false }
 
   - name: seiten
     label: Weitere Seiten
@@ -338,8 +357,8 @@ collections:
       - name: fundraising
         label: Aktuelles
         file: content/fundraising.md
-        fields:
-          - { label: Titel (Menü, Browser-Tab), name: title, widget: string }
+        fields: &news_fields
+          - { label: "Titel (Menü, Browser-Tab)", name: title, widget: string }
           - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
           - { label: Überschrift, name: headline, widget: string, required: false, hint: "Leer = Titel" }
           - { label: Einleitungssatz, name: lead, widget: text, required: false }
@@ -363,7 +382,7 @@ collections:
         label: Über uns
         file: content/wir.md
         fields: &about_fields
-          - { label: Titel (Menü, Browser-Tab), name: title, widget: string }
+          - { label: "Titel (Menü, Browser-Tab)", name: title, widget: string }
           - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
           - { label: Überschrift, name: headline, widget: string, required: false, hint: "Leer = Titel" }
           - { label: Einleitungssatz, name: lead, widget: text, required: false }
@@ -456,14 +475,17 @@ collections:
     icon: translate
     description: >-
       Die englischen Fassungen der Hauptseiten (Adressen unter /en/). Gleiche
-      Felder wie die deutsche Seite. Projekte, Beiträge und der Reisebericht
-      gibt es nur auf Deutsch. Links auf englische Seiten beginnen mit /en/
-      (z. B. /en/how-to-help.html), Links ohne /en/ führen zur deutschen Seite.
+      Felder wie die deutsche Seite. Projekte und Beiträge übersetzen Sie
+      direkt beim jeweiligen Eintrag (Umschalter DE/EN). Links auf englische
+      Seiten beginnen mit /en/ (z. B. /en/how-to-help.html), Links ohne /en/
+      führen zur deutschen Seite. Leere Felder (z. B. keine Veranstaltungen)
+      zeigen die deutsche Fassung.
     files:
       - { name: home, label: Home (Startseite), file: content/_index.en.md, fields: *home_fields }
       - { name: about, label: About us (Über uns), file: content/wir.en.md, fields: *about_fields }
       - { name: help, label: How to help (So können Sie helfen), file: content/ihre-hilfe.en.md, fields: *help_fields }
       - { name: projects, label: "Projects (Einleitung der Projektübersicht)", file: content/projekte/_index.en.md, fields: *page_fields }
+      - { name: news, label: "News (Aktuelles: Veranstaltungen, ältere Meldungen)", file: content/fundraising.en.md, fields: *news_fields }
       - { name: vision, label: Our vision (Unsere Vision), file: content/unsere-vision.en.md, fields: *page_fields }
       - { name: contact, label: Contact (Kontakt), file: content/kontakt.en.md, fields: *page_fields }
       - { name: legal, label: Legal notice (Impressum), file: content/impressum.en.md, fields: *page_fields }

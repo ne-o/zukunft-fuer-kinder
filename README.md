@@ -145,11 +145,28 @@ Run it by hand: Actions -> Pages -> Run workflow.
   (`/en/about-us.html` etc.) are set by `[[cascade]]` entries with
   `sites.matrix` (a `url` isn't prefixed with `/en/` automatically).
   Translated: start page, Über uns, So können Sie helfen, Kontakt, Vision,
-  project overview intro, Impressum, Datenschutz. Projects, news and the
-  2016 trip exist in German only; the English project overview
-  (`projekte/section.html`) lists the German projects with `title_en` and
-  English country names (`i18n/en.yaml`, `country_<German name>`), and
-  `_partials/current-project.html` reads the projects from the German site.
+  project overview intro, Aktuelles (`/en/news.html`), Impressum,
+  Datenschutz, and the projects. The 2016 trip exists in German only.
+  - **English is optional, German is the fallback.** Projects and news
+    posts: the English file (`x.en.md`) holds only the translated fields
+    (title, text; posts also `lead`, `image_alt`) - date, country, photo,
+    downloads, category, project link stay in the German file and the
+    templates read them there (`_partials/de-page.html`). Lists (project
+    timeline, news cards, current project, a post's project box) always
+    start from the German pages and take the English version where one
+    exists (`_partials/in-lang.html`, looked up by path - pages with
+    `build.render: never` aren't in `.Translations`), else the German one,
+    marked `lang="de"`. An English page without text shows the German text
+    with a note (`_partials/translated-content.html`). On the Aktuelles
+    page, empty English `events` or page text fall back to the German ones.
+    Country names and news categories are translated in `i18n/en.yaml`
+    (`country_<German name>`, `category_<German name, spaces as _>`).
+  - CMS: projects and news posts use Sveltia's i18n (`i18n:` at the top of
+    `static/admin/config.yml`, `multiple_files` with
+    `omit_default_locale_from_file_path`, so the files are `x.md` +
+    `x.en.md`); new entries start German only (`initial_locales`), fields
+    with `i18n: true` are translated, `build` is duplicated. The main
+    pages are separate entries under "English pages".
   - Template texts: `i18n/de.yaml`, `i18n/en.yaml` (`T "key"`); the
     lightbox gets its labels from data attributes on its script tag, the
     copy buttons from `data-copied`.

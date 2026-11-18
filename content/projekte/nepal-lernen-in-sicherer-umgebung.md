@@ -1,6 +1,5 @@
 ---
 title: Sicheres Lernen in Nepal
-title_en: 'Safe learning in Nepal'
 date: '2019-01-01'
 country: Nepal
 note: Fortführung von 2018

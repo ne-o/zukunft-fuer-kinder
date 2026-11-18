@@ -28,7 +28,7 @@ donate_button:
   label: Spenden
   url: /ihre-hilfe.html
 
-# English pages (below /en/). "News" stays German.
+# English pages (below /en/)
 menu_en:
   - label: Home
     url: /en/
@@ -36,8 +36,8 @@ menu_en:
     url: /en/about-us.html
   - label: Our projects
     url: /en/projects.html
-  - label: News (German)
-    url: /fundraising.html
+  - label: News
+    url: /en/news.html
   - label: How to help
     url: /en/how-to-help.html
 

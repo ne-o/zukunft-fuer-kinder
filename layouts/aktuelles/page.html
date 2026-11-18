@@ -1,25 +1,27 @@
 {{ define "main" }}
 {{- /* One news post (content/aktuelles): category and year above the title,
-   optional photo, text, optional link to the project the proceeds went to. */ -}}
-{{ partial "page-header.html" (dict "page" . "kicker" (delimit (slice .Params.category (.Date.Format "2006")) " · ")) }}
+   optional photo, text, optional link to the project the proceeds went to.
+   English posts (x.en.md) hold only title, summary, alt text and text;
+   everything else comes from the German file, missing text falls back to
+   German. */ -}}
+{{- $de := partial "de-page.html" . -}}
+{{ partial "page-header.html" (dict "page" . "kicker" (delimit (slice (partial "category.html" $de.Params.category) ($de.Date.Format "2006")) " · ")) }}
 <div class="container narrow">
-  {{- with .Params.image }}
+  {{- with $de.Params.image }}
   <figure class="post-figure">
-    {{ partial "img.html" (dict "src" . "alt" $.Params.image_alt "sizes" "(min-width: 50em) 40rem, 100vw" "class" "post-img" "eager" true) }}
+    {{ partial "img.html" (dict "src" . "alt" ($.Params.image_alt | default $de.Params.image_alt) "sizes" "(min-width: 50em) 40rem, 100vw" "class" "post-img" "eager" true) }}
   </figure>
   {{- end }}
-  <div class="prose">
-    {{ .Content }}
-  </div>
-  {{- with .Params.project }}{{ with site.GetPage (printf "/projekte/%s" .) }}
+  {{ partial "translated-content.html" . }}
+  {{- with $de.Params.project }}{{ with (index hugo.Sites 0).GetPage (printf "/projekte/%s" .) }}{{ $p := partial "in-lang.html" . }}
   <aside class="project-bar post-project">
     <div>
-      <p class="kicker">Der Erlös ist für dieses Projekt bestimmt</p>
-      <p class="project-bar-title">{{ .Title }}</p>
+      <p class="kicker">{{ T "proceeds_for" }}</p>
+      <p class="project-bar-title">{{ $p.Title }}</p>
     </div>
-    <a class="btn btn-light btn-small" href="{{ .RelPermalink }}">Zum Projekt</a>
+    <a class="btn btn-light btn-small" href="{{ $p.RelPermalink }}"{{ if ne $p.Language.Lang site.Language.Lang }} hreflang="de"{{ end }}>{{ T "to_project_short" }}</a>
   </aside>
   {{- end }}{{ end }}
-  <p class="back-link"><a href="{{ partial "site-url.html" "/fundraising.html" }}">← Alle Beiträge</a></p>
+  <p class="back-link"><a href="{{ partial "page-url.html" "/fundraising" }}">{{ T "back_to_posts" }}</a></p>
 </div>
 {{ end }}

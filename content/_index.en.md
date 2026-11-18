@@ -51,8 +51,8 @@ cards:
       We thank all supporters who helped us in 2024. Together with Plan
       Deutschland, we make sure that your money is used in a targeted and
       sustainable way.
-    link_label: News (in German)
-    link_url: /fundraising.html
+    link_label: To the news
+    link_url: /en/news.html
   - title: Helping means sharing
     image: images/gespraechsrunde-nepal.jpg
     image_alt: Girls and women talking together in a village in Nepal

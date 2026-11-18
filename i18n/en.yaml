@@ -29,7 +29,7 @@ back_to_projects: ← All projects
 timeline_title: All projects since 2007
 report_one: report
 report_other: reports
-german_only_note: The project pages are available in German only.
+german_only_note: ''
 bank_transfer: Donate by bank transfer
 recipient: Recipient
 iban: IBAN
@@ -61,3 +61,14 @@ country_Pakistan: Pakistan
 country_Philippinen: Philippines
 country_Syrien: Syria
 country_Südsudan: South Sudan
+text_german_only: This text is not yet available in English – here is the German version.
+to_post: Read the post
+back_to_posts: ← All posts
+proceeds_for: The proceeds are intended for this project
+to_project_short: To the project
+# News categories (German name as stored in the post; spaces as _)
+category_Spendenaktion: Fundraiser
+category_Veranstaltung: Event
+category_Aus_der_Stiftung: From the foundation
+category_Projektbericht: Project report
+category_Jahresrückblick: Year in review

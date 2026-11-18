@@ -1,6 +1,5 @@
 ---
 title: Kamalari-Projekt in Nepal
-title_en: 'Kamalari project in Nepal'
 date: '2018-02-01'
 country: Nepal
 note: Fortführung von November 2011, September 2012 und April 2013

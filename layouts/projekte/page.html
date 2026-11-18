@@ -1,11 +1,16 @@
 {{ define "main" }}
-{{ partial "page-header.html" (dict "page" . "kicker" (printf "%s · %s · %s" (T "project") .Params.country (.Date | time.Format "January 2006"))) }}
+{{- /* A project page. English pages (x.en.md) hold only title and text;
+   everything else comes from the German file. Without English text the
+   German text is shown. */ -}}
+{{- $de := partial "de-page.html" . -}}
+{{- $en := eq site.Language.Lang "en" -}}
+{{ partial "page-header.html" (dict "page" . "kicker" (printf "%s · %s · %s" (T "project") (partial "country.html" $de.Params.country) ($de.Date | time.Format "January 2006"))) }}
 <div class="container narrow">
-  {{ with .Params.note }}<p class="notice">{{ . }}</p>{{ end }}
-  {{- if .Params.current }}{{ with hugo.Data.settings.donate_button }}
+  {{ if not $en }}{{ with $de.Params.note }}<p class="notice">{{ . }}</p>{{ end }}{{ end }}
+  {{- if $de.Params.current }}{{ with cond $en hugo.Data.settings.donate_button_en hugo.Data.settings.donate_button }}
   <p class="notice">{{ T "current_project_notice" }} <a href="{{ partial "site-url.html" .url }}">{{ .label }}</a></p>
   {{- end }}{{ end }}
-  {{- with .Params.downloads }}
+  {{- with $de.Params.downloads }}
   <section class="downloads" aria-labelledby="downloads-title">
     <h2 id="downloads-title">{{ T "reports_downloads" }}</h2>
     <ul>
@@ -15,9 +20,7 @@
     </ul>
   </section>
   {{- end }}
-  <div class="prose">
-    {{ .Content }}
-  </div>
+  {{ partial "translated-content.html" . }}
   <p class="back-link"><a href="{{ partial "page-url.html" "/projekte" }}">{{ T "back_to_projects" }}</a></p>
 </div>
 {{ end }}

@@ -53,3 +53,10 @@ image_view: Bildansicht
 close: Schließen
 previous_image: Vorheriges Bild
 next_image: Nächstes Bild
+# Translated pages without text of their own (English only)
+text_german_only: ''
+# News
+to_post: Zum Beitrag
+back_to_posts: ← Alle Beiträge
+proceeds_for: Der Erlös ist für dieses Projekt bestimmt
+to_project_short: Zum Projekt

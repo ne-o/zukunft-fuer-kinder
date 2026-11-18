@@ -1,0 +1,14 @@
+{{- /* Body of a page that may be a translation without text: its own
+   content, else the German content with a note (English texts are
+   optional). Context: the page. */ -}}
+{{- $de := partial "de-page.html" . -}}
+{{- if or (eq . $de) (strings.TrimSpace (string .Content)) }}
+  <div class="prose">
+    {{ .Content }}
+  </div>
+{{- else }}
+  <p class="notice">{{ T "text_german_only" }}</p>
+  <div class="prose" lang="de">
+    {{ $de.Content }}
+  </div>
+{{- end }}
