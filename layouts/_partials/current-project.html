@@ -10,14 +10,14 @@
 {{- $marked := where $projects.RegularPages "Params.current" true -}}
 {{- with index $marked.ByDate.Reverse 0 }}
 {{- $p := partial "in-lang.html" . }}{{ $de := . }}
-{{- $fallback := ne $p.Language.Lang site.Language.Lang }}
+{{- $fallback := partial "is-german-file.html" $p }}
 {{- if eq $.variant "bar" }}
 <div class="project-bar">
   <div>
     <p class="kicker">{{ T "current_project_title" }}</p>
-    <p class="project-bar-title">{{ $p.Title }}</p>
+    <p class="project-bar-title"{{ if $fallback }} lang="de"{{ end }}>{{ $p.Title }}</p>
   </div>
-  {{ if $p.RelPermalink }}<a class="btn btn-light btn-small" href="{{ $p.RelPermalink }}"{{ if $fallback }} hreflang="de"{{ end }}>{{ cond $fallback (T "to_project") (T "more_about_project") }}</a>{{ end }}
+  {{ if $p.RelPermalink }}<a class="btn btn-light btn-small" href="{{ $p.RelPermalink }}">{{ T "more_about_project" }}</a>{{ end }}
 </div>
 {{- else }}
 <section class="current-project" aria-labelledby="current-project-title">
@@ -29,10 +29,10 @@
     </div>
     <div class="feature-body">
       {{ with .Params.country }}<p class="kicker">{{ partial "country.html" . }}</p>{{ end }}
-      <h3 class="feature-title">{{ if $p.RelPermalink }}<a href="{{ $p.RelPermalink }}"{{ if $fallback }} hreflang="de"{{ end }}>{{ $p.Title }}</a>{{ else }}{{ $p.Title }}{{ end }}</h3>
-      {{ with $p.Summary | plainify | strings.TrimSpace }}<p>{{ . | truncate 260 }}</p>{{ end }}
+      <h3 class="feature-title"{{ if $fallback }} lang="de"{{ end }}>{{ if $p.RelPermalink }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ else }}{{ $p.Title }}{{ end }}</h3>
+      {{ with $p.Summary | plainify | strings.TrimSpace }}<p{{ if $fallback }} lang="de"{{ end }}>{{ . | truncate 260 }}</p>{{ end }}
       <div class="btn-row">
-        {{ if $p.RelPermalink }}<a class="btn btn-ghost" href="{{ $p.RelPermalink }}"{{ if $fallback }} hreflang="de"{{ end }}>{{ cond $fallback (T "to_project") (T "more_about_project") }}</a>{{ end }}
+        {{ if $p.RelPermalink }}<a class="btn btn-ghost" href="{{ $p.RelPermalink }}">{{ T "more_about_project" }}</a>{{ end }}
         {{ if $.donate }}{{ with cond $en hugo.Data.settings.donate_button_en hugo.Data.settings.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}{{ end }}
       </div>
     </div>

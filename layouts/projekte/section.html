@@ -19,7 +19,7 @@
     <li>
       <time datetime="{{ .Date | time.Format "2006-01" }}">{{ .Date | time.Format "Jan 2006" }}</time>
       <div>
-        {{ if $p.RelPermalink }}<a href="{{ $p.RelPermalink }}"{{ if ne $p.Language.Lang site.Language.Lang }} hreflang="de" lang="de"{{ end }}>{{ $p.Title }}</a>{{ else }}<span>{{ $p.Title }}</span>{{ end }}
+        {{ if $p.RelPermalink }}<a href="{{ $p.RelPermalink }}"{{ if partial "is-german-file.html" $p }} lang="de"{{ end }}>{{ $p.Title }}</a>{{ else }}<span>{{ $p.Title }}</span>{{ end }}
         <span class="chip">{{ partial "country.html" .Params.country }}</span>
         {{ if not $en }}{{ with .Params.note }}<small>{{ . }}</small>{{ end }}{{ end }}
         {{ with .Params.downloads }}<small class="timeline-docs">{{ len . }} {{ cond (eq (len .) 1) (T "report_one") (T "report_other") }} (PDF)</small>{{ end }}

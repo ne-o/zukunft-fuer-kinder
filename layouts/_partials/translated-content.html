@@ -1,14 +1,14 @@
-{{- /* Body of a page that may be a translation without text: its own
-   content, else the German content with a note (English texts are
-   optional). Context: the page. */ -}}
-{{- $de := partial "de-page.html" . -}}
-{{- if or (eq . $de) (strings.TrimSpace (string .Content)) }}
-  <div class="prose">
-    {{ .Content }}
-  </div>
-{{- else }}
+{{- /* Body of a page that may have no text in this language (an English
+   page built from the German file, or a translation without text): then
+   the German content with a note (English texts are optional).
+   Context: the page. */ -}}
+{{- if partial "is-fallback.html" . }}
   <p class="notice">{{ T "text_german_only" }}</p>
   <div class="prose" lang="de">
-    {{ $de.Content }}
+    {{ (partial "de-page.html" .).Content }}
+  </div>
+{{- else }}
+  <div class="prose">
+    {{ .Content }}
   </div>
 {{- end }}

@@ -1,0 +1,9 @@
+{{- /* true for an English project or news page whose text is German: built
+   from the German file (is-german-file.html) or an English file without
+   text of its own. Shows the German text with a note
+   (translated-content.html); the German page is its canonical URL. */ -}}
+{{- $fb := partial "is-german-file.html" . -}}
+{{- if and (not $fb) .IsPage .File (ne .Language.Lang "de") (in (slice "projekte" "aktuelles") .Section) -}}
+  {{- if not (strings.TrimSpace (string .RawContent)) }}{{ $fb = true }}{{ end -}}
+{{- end -}}
+{{- return $fb -}}

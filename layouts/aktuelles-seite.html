@@ -30,7 +30,7 @@
     <div class="cards news-cards">
       {{- range . }}
       {{- $d := . }}{{ $p := partial "in-lang.html" . }}
-      <article class="card"{{ if ne $p.Language.Lang site.Language.Lang }} lang="de"{{ end }}>
+      <article class="card"{{ if partial "is-german-file.html" $p }} lang="de"{{ end }}>
         {{ with .Params.image }}{{ partial "img.html" (dict "src" . "alt" "" "sizes" "(min-width: 60em) 30vw, (min-width: 40em) 50vw, 100vw" "class" "card-img") }}{{ else }}<div class="img-fallback card-img" aria-hidden="true">{{ partial "category.html" .Params.category }}</div>{{ end }}
         <div class="card-body">
           <p class="kicker">{{ delimit (slice (partial "category.html" $d.Params.category) ($d.Date.Format "2006")) " · " }}</p>

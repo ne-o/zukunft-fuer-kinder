@@ -19,7 +19,7 @@
       <p class="kicker">{{ T "proceeds_for" }}</p>
       <p class="project-bar-title">{{ $p.Title }}</p>
     </div>
-    <a class="btn btn-light btn-small" href="{{ $p.RelPermalink }}"{{ if ne $p.Language.Lang site.Language.Lang }} hreflang="de"{{ end }}>{{ T "to_project_short" }}</a>
+    <a class="btn btn-light btn-small" href="{{ $p.RelPermalink }}">{{ T "to_project_short" }}</a>
   </aside>
   {{- end }}{{ end }}
   <p class="back-link"><a href="{{ partial "page-url.html" "/fundraising" }}">{{ T "back_to_posts" }}</a></p>

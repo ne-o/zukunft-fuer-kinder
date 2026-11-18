@@ -1,0 +1,9 @@
+{{- /* true for an English project or news page built from the German file
+   (hugo.toml, sites.matrix): no English file, so title, summary and text
+   are German - marked lang="de" in headers and lists. */ -}}
+{{- $de := false -}}
+{{- if and .IsPage .File (ne .Language.Lang "de") (in (slice "projekte" "aktuelles") .Section) -}}
+  {{- $g := partial "de-page.html" . -}}
+  {{- if and $g.File (eq .File.Filename $g.File.Filename) }}{{ $de = true }}{{ end -}}
+{{- end -}}
+{{- return $de -}}

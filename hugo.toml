@@ -99,6 +99,19 @@ parent_page = "/nepal-besuch-2016.html"
 [cascade.target]
 path = "/reise-2016/**"
 
+# Projects and news posts exist in English even without an English file:
+# the German file is also built for /en/ (English navigation, German text
+# with a note - layouts/_partials/is-fallback.html). An English file
+# (x.en.md) replaces it there. Targets German files only, otherwise the
+# English file would also be built as the German page.
+[[cascade]]
+[cascade.sites.matrix]
+languages = ["de", "en"]
+[cascade.target]
+path = "{/projekte/**,/aktuelles/**}"
+[cascade.target.sites.matrix]
+languages = ["de"]
+
 [[cascade]]
 [cascade.build]
 render = "never"

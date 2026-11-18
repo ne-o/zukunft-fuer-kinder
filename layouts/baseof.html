@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} – {{ site.Title }}{{ end }}</title>
   <meta name="description" content="{{ .Description | default site.Params.description }}">
-  {{- range .AllTranslations }}
+  {{- if partial "is-fallback.html" . }}
+  {{- /* English page showing German content: the German page is the original */}}
+  <link rel="canonical" href="{{ (partial "de-page.html" .).Permalink }}">
+  {{- else }}
+  {{- range .AllTranslations }}{{ if not (partial "is-fallback.html" .) }}
   <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}">
+  {{- end }}{{ end }}
   {{- end }}
   {{- if ne site.BaseURL site.Params.production_url }}
   <meta name="robots" content="noindex">

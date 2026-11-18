@@ -151,13 +151,19 @@ Run it by hand: Actions -> Pages -> Run workflow.
     posts: the English file (`x.en.md`) holds only the translated fields
     (title, text; posts also `lead`, `image_alt`) - date, country, photo,
     downloads, category, project link stay in the German file and the
-    templates read them there (`_partials/de-page.html`). Lists (project
-    timeline, news cards, current project, a post's project box) always
-    start from the German pages and take the English version where one
-    exists (`_partials/in-lang.html`, looked up by path - pages with
-    `build.render: never` aren't in `.Translations`), else the German one,
-    marked `lang="de"`. An English page without text shows the German text
-    with a note (`_partials/translated-content.html`). On the Aktuelles
+    templates read them there (`_partials/de-page.html`). Every German
+    project and post is also built for `/en/` (cascade with
+    `sites.matrix` in `hugo.toml`, targeting the German files only), so
+    each has an English page and the language switch never lands
+    elsewhere; an English file replaces that page. Such a page, or an
+    English file without text, shows the German text with a note
+    (`_partials/translated-content.html`) and names the German page as
+    canonical; `_partials/is-german-file.html` / `is-fallback.html` tell
+    these cases apart, German titles are marked `lang="de"`. Lists (project
+    timeline, news cards, current project, a post's project box) start from
+    the German pages and take the page in the current language
+    (`_partials/in-lang.html`, looked up by path - pages with
+    `build.render: never` aren't in `.Translations`). On the Aktuelles
     page, empty English `events` or page text fall back to the German ones.
     Country names and news categories are translated in `i18n/en.yaml`
     (`country_<German name>`, `category_<German name, spaces as _>`).

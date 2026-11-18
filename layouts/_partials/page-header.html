@@ -3,10 +3,11 @@
    Front matter may set kicker (small line above) and headline (instead of
    the title as the big heading). */ -}}
 {{- $p := .page -}}
+{{- $fb := and $p.File (partial "is-german-file.html" $p) -}}
 <header class="page-header">
   <div class="container{{ if not .wide }} narrow{{ end }}">
     {{ with .kicker | default $p.Params.kicker }}<p class="kicker">{{ . }}</p>{{ end }}
-    <h1>{{ $p.Params.headline | default $p.Title }}</h1>
-    {{ with $p.Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
+    <h1{{ if $fb }} lang="de"{{ end }}>{{ $p.Params.headline | default $p.Title }}</h1>
+    {{ with $p.Params.lead }}<p class="lead"{{ if $fb }} lang="de"{{ end }}>{{ . }}</p>{{ end }}
   </div>
 </header>
