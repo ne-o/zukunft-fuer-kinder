@@ -5,7 +5,7 @@
 {{- with resources.Get .Destination -}}
   {{- /* Same spec as the largest srcset entry in img.html - one file. */ -}}
   {{- $full := .Resize (printf "%dx webp q78" .Width) -}}
-  <a class="zoom" href="{{ $full.RelPermalink }}" aria-label="{{ with $.PlainText }}{{ . }} – {{ end }}Bild vergrößern">
+  <a class="zoom" href="{{ $full.RelPermalink }}" aria-label="{{ with $.PlainText }}{{ . }} – {{ end }}{{ T "zoom_image" }}">
   {{- partial "img.html" (dict "src" $.Destination "alt" $.PlainText "sizes" "(min-width: 50em) 40rem, 100vw") -}}
   </a>
 {{- else -}}

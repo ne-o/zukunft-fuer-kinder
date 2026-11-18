@@ -1,5 +1,6 @@
 ---
 title: Soforthilfe bei der Dürrekatastrophe im Südsudan
+title_en: 'Emergency aid during the drought in South Sudan'
 date: '2017-03-01'
 country: Südsudan
 downloads:

@@ -1,5 +1,6 @@
 ---
 title: Stipendiatenprojekt in Ghana
+title_en: 'Scholarship project in Ghana'
 date: '2010-12-01'
 country: Ghana
 ---

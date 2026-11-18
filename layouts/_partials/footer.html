@@ -1,4 +1,5 @@
 {{- $s := hugo.Data.settings -}}
+{{- $en := eq site.Language.Lang "en" -}}
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
@@ -7,34 +8,34 @@
       {{- end }}{{ else }}
       <p class="footer-brand">{{ $s.site_name_small }} „{{ $s.site_name }}“</p>
       {{- end }}
-      {{ with $s.footer_note }}<p class="footer-note">{{ . }}</p>{{ end }}
+      {{ with cond $en $s.footer_note_en $s.footer_note }}<p class="footer-note">{{ . }}</p>{{ end }}
     </div>
     <nav aria-labelledby="footer-quick">
-      <h2 class="footer-title" id="footer-quick">Schnellzugriff</h2>
+      <h2 class="footer-title" id="footer-quick">{{ T "quick_links" }}</h2>
       <ul class="footer-links">
-        {{- range $s.menu }}
+        {{- range cond $en $s.menu_en $s.menu }}
         <li><a href="{{ partial "site-url.html" .url }}">{{ .label }}</a></li>
         {{- end }}
       </ul>
     </nav>
     {{- with $s.contact }}
     <div>
-      <h2 class="footer-title">Kontakt</h2>
+      <h2 class="footer-title">{{ T "contact" }}</h2>
       <address>
         {{ .name }}<br>{{ .street }}<br>{{ .city }}<br>
         {{- with .email }}
         <a href="mailto:{{ . }}">{{ . }}</a>
         {{- end }}
       </address>
-      <a class="btn btn-outline-light btn-small" href="{{ partial "site-url.html" "/kontakt.html" }}">Kontakt aufnehmen</a>
+      <a class="btn btn-outline-light btn-small" href="{{ partial "page-url.html" "/kontakt" }}">{{ T "get_in_touch" }}</a>
     </div>
     {{- end }}
   </div>
   <div class="container footer-bottom">
     <span>© {{ now.Year }} {{ $s.site_name_small }} „{{ $s.site_name }}“</span>
-    <nav aria-label="Rechtliches">
-      <a href="{{ partial "site-url.html" "/impressum.html" }}">Impressum</a>
-      <a href="{{ partial "site-url.html" "/datenschutz.html" }}">Datenschutz</a>
+    <nav aria-label="{{ T "legal" }}">
+      <a href="{{ partial "page-url.html" "/impressum" }}">{{ T "legal_notice" }}</a>
+      <a href="{{ partial "page-url.html" "/datenschutz" }}">{{ T "privacy" }}</a>
       {{ partial "lang-switch.html" . }}
     </nav>
   </div>

@@ -1,0 +1,5 @@
+{{- /* URL of a page in the current language, else the German page.
+   Usage: href="{{ partial "page-url.html" "/kontakt" }}" (content path,
+   without .html). */ -}}
+{{- $p := site.GetPage . | default ((index hugo.Sites 0).GetPage .) -}}
+{{- return (cond (ne $p nil) $p.RelPermalink "") -}}

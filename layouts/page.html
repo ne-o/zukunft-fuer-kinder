@@ -6,7 +6,7 @@
     {{ .Content }}
   </div>
   {{ with .Params.parent_page }}
-  <p class="back-link"><a href="{{ partial "site-url.html" . }}">← Zurück zum Reisebericht</a></p>
+  <p class="back-link"><a href="{{ partial "site-url.html" . }}">{{ T "back_to_trip" }}</a></p>
   {{ end }}
 </div>
 {{ end }}

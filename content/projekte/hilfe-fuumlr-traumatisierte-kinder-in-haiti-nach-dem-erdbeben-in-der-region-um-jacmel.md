@@ -1,5 +1,6 @@
 ---
 title: Hilfe für traumatisierte Kinder in Haiti nach dem Erdbeben in der Region um Jacmel
+title_en: 'Help for traumatised children in the Jacmel region of Haiti after the earthquake'
 date: '2010-03-01'
 country: Haiti
 ---

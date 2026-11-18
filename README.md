@@ -22,7 +22,10 @@ Sveltia CMS, configured in `static/admin/config.yml`:
 - **Projekte**: one entry per project; new ones appear in the timeline on
   `/projekte.html` automatically, sorted by date. Reports (PDF) are added
   in the project's "Berichte und Downloads" list.
-- **Weitere Seiten**, **Nepal-Besuch 2016 (Unterseiten)**, **English pages**.
+- **Aktuelles (Beiträge)**, **Weitere Seiten**, **Nepal-Besuch 2016
+  (Unterseiten)**.
+- **English pages**: the English versions of the main pages, with the same
+  fields as the German ones.
 
 Login: "Sign in with token" - each editor is a collaborator on this repo
 and uses their own **classic** GitHub token: fine-grained tokens can't be
@@ -134,7 +137,32 @@ Run it by hand: Actions -> Pages -> Run workflow.
     the cards, then the page text with the older news); each post has its
     own page (`aktuelles/page.html`). The section has no list page.
   - `reise-2016/` - subpages of the 2016 trip report.
-  - `english/` - English pages.
+- Languages: German at the root, English below `/en/` (Hugo multilingual,
+  `[languages]` in `hugo.toml`). An English page is the German file with
+  `.en` before `.md` (`wir.md` -> `wir.en.md`); Hugo pairs them, so the
+  `Deutsch | English` switch (`_partials/lang-switch.html`) goes to the
+  matching page, or to the other language's start page. English addresses
+  (`/en/about-us.html` etc.) are set by `[[cascade]]` entries with
+  `sites.matrix` (a `url` isn't prefixed with `/en/` automatically).
+  Translated: start page, Über uns, So können Sie helfen, Kontakt, Vision,
+  project overview intro, Impressum, Datenschutz. Projects, news and the
+  2016 trip exist in German only; the English project overview
+  (`projekte/section.html`) lists the German projects with `title_en` and
+  English country names (`i18n/en.yaml`, `country_<German name>`), and
+  `_partials/current-project.html` reads the projects from the German site.
+  - Template texts: `i18n/de.yaml`, `i18n/en.yaml` (`T "key"`); the
+    lightbox gets its labels from data attributes on its script tag, the
+    copy buttons from `data-copied`.
+  - Settings with an English counterpart: `menu_en`, `donate_button_en`,
+    `footer_note_en`, `bank.note_en`, `costs.text_en`.
+  - `_partials/page-url.html` - a page's URL in the current language,
+    else the German one (footer, 404, buttons).
+  - Old English addresses (`/home-engl.html`, `/wir-engl.html`,
+    `/projekte-engl.html`, `/unsere-vision-engl.html`) forward via small
+    HTML files in `static/` (relative targets, so they work below a path
+    too); Hugo aliases on English pages would land below `/en/`.
+  - The sitemap is an index (`/sitemap.xml` -> `/de/sitemap.xml`,
+    `/en/sitemap.xml`); `tools/check_links.py` follows such an index.
 - URLs: every page is `/<file name>.html`, also for pages in subfolders
   (`[permalinks.page]` in `hugo.toml`). Published URLs must keep working:
   when a page moves or is removed, add an alias.

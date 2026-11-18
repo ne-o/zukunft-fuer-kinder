@@ -1,5 +1,6 @@
 ---
 title: Sicheres Lernen in abgelegenen Bergregionen in Nepal
+title_en: 'Safe learning in remote mountain regions of Nepal'
 date: '2020-12-01'
 country: Nepal
 note: Fortführung von April 2020

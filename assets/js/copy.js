@@ -7,10 +7,11 @@
   document.querySelectorAll('.copy-btn').forEach(function (b) {
     b.hidden = false;
     b.addEventListener('click', function () {
+      var label = b.textContent;
       navigator.clipboard.writeText(b.dataset.copy).then(function () {
-        b.textContent = 'Kopiert';
+        b.textContent = b.dataset.copied || label;
         b.classList.add('copied');
-        setTimeout(function () { b.textContent = 'Kopieren'; b.classList.remove('copied'); }, 2000);
+        setTimeout(function () { b.textContent = label; b.classList.remove('copied'); }, 2000);
       });
     });
   });

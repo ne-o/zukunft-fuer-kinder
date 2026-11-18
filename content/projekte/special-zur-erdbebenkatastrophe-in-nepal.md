@@ -1,5 +1,6 @@
 ---
 title: Soforthilfe nach dem schweren Erdbeben in Nepal
+title_en: 'Emergency aid after the severe earthquake in Nepal'
 date: '2015-04-01'
 country: Nepal
 ---

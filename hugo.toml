@@ -2,9 +2,15 @@
 # (--baseURL); builds for any other address get "noindex" (baseof.html), so
 # a test address like ne-o.github.io never ends up in search engines.
 baseURL = "https://www.zukunft-fuer-kinder.net/"
-title = "Schönebeck-Stiftung „Zukunft für Kinder“"
-locale = "de-DE"
+
+# Two languages: German at the root, English below /en/. An English page is
+# the German file with ".en" before ".md" (wir.md -> wir.en.md); Hugo pairs
+# them, so the Deutsch | English switch goes to the matching page. Pages
+# without an English file (projects, news, trip report) exist in German only.
+# Template texts: i18n/de.yaml, i18n/en.yaml.
 defaultContentLanguage = "de"
+# No /de/ -> / redirect page (with uglyURLs it lands in a stray folder).
+disableDefaultLanguageRedirect = true
 
 # Page URLs end in .html (/<slug>.html instead of /<slug>/) - published
 # addresses must keep working, see tools/check_links.py.
@@ -13,9 +19,24 @@ uglyURLs = true
 enableRobotsTXT = true
 disableKinds = ["taxonomy", "term", "rss"]
 
+[languages.de]
+weight = 1
+label = "Deutsch"
+locale = "de-DE"
+title = "Schönebeck-Stiftung „Zukunft für Kinder“"
+[languages.de.params]
+description = "Die Schönebeck-Stiftung „Zukunft für Kinder“ fördert seit 2007 Bildung, Gesundheit und Kinderrechte – vor allem in Nepal, gemeinsam mit Plan International."
+
+[languages.en]
+weight = 2
+label = "English"
+locale = "en-GB"
+title = "Schönebeck-Stiftung „Zukunft für Kinder“"
+[languages.en.params]
+description = "Since 2007, the Schönebeck-Stiftung „Zukunft für Kinder“ (Future for Children) has supported education, health and children's rights – mainly in Nepal, together with Plan International."
+
 [params]
 production_url = "https://www.zukunft-fuer-kinder.net/"
-description = "Die Schönebeck-Stiftung „Zukunft für Kinder“ fördert seit 2007 Bildung, Gesundheit und Kinderrechte – vor allem in Nepal, gemeinsam mit Plan International."
 
 [imaging]
 resampleFilter = "Lanczos"
@@ -26,16 +47,16 @@ unsafe = false
 # A line break in the editor is a line break on the page.
 hardWraps = true
 
-# Projects, news posts, trip report pages and English pages are served at the root
+# Projects, news posts and trip report pages are served at the root
 # (/<file name>.html) although they live in content subfolders.
 [permalinks.page]
 projekte = "/:contentbasename"
 aktuelles = "/:contentbasename"
 reise-2016 = "/:contentbasename"
-english = "/:contentbasename"
 
 # Structural settings per page live here, not in the pages' front matter, so
-# saving a page in the CMS can never drop them.
+# saving a page in the CMS can never drop them. A target without
+# sites.matrix applies to both languages.
 [[cascade]]
 layout = "kontakt"
 [cascade.target]
@@ -56,6 +77,8 @@ url = "/projekte.html"
 aliases = ["/laufende-und-abgeschlossene-projekte.html"]
 [cascade.target]
 path = "/projekte"
+[cascade.target.sites.matrix]
+languages = ["de"]
 
 [[cascade]]
 layout = "aktuelles-seite"
@@ -69,13 +92,59 @@ parent_page = "/nepal-besuch-2016.html"
 path = "/reise-2016/**"
 
 [[cascade]]
-page_lang = "en"
-[cascade.target]
-path = "/english/**"
-
-[[cascade]]
 [cascade.build]
 render = "never"
 [cascade.target]
-path = "{/reise-2016,/english,/aktuelles}"
+path = "{/reise-2016,/aktuelles}"
 kind = "section"
+
+# English addresses. ("url" is not prefixed with /en/ automatically.) The
+# old English addresses (/home-engl.html etc.) forward from static/.
+[[cascade]]
+url = "/en/about-us.html"
+[cascade.target]
+path = "/wir"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/how-to-help.html"
+[cascade.target]
+path = "/ihre-hilfe"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/projects.html"
+[cascade.target]
+path = "/projekte"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/vision.html"
+[cascade.target]
+path = "/unsere-vision"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/contact.html"
+[cascade.target]
+path = "/kontakt"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/legal-notice.html"
+[cascade.target]
+path = "/impressum"
+[cascade.target.sites.matrix]
+languages = ["en"]
+
+[[cascade]]
+url = "/en/privacy.html"
+[cascade.target]
+path = "/datenschutz"
+[cascade.target.sites.matrix]
+languages = ["en"]

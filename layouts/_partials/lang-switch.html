@@ -1,8 +1,12 @@
-{{- /* Deutsch | English - the English pages are a separate small set
-   (content/english, page_lang "en"), so the switch goes to their start. */ -}}
-{{- $en := eq .Params.page_lang "en" -}}
+{{- /* Deutsch | English: goes to the same page in the other language, or to
+   that language's start page when the page exists in one language only. */ -}}
+{{- $page := . -}}
 <p class="lang-switch">
-  <a href="{{ partial "site-url.html" "/" }}" lang="de"{{ if not $en }} aria-current="true"{{ end }}>Deutsch</a>
-  <span aria-hidden="true">|</span>
-  <a href="{{ partial "site-url.html" "/home-engl.html" }}" lang="en"{{ if $en }} aria-current="true"{{ end }}>English</a>
+  {{- range $i, $site := hugo.Sites }}
+  {{- if $i }} <span aria-hidden="true">|</span>{{ end }}
+  {{- $target := $site.Home }}
+  {{- range $page.Translations }}{{ if eq .Lang $site.Language.Lang }}{{ $target = . }}{{ end }}{{ end }}
+  {{- $current := eq $site.Language.Lang site.Language.Lang }}
+  <a href="{{ if $current }}{{ $page.RelPermalink }}{{ else }}{{ $target.RelPermalink }}{{ end }}" lang="{{ $site.Language.Lang }}"{{ if $current }} aria-current="true"{{ end }}>{{ $site.Language.Label }}</a>
+  {{- end }}
 </p>

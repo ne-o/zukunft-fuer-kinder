@@ -1,5 +1,6 @@
 ---
 title: Unterstützung beim Aufbau von Schulen in der Region Bara/Nepal
+title_en: 'Helping to build schools in the Bara region, Nepal'
 date: '2009-07-01'
 country: Nepal
 ---

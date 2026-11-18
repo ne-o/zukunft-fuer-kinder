@@ -1,7 +1,8 @@
 {{- $s := hugo.Data.settings -}}
+{{- $en := eq site.Language.Lang "en" -}}
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="{{ partial "site-url.html" "/" }}" aria-label="{{ $s.site_name }} – Startseite">
+    <a class="brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ $s.site_name }} – {{ T "home" }}">
       {{- with $s.logo }}{{ with resources.Get . }}{{ $l := .Resize "x128 webp" }}
       <img class="brand-logo" src="{{ $l.RelPermalink }}" alt="" height="64" width="{{ div (mul $l.Width 64) $l.Height }}">
       {{- end }}{{ else }}
@@ -15,19 +16,19 @@
       {{- end }}
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="hauptmenue">
-      <span class="nav-toggle-bars" aria-hidden="true"></span><span class="nav-toggle-label">Menü</span>
+      <span class="nav-toggle-bars" aria-hidden="true"></span><span class="nav-toggle-label">{{ T "menu" }}</span>
     </button>
-    <nav id="hauptmenue" class="site-nav" aria-label="Hauptmenü">
+    <nav id="hauptmenue" class="site-nav" aria-label="{{ T "main_menu" }}">
       <ul>
-        {{- range $s.menu }}
+        {{- range cond $en $s.menu_en $s.menu }}
         {{- $u := partial "site-url.html" .url }}
-        <li><a href="{{ $u }}"{{ if or (eq $u $.RelPermalink) (and $.IsHome (eq .url "/")) }} aria-current="page"{{ end }}>{{ .label }}</a></li>
+        <li><a href="{{ $u }}"{{ if or (eq $u $.RelPermalink) (and $.IsHome (eq $u site.Home.RelPermalink)) }} aria-current="page"{{ end }}>{{ .label }}</a></li>
         {{- end }}
       </ul>
       {{ partial "lang-switch.html" . }}
     </nav>
     {{- /* outside the menu: stays visible when the menu collapses */}}
-    {{- with $s.donate_button }}
+    {{- with cond $en $s.donate_button_en $s.donate_button }}
     <a class="btn btn-cta btn-small header-donate" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>
     {{- end }}
   </div>

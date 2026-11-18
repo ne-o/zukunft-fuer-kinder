@@ -5,12 +5,12 @@
   {{- with hugo.Data.settings.contact }}
   <div class="contact-grid">
     <div class="info-card">
-      <h2>Per Post</h2>
+      <h2>{{ T "by_post" }}</h2>
       <address>{{ .name }}<br>{{ .street }}<br>{{ .city }}</address>
     </div>
     {{- with .email }}
     <div class="info-card">
-      <h2>Per E-Mail</h2>
+      <h2>{{ T "by_email" }}</h2>
       <p><a href="mailto:{{ . }}">{{ . }}</a></p>
     </div>
     {{- end }}

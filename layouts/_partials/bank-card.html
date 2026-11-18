@@ -1,27 +1,28 @@
 {{- /* Donation account from the settings - one place for start page and
    "So können Sie helfen". Copy buttons appear only where the browser can
    copy (assets/js/copy.js); the IBAN is copied without spaces. */ -}}
+{{- $en := eq site.Language.Lang "en" -}}
 {{- with hugo.Data.settings.bank }}
 <div class="bank">
 <dl class="bank-card">
   {{- range $r := slice
-      (dict "label" "Empfänger" "value" .recipient "copy" .recipient)
-      (dict "label" "IBAN" "value" .iban "copy" (replace .iban " " "") "mono" true)
-      (dict "label" "BIC" "value" .bic "copy" .bic "mono" true)
-      (dict "label" "Bank" "value" .bank_name)
-      (dict "label" "Verwendungszweck" "value" .reference "copy" .reference) }}
+      (dict "label" (T "recipient") "value" .recipient "copy" .recipient)
+      (dict "label" (T "iban") "value" .iban "copy" (replace .iban " " "") "mono" true)
+      (dict "label" (T "bic") "value" .bic "copy" .bic "mono" true)
+      (dict "label" (T "bank") "value" .bank_name)
+      (dict "label" (T "reference") "value" .reference "copy" .reference) }}
   {{- if .value }}
   <div class="bank-row">
     <dt>{{ .label }}</dt>
     <dd{{ if .mono }} class="mono"{{ end }}>{{ .value }}</dd>
     {{- with .copy }}
-    <button type="button" class="copy-btn" data-copy="{{ . }}" aria-label="{{ $r.label }} kopieren" hidden>Kopieren</button>
+    <button type="button" class="copy-btn" data-copy="{{ . }}" aria-label="{{ T "copy_label" (dict "label" $r.label) }}" data-copied="{{ T "copied" }}" hidden>{{ T "copy" }}</button>
     {{- end }}
   </div>
   {{- end }}
   {{- end }}
 </dl>
-{{- with .note }}<p class="bank-note">{{ . }}</p>{{ end }}
+{{- with cond $en (.note_en | default .note) .note }}<p class="bank-note">{{ . }}</p>{{ end }}
 </div>
 {{- $js := resources.Get "js/copy.js" | minify | fingerprint }}
 <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>

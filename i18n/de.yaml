@@ -1,0 +1,55 @@
+# Texts in the templates (layouts/), German. Same keys in en.yaml.
+skip_to_content: Zum Inhalt springen
+menu: Menü
+main_menu: Hauptmenü
+home: Startseite
+quick_links: Schnellzugriff
+contact: Kontakt
+get_in_touch: Kontakt aufnehmen
+legal: Rechtliches
+legal_notice: Impressum
+privacy: Datenschutz
+by_post: Per Post
+by_email: Per E-Mail
+facts_label: Die Stiftung in Zahlen
+zoom_image: Bild vergrößern
+back_to_trip: ← Zurück zum Reisebericht
+# Error page
+error_404: Fehler 404
+not_found_title: Diese Seite gibt es nicht (mehr).
+not_found_text: 'Vielleicht wurde sie umbenannt oder entfernt. Hier geht es weiter:'
+to_home: Zur Startseite
+all_projects: Alle Projekte
+# Projects
+current_project_title: Für dieses Projekt sammeln wir gerade
+current_project_notice: Für dieses Projekt sammeln wir gerade.
+more_about_project: Mehr zum Projekt
+to_project: Zum Projekt
+project: Projekt
+reports_downloads: Berichte und Downloads
+back_to_projects: ← Alle Projekte
+timeline_title: Alle Projekte seit 2007
+report_one: Bericht
+report_other: Berichte
+german_only_note: ''
+# Donations
+bank_transfer: Per Überweisung spenden
+recipient: Empfänger
+iban: IBAN
+bic: BIC
+bank: Bank
+reference: Verwendungszweck
+copy: Kopieren
+copy_label: '{{ .label }} kopieren'
+copied: Kopiert
+costs_title: Unsere Kosten – offen gelegt
+fixed_costs: Fixkosten pro Jahr
+fee: Gebühr auf Spenden und Erträge
+fee_example: Bei 100 € Spende beträgt die Gebühr {{ .fee }} €.
+fixed_separate: Die jährlichen Fixkosten der Stiftung fallen separat an.
+more_info: Mehr erfahren
+# Lightbox (assets/js/lightbox.js reads these from data attributes)
+image_view: Bildansicht
+close: Schließen
+previous_image: Vorheriges Bild
+next_image: Nächstes Bild

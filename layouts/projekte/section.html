@@ -1,24 +1,28 @@
 {{ define "main" }}
-{{- /* Project overview (/projekte.html): the project marked as current,
-   timeline of all projects (from their front matter dates), then the intro
-   text. Entries with build.render "never" appear in the timeline without a
-   link. */ -}}
-{{- $all := .RegularPages.ByDate.Reverse -}}
+{{- /* Project overview (/projekte.html, /en/projects.html): the project
+   marked as current, timeline of all projects (from their front matter
+   dates), then the intro text. Entries with build.render "never" appear in
+   the timeline without a link. Projects exist in German only; the English
+   overview lists them with title_en and links to the German pages. */ -}}
+{{- $en := eq site.Language.Lang "en" -}}
+{{- $all := ((index hugo.Sites 0).GetPage "/projekte").RegularPages.ByDate.Reverse -}}
 {{ partial "page-header.html" (dict "page" .) }}
 
 {{ partial "current-project.html" (dict "donate" true) }}
 
 <section class="container narrow timeline-section">
-  <h2>Alle Projekte seit 2007</h2>
+  <h2>{{ T "timeline_title" }}</h2>
+  {{ with T "german_only_note" }}<p class="notice">{{ . }}</p>{{ end }}
   <ol class="timeline">
     {{- range $all }}
+    {{- $title := cond $en (.Params.title_en | default .Title) .Title }}
     <li>
       <time datetime="{{ .Date | time.Format "2006-01" }}">{{ .Date | time.Format "Jan 2006" }}</time>
       <div>
-        {{ if .RelPermalink }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ else }}<span>{{ .Title }}</span>{{ end }}
-        <span class="chip">{{ .Params.country }}</span>
-        {{ with .Params.note }}<small>{{ . }}</small>{{ end }}
-        {{ with .Params.downloads }}<small class="timeline-docs">{{ len . }} {{ cond (eq (len .) 1) "Bericht" "Berichte" }} (PDF)</small>{{ end }}
+        {{ if .RelPermalink }}<a href="{{ .RelPermalink }}"{{ if $en }} hreflang="de"{{ end }}>{{ $title }}</a>{{ else }}<span>{{ $title }}</span>{{ end }}
+        <span class="chip">{{ partial "country.html" .Params.country }}</span>
+        {{ if not $en }}{{ with .Params.note }}<small>{{ . }}</small>{{ end }}{{ end }}
+        {{ with .Params.downloads }}<small class="timeline-docs">{{ len . }} {{ cond (eq (len .) 1) (T "report_one") (T "report_other") }} (PDF)</small>{{ end }}
       </div>
     </li>
     {{- end }}

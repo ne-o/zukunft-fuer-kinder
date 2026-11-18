@@ -8,7 +8,7 @@
   {{ with .Params.donate_kicker }}<p class="kicker">{{ . }}</p>{{ end }}
   {{ with .Params.donate_heading }}<h2>{{ . }}</h2>{{ end }}
   <div class="donate-card">
-    <h3>{{ .Params.donate_title | default "Per Überweisung spenden" }}</h3>
+    <h3>{{ .Params.donate_title | default (T "bank_transfer") }}</h3>
     {{ partial "bank-card.html" . }}
   </div>
   {{ partial "current-project.html" (dict "variant" "bar") }}
@@ -42,13 +42,13 @@
   {{ with $.Params.active_title }}<h2>{{ . }}</h2>{{ end }}
   <div class="tiles">
     {{- range . }}
-    <div class="tile"><h3>{{ .title }}</h3><p>{{ .text }}</p>{{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default "Mehr erfahren" }}</a>{{ end }}</div>
+    <div class="tile"><h3>{{ .title }}</h3><p>{{ .text }}</p>{{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default (T "more_info") }}</a>{{ end }}</div>
     {{- end }}
   </div>
   {{- with $.Params.active_question }}
   <div class="ask-row">
     <p>{{ . }}</p>
-    <a class="btn btn-cta" href="{{ partial "site-url.html" "/kontakt.html" }}">Kontakt aufnehmen</a>
+    <a class="btn btn-cta" href="{{ partial "page-url.html" "/kontakt" }}">{{ T "get_in_touch" }}</a>
   </div>
   {{- end }}
 </section>

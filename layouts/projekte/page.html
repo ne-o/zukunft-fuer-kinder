@@ -1,13 +1,13 @@
 {{ define "main" }}
-{{ partial "page-header.html" (dict "page" . "kicker" (printf "Projekt · %s · %s" .Params.country (.Date | time.Format "January 2006"))) }}
+{{ partial "page-header.html" (dict "page" . "kicker" (printf "%s · %s · %s" (T "project") .Params.country (.Date | time.Format "January 2006"))) }}
 <div class="container narrow">
   {{ with .Params.note }}<p class="notice">{{ . }}</p>{{ end }}
   {{- if .Params.current }}{{ with hugo.Data.settings.donate_button }}
-  <p class="notice">Für dieses Projekt sammeln wir gerade. <a href="{{ partial "site-url.html" .url }}">{{ .label }}</a></p>
+  <p class="notice">{{ T "current_project_notice" }} <a href="{{ partial "site-url.html" .url }}">{{ .label }}</a></p>
   {{- end }}{{ end }}
   {{- with .Params.downloads }}
   <section class="downloads" aria-labelledby="downloads-title">
-    <h2 id="downloads-title">Berichte und Downloads</h2>
+    <h2 id="downloads-title">{{ T "reports_downloads" }}</h2>
     <ul>
       {{- range . }}
       <li>{{ partial "file-link.html" (dict "url" .file "label" .label) }}</li>
@@ -18,6 +18,6 @@
   <div class="prose">
     {{ .Content }}
   </div>
-  <p class="back-link"><a href="{{ partial "site-url.html" "/projekte.html" }}">← Alle Projekte</a></p>
+  <p class="back-link"><a href="{{ partial "page-url.html" "/projekte" }}">{{ T "back_to_projects" }}</a></p>
 </div>
 {{ end }}

@@ -1,5 +1,5 @@
-{{- /* A number in German notation: 3 -> "3", 2.5 -> "2,5", 428.4 -> "428,40"
-   with decimals 2. Context: dict "n" (number), "decimals" (optional: fixed
+{{- /* A number in the page language's notation: 3 -> "3", 2.5 -> "2,5"
+   (English "2.5"), 428.4 -> "428,40" with decimals 2. Context: dict "n" (number), "decimals" (optional: fixed
    number of decimals; default: as few as needed, at most 2). */ -}}
 {{- $n := float .n -}}
 {{- $d := .decimals -}}

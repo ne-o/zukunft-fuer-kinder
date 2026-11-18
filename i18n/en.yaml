@@ -1,0 +1,63 @@
+# Texts in the templates (layouts/), English. Same keys in de.yaml.
+skip_to_content: Skip to content
+menu: Menu
+main_menu: Main menu
+home: Home
+quick_links: Quick links
+contact: Contact
+get_in_touch: Get in touch
+legal: Legal
+legal_notice: Legal notice
+privacy: Privacy policy
+by_post: By post
+by_email: By email
+facts_label: The foundation in numbers
+zoom_image: Enlarge image
+back_to_trip: ← Back to the trip report
+error_404: Error 404
+not_found_title: This page doesn't exist (any more).
+not_found_text: 'It may have been renamed or removed. Continue here:'
+to_home: To the home page
+all_projects: All projects
+current_project_title: This is the project we are raising funds for right now
+current_project_notice: This is the project we are raising funds for right now.
+more_about_project: More about the project
+to_project: Project page (in German)
+project: Project
+reports_downloads: Reports and downloads
+back_to_projects: ← All projects
+timeline_title: All projects since 2007
+report_one: report
+report_other: reports
+german_only_note: The project pages are available in German only.
+bank_transfer: Donate by bank transfer
+recipient: Recipient
+iban: IBAN
+bic: BIC
+bank: Bank
+reference: Reference
+copy: Copy
+copy_label: 'Copy {{ .label }}'
+copied: Copied
+costs_title: Our costs – openly shown
+fixed_costs: fixed costs per year
+fee: fee on donations and income
+fee_example: On a €100 donation, the fee is €{{ .fee }}.
+fixed_separate: The foundation's annual fixed costs are incurred separately.
+more_info: Find out more
+image_view: Image view
+close: Close
+previous_image: Previous image
+next_image: Next image
+# Country names on the projects page (German name as stored in the project)
+country_Bangladesch: Bangladesh
+country_Ghana: Ghana
+country_Haiti: Haiti
+country_Kambodscha: Cambodia
+country_Malawi: Malawi
+country_Nepal: Nepal
+country_Ostafrika: East Africa
+country_Pakistan: Pakistan
+country_Philippinen: Philippines
+country_Syrien: Syria
+country_Südsudan: South Sudan

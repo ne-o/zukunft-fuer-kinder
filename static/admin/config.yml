@@ -99,6 +99,19 @@ collections:
             fields:
               - { label: Text, name: label, widget: string }
               - { label: Link, name: url, widget: string }
+          - label: Menü (englische Seiten)
+            name: menu_en
+            widget: list
+            summary: "{{label}}"
+            fields:
+              - { label: Text, name: label, widget: string }
+              - { label: Link, name: url, widget: string, hint: "z. B. /en/projects.html" }
+          - label: Spenden-Knopf (englische Seiten)
+            name: donate_button_en
+            widget: object
+            fields:
+              - { label: Text, name: label, widget: string }
+              - { label: Link, name: url, widget: string }
           - label: Kontakt
             name: contact
             widget: object
@@ -117,6 +130,7 @@ collections:
               - { label: Bank, name: bank_name, widget: string }
               - { label: Verwendungszweck, name: reference, widget: string }
               - { label: Hinweis unter den Kontodaten, name: note, widget: string, required: false }
+              - { label: Hinweis unter den Kontodaten (Englisch), name: note_en, widget: string, required: false }
           - label: Kosten der Stiftung (Seite „So können Sie helfen“)
             name: costs
             widget: object
@@ -125,7 +139,9 @@ collections:
               - { label: "Fixkosten pro Jahr (Euro)", name: fixed_per_year, widget: number, value_type: float, required: false, hint: "z. B. 428.40 (mit Punkt)" }
               - { label: "Gebühr auf Spenden und Erträge (Prozent)", name: fee_percent, widget: number, value_type: float, required: false, hint: "z. B. 3 – das Beispiel „Bei 100 € Spende …“ wird daraus berechnet." }
               - { label: Erklärung, name: text, widget: text, required: false }
+              - { label: Erklärung (Englisch), name: text_en, widget: text, required: false }
           - { label: Hinweis in der Fußzeile, name: footer_note, widget: text, required: false }
+          - { label: Hinweis in der Fußzeile (Englisch), name: footer_note_en, widget: text, required: false }
 
   - name: pages
     label: Startseite
@@ -134,7 +150,7 @@ collections:
       - name: home
         label: Startseite
         file: content/_index.md
-        fields:
+        fields: &home_fields
           - { label: Titel (intern), name: title, widget: hidden }
           - { label: Beschreibung für Suchmaschinen, name: description, widget: text }
           - label: Kopfbereich
@@ -233,6 +249,7 @@ collections:
       der Startseite, der Projektübersicht und der Spendenseite groß gezeigt.
     fields:
       - { label: Titel, name: title, widget: string }
+      - { label: Titel (Englisch), name: title_en, widget: string, required: false, hint: "Für die englische Projektübersicht. Leer = deutscher Titel. Die Projektseite selbst gibt es nur auf Deutsch." }
       - label: Aktuelles Projekt
         name: current
         widget: boolean
@@ -345,7 +362,7 @@ collections:
       - name: wir
         label: Über uns
         file: content/wir.md
-        fields:
+        fields: &about_fields
           - { label: Titel (Menü, Browser-Tab), name: title, widget: string }
           - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
           - { label: Überschrift, name: headline, widget: string, required: false, hint: "Leer = Titel" }
@@ -376,7 +393,7 @@ collections:
       - name: hilfe
         label: So können Sie helfen
         file: content/ihre-hilfe.md
-        fields:
+        fields: &help_fields
           - { label: Titel, name: title, widget: string }
           - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
           - { label: Einleitungssatz, name: lead, widget: text, required: false }
@@ -435,11 +452,19 @@ collections:
 
   - name: english
     label: English pages
+    label_singular: English page
     icon: translate
-    folder: content/english
-    media_folder: /assets/images
-    public_folder: images
-    create: false
-    fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Text, name: body, widget: markdown }
+    description: >-
+      Die englischen Fassungen der Hauptseiten (Adressen unter /en/). Gleiche
+      Felder wie die deutsche Seite. Projekte, Beiträge und der Reisebericht
+      gibt es nur auf Deutsch. Links auf englische Seiten beginnen mit /en/
+      (z. B. /en/how-to-help.html), Links ohne /en/ führen zur deutschen Seite.
+    files:
+      - { name: home, label: Home (Startseite), file: content/_index.en.md, fields: *home_fields }
+      - { name: about, label: About us (Über uns), file: content/wir.en.md, fields: *about_fields }
+      - { name: help, label: How to help (So können Sie helfen), file: content/ihre-hilfe.en.md, fields: *help_fields }
+      - { name: projects, label: "Projects (Einleitung der Projektübersicht)", file: content/projekte/_index.en.md, fields: *page_fields }
+      - { name: vision, label: Our vision (Unsere Vision), file: content/unsere-vision.en.md, fields: *page_fields }
+      - { name: contact, label: Contact (Kontakt), file: content/kontakt.en.md, fields: *page_fields }
+      - { name: legal, label: Legal notice (Impressum), file: content/impressum.en.md, fields: *page_fields }
+      - { name: privacy, label: Privacy policy (Datenschutz), file: content/datenschutz.en.md, fields: *page_fields }

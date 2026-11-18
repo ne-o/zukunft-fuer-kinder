@@ -74,7 +74,7 @@ The sections of the website are listed on the left:
 | **Aktuelles (Beiträge)** (news posts) | one entry per news item (fundraiser, event, project report …) |
 | **Weitere Seiten** (other pages) | vision, about us, how to help, contact, legal notice, privacy etc. |
 | **Nepal-Besuch 2016 (Unterseiten)** | the pages of the 2016 trip report |
-| **English pages** | the English pages |
+| **English pages** | the English versions of the main pages (same fields as in German) |
 
 ![Project list](img/02-projekte.webp)
 
@@ -180,6 +180,12 @@ The **Text** field works like a simple word processor:
 - **Weitere Seiten -> Aktuelles**: the upcoming events and, below them,
   the older news. When an event is over, delete it there and create a
   post about it.
+- **English pages**: the English pages have the same fields as the
+  German ones. When you change a German main page, please remember the
+  English version too. Links to English pages start with `/en/` (e.g.
+  `/en/how-to-help.html`). Projects and news exist in German only; for the
+  English project overview, each project has the field **Titel
+  (Englisch)** (English title).
 - **Einstellungen -> Website-Einstellungen** applies to the **whole**
   website: colour scheme, fonts, logo, menu, donate button, contact and
   bank account. The colour schemes are checked for readability. Please

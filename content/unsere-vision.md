@@ -2,8 +2,6 @@
 title: Unsere Vision
 ---
 
-English translation [here](/unsere-vision-engl.html). Navigation leads back to German page - if avialable select English translation then once again.
-
 **_Unsere Vision: Kinder haben eine Zukunft!_**
 
 Gerade die Schwächsten unserer Gesellschaft leiden weltweit am meisten unter Armut, Krankheit, Krieg und fehlender sozialer Anerkennung. Eine hohe Analphabetisierungsrate, Kinderarbeit bis hin zur Prostitution und geringe Chancen auf eine vernünftige Ausbildung sind die Konsequenzen daraus. Soll das ein Leben mit Zukunft sein?

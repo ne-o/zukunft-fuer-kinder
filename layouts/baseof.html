@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="{{ .Params.page_lang | default site.Language.Locale }}">
+<html lang="{{ site.Language.Locale }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} – {{ site.Title }}{{ end }}</title>
   <meta name="description" content="{{ .Description | default site.Params.description }}">
+  {{- range .AllTranslations }}
+  <link rel="alternate" hreflang="{{ .Language.Locale }}" href="{{ .Permalink }}">
+  {{- end }}
   {{- if ne site.BaseURL site.Params.production_url }}
   <meta name="robots" content="noindex">
   {{- end }}
@@ -13,7 +16,7 @@
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 </head>
 <body>
-  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+  <a class="skip-link" href="#inhalt">{{ T "skip_to_content" }}</a>
   {{ partial "header.html" . }}
   <main id="inhalt">
     {{ block "main" . }}{{ end }}
@@ -21,7 +24,7 @@
   {{ partial "footer.html" . }}
   {{- if strings.Contains .Content `class="zoom"` }}
   {{- $js := resources.Get "js/lightbox.js" | minify | fingerprint }}
-  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" data-label="{{ T "image_view" }}" data-close="{{ T "close" }}" data-prev="{{ T "previous_image" }}" data-next="{{ T "next_image" }}" defer></script>
   {{- end }}
 </body>
 </html>

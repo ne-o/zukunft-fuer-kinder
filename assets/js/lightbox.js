@@ -3,6 +3,8 @@
 // Arrow keys and swipe navigate; Esc, the close button or a click next to
 // the image close it. Without JavaScript the links simply open the image.
 (function () {
+  // Labels in the page's language, from the script tag (baseof.html).
+  var t = (document.currentScript && document.currentScript.dataset) || {};
   var links = [].slice.call(document.querySelectorAll('a.zoom'));
   if (!links.length || !window.HTMLDialogElement) return;
 
@@ -11,13 +13,13 @@
   };
   var d = document.createElement('dialog');
   d.className = 'lightbox' + (links.length === 1 ? ' single' : '');
-  d.setAttribute('aria-label', 'Bildansicht');
+  d.setAttribute('aria-label', t.label || 'Bildansicht');
   d.innerHTML =
     '<figure><img alt=""><figcaption></figcaption></figure>' +
     '<p class="lb-count"></p>' +
-    '<button type="button" class="lb-close" aria-label="Schließen">' + icon('M6 6l12 12M18 6L6 18') + '</button>' +
-    '<button type="button" class="lb-prev" aria-label="Vorheriges Bild">' + icon('M15 5l-7 7 7 7') + '</button>' +
-    '<button type="button" class="lb-next" aria-label="Nächstes Bild">' + icon('M9 5l7 7-7 7') + '</button>';
+    '<button type="button" class="lb-close" aria-label="' + (t.close || 'Schließen') + '">' + icon('M6 6l12 12M18 6L6 18') + '</button>' +
+    '<button type="button" class="lb-prev" aria-label="' + (t.prev || 'Vorheriges Bild') + '">' + icon('M15 5l-7 7 7 7') + '</button>' +
+    '<button type="button" class="lb-next" aria-label="' + (t.next || 'Nächstes Bild') + '">' + icon('M9 5l7 7-7 7') + '</button>';
   document.body.appendChild(d);
   var img = d.querySelector('img'), cap = d.querySelector('figcaption'),
       count = d.querySelector('.lb-count'), i = 0;

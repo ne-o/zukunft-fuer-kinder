@@ -1,5 +1,6 @@
 ---
 title: Soforthilfe für Pakistan nach der verheerenden Flutkatastrophe
+title_en: 'Emergency aid for Pakistan after the devastating floods'
 date: '2010-09-01'
 country: Pakistan
 ---

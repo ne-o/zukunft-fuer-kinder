@@ -28,6 +28,23 @@ donate_button:
   label: Spenden
   url: /ihre-hilfe.html
 
+# English pages (below /en/). "News" stays German.
+menu_en:
+  - label: Home
+    url: /en/
+  - label: About us
+    url: /en/about-us.html
+  - label: Our projects
+    url: /en/projects.html
+  - label: News (German)
+    url: /fundraising.html
+  - label: How to help
+    url: /en/how-to-help.html
+
+donate_button_en:
+  label: Donate
+  url: /en/how-to-help.html
+
 costs:
   fixed_per_year: 428.40
   fee_percent: 3
@@ -35,6 +52,10 @@ costs:
     Die Kosten fallen für die Verwaltung und Betreuung der Stiftung und der
     Projekte an. Wir arbeiten ehrenamtlich und tragen die Kosten für
     Spendenbescheinigungen und Porto selbst.
+  text_en: >-
+    These costs cover the administration and support of the foundation and
+    its projects. We work on a voluntary basis and cover the costs of
+    donation receipts and postage ourselves.
 
 contact:
   name: Schönebeck Stiftung – Zukunft für Kinder
@@ -49,7 +70,11 @@ bank:
   bank_name: SozialBank AG
   reference: Spende Schönebeck Stiftung - Zukunft für Kinder
   note: Das Spendenkonto ist unserer Stiftung zugeordnet. Der Empfängername lautet „Stiftung Hilfe mit Plan“.
+  note_en: This donation account is assigned to our foundation. The recipient name is “Stiftung Hilfe mit Plan”.
 
 footer_note: >-
   Treuhänderin der Stiftung ist die Stiftung Hilfe mit Plan.
   Partner unserer Projekte ist Plan Deutschland.
+footer_note_en: >-
+  The foundation is held in trust by the Stiftung Hilfe mit Plan.
+  Plan Deutschland is the partner for our projects.

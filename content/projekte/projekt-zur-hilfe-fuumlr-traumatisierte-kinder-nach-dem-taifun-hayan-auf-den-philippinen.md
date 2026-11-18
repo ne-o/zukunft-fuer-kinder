@@ -1,5 +1,6 @@
 ---
 title: Hilfe für traumatisierte Kinder nach dem Taifun Haiyan auf den Philippinen
+title_en: 'Help for traumatised children after Typhoon Haiyan in the Philippines'
 date: '2014-01-01'
 country: Philippinen
 image: images/archiv/952275.webp

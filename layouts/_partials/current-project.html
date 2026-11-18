@@ -1,33 +1,38 @@
 {{- /* The project marked "Aktuelles Projekt" in the CMS (front matter
    current: true), shown on the start page, the project overview and the
    donation page. Several marked: the newest wins. None marked: nothing.
+   Projects exist in German only: English pages show title_en and the
+   country, and link to the German project page.
    Context: dict "donate" (bool: donate button next to the link),
    "variant" ("bar": slim dark bar instead of the large card). */ -}}
-{{- $marked := where (site.GetPage "/projekte").RegularPages "Params.current" true -}}
+{{- $en := eq site.Language.Lang "en" -}}
+{{- $projects := (index hugo.Sites 0).GetPage "/projekte" -}}
+{{- $marked := where $projects.RegularPages "Params.current" true -}}
 {{- with index $marked.ByDate.Reverse 0 }}
+{{- $title := cond $en (.Params.title_en | default .Title) .Title }}
 {{- if eq $.variant "bar" }}
 <div class="project-bar">
   <div>
-    <p class="kicker">Für dieses Projekt sammeln wir gerade</p>
-    <p class="project-bar-title">{{ .Title }}</p>
+    <p class="kicker">{{ T "current_project_title" }}</p>
+    <p class="project-bar-title">{{ $title }}</p>
   </div>
-  {{ if .RelPermalink }}<a class="btn btn-light btn-small" href="{{ .RelPermalink }}">Mehr zum Projekt</a>{{ end }}
+  {{ if .RelPermalink }}<a class="btn btn-light btn-small" href="{{ .RelPermalink }}"{{ if $en }} hreflang="de"{{ end }}>{{ cond $en (T "to_project") (T "more_about_project") }}</a>{{ end }}
 </div>
 {{- else }}
 <section class="current-project" aria-labelledby="current-project-title">
   <div class="container">
-  <h2 class="section-title" id="current-project-title">Für dieses Projekt sammeln wir gerade</h2>
+  <h2 class="section-title" id="current-project-title">{{ T "current_project_title" }}</h2>
   <article class="feature">
     <div class="feature-media">
-      {{ if .Params.image }}{{ partial "img.html" (dict "src" .Params.image "alt" "" "sizes" "(min-width: 60em) 36rem, 100vw" "class" "feature-img") }}{{ else }}<div class="img-fallback">{{ .Params.country }}</div>{{ end }}
+      {{ if .Params.image }}{{ partial "img.html" (dict "src" .Params.image "alt" "" "sizes" "(min-width: 60em) 36rem, 100vw" "class" "feature-img") }}{{ else }}<div class="img-fallback">{{ partial "country.html" .Params.country }}</div>{{ end }}
     </div>
     <div class="feature-body">
-      {{ with .Params.country }}<p class="kicker">{{ . }}</p>{{ end }}
-      <h3 class="feature-title">{{ if .RelPermalink }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ else }}{{ .Title }}{{ end }}</h3>
-      <p>{{ .Summary | plainify | truncate 260 }}</p>
+      {{ with .Params.country }}<p class="kicker">{{ partial "country.html" . }}</p>{{ end }}
+      <h3 class="feature-title">{{ if .RelPermalink }}<a href="{{ .RelPermalink }}"{{ if $en }} hreflang="de"{{ end }}>{{ $title }}</a>{{ else }}{{ $title }}{{ end }}</h3>
+      {{ if not $en }}<p>{{ .Summary | plainify | truncate 260 }}</p>{{ end }}
       <div class="btn-row">
-        {{ if .RelPermalink }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">Zum Projekt</a>{{ end }}
-        {{ if $.donate }}{{ with hugo.Data.settings.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}{{ end }}
+        {{ if .RelPermalink }}<a class="btn btn-ghost" href="{{ .RelPermalink }}"{{ if $en }} hreflang="de"{{ end }}>{{ T "to_project" }}</a>{{ end }}
+        {{ if $.donate }}{{ with cond $en hugo.Data.settings.donate_button_en hugo.Data.settings.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}{{ end }}
       </div>
     </div>
   </article>

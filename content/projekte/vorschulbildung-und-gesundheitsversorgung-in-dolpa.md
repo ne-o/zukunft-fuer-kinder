@@ -1,5 +1,6 @@
 ---
 title: Vorschulbildung und Gesundheitsvesorgung in Dolpa / Nepal
+title_en: 'Pre-school education and health care in Dolpa, Nepal'
 date: '2017-03-01'
 country: Nepal
 note: Fortführung von August 2016

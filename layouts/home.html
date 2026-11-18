@@ -36,7 +36,7 @@
 {{- end }}
 
 {{- with .Params.facts }}
-<section class="facts" aria-label="Die Stiftung in Zahlen">
+<section class="facts" aria-label="{{ T "facts_label" }}">
   <div class="container facts-grid">
     {{- range . }}
     <div class="fact">
@@ -99,8 +99,8 @@
     </div>
     {{ with .question }}<p class="help-question">{{ . }}</p>{{ end }}
     <div class="btn-row">
-      {{ with $s.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}
-      <a class="btn btn-ghost" href="{{ partial "site-url.html" "/kontakt.html" }}">Kontakt aufnehmen</a>
+      {{ with cond (eq site.Language.Lang "en") $s.donate_button_en $s.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}
+      <a class="btn btn-ghost" href="{{ partial "page-url.html" "/kontakt" }}">{{ T "get_in_touch" }}</a>
     </div>
   </div>
 </section>

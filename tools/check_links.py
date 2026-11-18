@@ -11,9 +11,11 @@
    live one, fetched before deploying) still exists in the new build. Only a warning, no exit code:
    an editor may delete a page on purpose - add an alias in hugo.toml to
    keep its URL working. Sitemap URLs below --base are taken relative to
-   it, others relative to the build's root.
+   it, others relative to the build's root. A sitemap index (Hugo writes
+   one for the two languages) is followed: its sitemaps are fetched from
+   the published site.
 In GitHub Actions both are printed as annotations."""
-import os, re, sys, urllib.parse
+import os, re, sys, urllib.parse, urllib.request
 from html.parser import HTMLParser
 
 args = sys.argv[1:]
@@ -54,8 +56,17 @@ for d, _, files in os.walk(root):
                 bad += 1
                 print(f"::error title=Broken link::{base}: {r}" if gh else f"BROKEN {base}: {r}")
 print(f"{pages} pages checked, {bad} broken internal references")
+def sitemap_urls(text):
+    locs = re.findall(r"<loc>\s*(https?://[^<\s]+)\s*</loc>", text)
+    if "<sitemapindex" not in text:
+        return [urllib.parse.urlparse(u).path for u in locs]
+    out = []
+    for u in locs:
+        out += sitemap_urls(urllib.request.urlopen(u, timeout=30).read().decode("utf-8"))
+    return out
+
 for sm in args[1:]:
-    olds = re.findall(r"<loc>https?://[^/]+(/[^<]*)</loc>", open(sm).read())
+    olds = sitemap_urls(open(sm, encoding="utf-8").read())
     olds = [u[len(prefix) - 1:] if u.startswith(prefix) else u for u in olds]
     missing = sorted({u for u in olds if not exists(u)})
     print(f"{os.path.basename(sm)}: {len(olds)} published URLs, {len(missing)} missing")

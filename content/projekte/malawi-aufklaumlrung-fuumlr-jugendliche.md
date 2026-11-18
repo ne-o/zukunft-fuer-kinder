@@ -1,5 +1,6 @@
 ---
 title: Aufklärung für Jugendliche in Malawi
+title_en: 'Sex education for young people in Malawi'
 date: '2019-01-01'
 country: Malawi
 downloads:

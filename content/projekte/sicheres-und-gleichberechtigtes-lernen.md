@@ -1,5 +1,6 @@
 ---
 title: Sicheres und gleichberechtigtes Lernen für Mädchen und Jungen in Nepal
+title_en: 'Safe and equal learning for girls and boys in Nepal'
 date: '2019-12-01'
 country: Nepal
 downloads:

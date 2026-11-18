@@ -1,5 +1,6 @@
 ---
 title: Zukunftsperspektiven für junge Frauen in Nepal
+title_en: 'Prospects for young women in Nepal'
 date: '2021-01-01'
 country: Nepal
 image: images/archiv/details-zukunftsperspektiven-f-r-junge-frauen.webp

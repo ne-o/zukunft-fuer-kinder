@@ -1,12 +1,12 @@
 {{ define "main" }}
 <header class="page-header">
   <div class="container narrow">
-    <p class="kicker">Fehler 404</p>
-    <h1>Diese Seite gibt es nicht (mehr).</h1>
-    <p class="lead">Vielleicht wurde sie umbenannt oder entfernt. Hier geht es weiter:</p>
+    <p class="kicker">{{ T "error_404" }}</p>
+    <h1>{{ T "not_found_title" }}</h1>
+    <p class="lead">{{ T "not_found_text" }}</p>
     <div class="btn-row">
-      <a class="btn btn-primary" href="{{ partial "site-url.html" "/" }}">Zur Startseite</a>
-      <a class="btn btn-ghost" href="{{ partial "site-url.html" "/projekte.html" }}">Alle Projekte</a>
+      <a class="btn btn-primary" href="{{ site.Home.RelPermalink }}">{{ T "to_home" }}</a>
+      <a class="btn btn-ghost" href="{{ partial "page-url.html" "/projekte" }}">{{ T "all_projects" }}</a>
     </div>
   </div>
 </header>
