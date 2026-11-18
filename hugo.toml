@@ -26,10 +26,11 @@ unsafe = false
 # A line break in the editor is a line break on the page.
 hardWraps = true
 
-# Projects, trip report pages and English pages are served at the root
+# Projects, news posts, trip report pages and English pages are served at the root
 # (/<file name>.html) although they live in content subfolders.
 [permalinks.page]
 projekte = "/:contentbasename"
+aktuelles = "/:contentbasename"
 reise-2016 = "/:contentbasename"
 english = "/:contentbasename"
 
@@ -39,6 +40,11 @@ english = "/:contentbasename"
 layout = "kontakt"
 [cascade.target]
 path = "/kontakt"
+
+[[cascade]]
+layout = "ueber-uns"
+[cascade.target]
+path = "/wir"
 
 [[cascade]]
 layout = "spenden"
@@ -52,6 +58,7 @@ aliases = ["/laufende-und-abgeschlossene-projekte.html"]
 path = "/projekte"
 
 [[cascade]]
+layout = "aktuelles-seite"
 aliases = ["/wir-auf-amazon-smile.html"]  # removed page, forwards here
 [cascade.target]
 path = "/fundraising"
@@ -70,5 +77,5 @@ path = "/english/**"
 [cascade.build]
 render = "never"
 [cascade.target]
-path = "{/reise-2016,/english}"
+path = "{/reise-2016,/english,/aktuelles}"
 kind = "section"

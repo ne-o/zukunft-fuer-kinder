@@ -71,6 +71,7 @@ The sections of the website are listed on the left:
 | **Einstellungen** (settings) | colours, fonts, logo, menu, contact, bank account - for the whole website |
 | **Startseite** (start page) | texts, photos, facts and cards of the start page |
 | **Projekte** (projects) | one entry per project, with reports (PDF) |
+| **Aktuelles (Beiträge)** (news posts) | one entry per news item (fundraiser, event, project report …) |
 | **Weitere Seiten** (other pages) | vision, about us, how to help, contact, legal notice, privacy etc. |
 | **Nepal-Besuch 2016 (Unterseiten)** | the pages of the 2016 trip report |
 | **English pages** | the English pages |
@@ -97,7 +98,11 @@ minutes**. Then reload the page (F5).
 A project's fields:
 - **Titel** (title), **Land** (country) - shown in the project overview.
 - **Datum** (date) - sets the order in the timeline on the projects
-  page. The newest project is highlighted there.
+  page.
+- **Aktuelles Projekt** (current project) - tick it for the project we are
+  raising money for right now: it is shown large on the start page, the
+  projects page and the donation page. Tick only one; if several are
+  ticked, the newest counts.
 - **Hinweis** (note) - a short addition, e.g. "Fortführung von September
   2022".
 - **Vorschaubild** (preview image) - photo for the project overview.
@@ -165,8 +170,16 @@ The **Text** field works like a simple word processor:
 
 ## 8. Other pages and settings
 - **Startseite** and **Weitere Seiten** work just like a project. New
-  general pages can't be created here - only new projects. Ask the
-  person who looks after the website for that.
+  general pages can't be created here - only new projects and news
+  posts. Ask the person who looks after the website for that.
+- **Aktuelles (Beiträge)** (news posts): **New** creates a news item.
+  Each post appears as a card on the "Aktuelles" page (newest first) and
+  gets a page of its own. The **Kurzfassung** (summary) is shown on the
+  card; **Erlös für Projekt** (proceeds for project) optionally links the
+  project the money went to. Without a photo, a coloured box is shown.
+- **Weitere Seiten -> Aktuelles**: the upcoming events and, below them,
+  the older news. When an event is over, delete it there and create a
+  post about it.
 - **Einstellungen -> Website-Einstellungen** applies to the **whole**
   website: colour scheme, fonts, logo, menu, donate button, contact and
   bank account. The colour schemes are checked for readability. Please

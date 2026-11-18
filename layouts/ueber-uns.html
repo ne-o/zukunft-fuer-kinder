@@ -1,0 +1,32 @@
+{{ define "main" }}
+{{- /* Über uns: text sections, each with an optional photo
+   (image_size: "side" = narrow beside the text, "half" = half the width,
+   "full" = full width below the text; image_left puts a side/half photo on
+   the left; tone "band" = full-width coloured background; anchor = id for
+   links like /wir.html#<anchor>). */ -}}
+{{ partial "page-header.html" (dict "page" . "wide" true) }}
+{{- range $s := .Params.sections }}
+<section class="about-section{{ if eq $s.tone "band" }} about-band{{ end }}"{{ with $s.anchor }} id="{{ . }}"{{ end }}>
+  <div class="container about-grid size-{{ $s.image_size | default "side" }}{{ if $s.image_left }} image-left{{ end }}{{ if not $s.image }} no-image{{ end }}">
+    <div class="about-text">
+      {{ with $s.title }}<h2>{{ . }}</h2>{{ end }}
+      <div class="prose">{{ $.RenderString (dict "display" "block") ($s.text | default "") }}</div>
+    </div>
+    {{- with $s.image }}
+    <figure class="about-figure">
+      {{ partial "img.html" (dict "src" . "alt" $s.image_alt "sizes" (cond (eq $s.image_size "full") "(min-width: 80em) 76rem, 100vw" (cond (eq $s.image_size "half") "(min-width: 60em) 38rem, 100vw" "(min-width: 60em) 28rem, 100vw")) "class" "about-img") }}
+      {{ with $s.caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+    </figure>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+{{- with .Params.button }}
+<div class="container about-cta">
+  <a class="btn btn-ghost" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>
+</div>
+{{- end }}
+{{- with .Content }}
+<div class="container narrow"><div class="prose">{{ . }}</div></div>
+{{- end }}
+{{ end }}

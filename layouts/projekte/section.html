@@ -1,25 +1,12 @@
 {{ define "main" }}
-{{- /* Project overview (/projekte.html): newest project, timeline of all
-   projects (from their front matter dates), then the intro text. Entries
-   with build.render "never" appear in the timeline without a link. */ -}}
+{{- /* Project overview (/projekte.html): the project marked as current,
+   timeline of all projects (from their front matter dates), then the intro
+   text. Entries with build.render "never" appear in the timeline without a
+   link. */ -}}
 {{- $all := .RegularPages.ByDate.Reverse -}}
 {{ partial "page-header.html" (dict "page" .) }}
 
-{{- with index (where $all "RelPermalink" "!=" "") 0 }}
-<section class="container">
-  <article class="feature">
-    <div class="feature-media">
-      {{ if .Params.image }}{{ partial "img.html" (dict "src" .Params.image "alt" "" "sizes" "(min-width: 60em) 36rem, 100vw" "class" "feature-img") }}{{ else }}<div class="img-fallback">{{ .Params.country }}</div>{{ end }}
-    </div>
-    <div class="feature-body">
-      <p class="kicker">Unser aktuelles Projekt · seit {{ .Date | time.Format "January 2006" }}</p>
-      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-      <p>{{ .Summary | plainify | truncate 260 }}</p>
-      <a class="btn btn-primary" href="{{ .RelPermalink }}">Zum Projekt</a>
-    </div>
-  </article>
-</section>
-{{- end }}
+{{ partial "current-project.html" (dict "donate" true) }}
 
 <section class="container narrow timeline-section">
   <h2>Alle Projekte seit 2007</h2>

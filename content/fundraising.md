@@ -1,5 +1,22 @@
 ---
-title: Fundraising
+title: Aktuelles
+kicker: Aktuelles
+headline: Aktuelles aus der Stiftung
+lead: Was ansteht und wie Menschen unsere Stiftung unterstützen.
+events_title: Bevorstehende Veranstaltungen
+events:
+  - title: Untermeitinger Christkindlmarkt
+    when: Termin folgt
+    text: Die Stiftung ist wieder auf dem Untermeitinger Christkindlmarkt dabei. Termin und Programm folgen.
+    link_label: Die Tombola 2024
+    link_url: /tombola-christkindlmarkt-2024.html
+  - title: Spendenlauf in Bruckmühl
+    when: Für 2027 angedacht
+    text: Strecke, Anmeldung und Ablauf geben wir hier bekannt, sobald sie feststehen.
+    link_label: ''
+    link_url: ''
+posts_title: Beiträge
+archive_title: Aus den vergangenen Jahren
 ---
 
 _**Enorme Unterstützung im vergangenen Jahr**_

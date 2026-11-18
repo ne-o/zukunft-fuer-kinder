@@ -62,6 +62,7 @@ collections:
             options:
               - { label: "Sonne (warmes Rot, Safran)", value: sonne }
               - { label: "Himmel (Blau, Gelb)", value: himmel }
+              - { label: "Petrol (Petrol, Terrakotta, Sand)", value: petrol }
               - { label: "Wald (Grün, Orange)", value: wald }
           - label: Schrift für Überschriften
             name: heading_font
@@ -69,13 +70,20 @@ collections:
             options: &fonts
               - { label: "Nunito (freundlich, rund)", value: nunito }
               - { label: "Lora (klassisch, mit Serifen)", value: lora }
+              - { label: "Fraunces (warm, mit Serifen)", value: fraunces }
+              - { label: "Figtree (klar, modern)", value: figtree }
               - { label: "Systemschrift (schlicht)", value: system }
           - { label: Schrift für Fließtext, name: body_font, widget: select, options: *fonts }
           - label: Logo
             name: logo
             widget: image
             required: false
-            hint: Leer lassen, um das Text-Logo zu verwenden.
+            hint: "Mit Schriftzug, oben links. Leer lassen, um das Text-Logo zu verwenden."
+          - label: Logo, helle Fassung (Fußzeile)
+            name: logo_light
+            widget: image
+            required: false
+            hint: "Für den dunklen Hintergrund der Fußzeile. Leer = Name als Text."
           - { label: "Name (klein, oben)", name: site_name_small, widget: string }
           - { label: Name (groß), name: site_name, widget: string }
           - label: Menü
@@ -108,6 +116,15 @@ collections:
               - { label: BIC, name: bic, widget: string }
               - { label: Bank, name: bank_name, widget: string }
               - { label: Verwendungszweck, name: reference, widget: string }
+              - { label: Hinweis unter den Kontodaten, name: note, widget: string, required: false }
+          - label: Kosten der Stiftung (Seite „So können Sie helfen“)
+            name: costs
+            widget: object
+            hint: Beide Zahlen leer = der Kasten erscheint nicht.
+            fields:
+              - { label: "Fixkosten pro Jahr (Euro)", name: fixed_per_year, widget: number, value_type: float, required: false, hint: "z. B. 428.40 (mit Punkt)" }
+              - { label: "Gebühr auf Spenden und Erträge (Prozent)", name: fee_percent, widget: number, value_type: float, required: false, hint: "z. B. 3 – das Beispiel „Bei 100 € Spende …“ wird daraus berechnet." }
+              - { label: Erklärung, name: text, widget: text, required: false }
           - { label: Hinweis in der Fußzeile, name: footer_note, widget: text, required: false }
 
   - name: pages
@@ -129,7 +146,6 @@ collections:
               - { label: Text, name: text, widget: text }
               - { label: Foto, name: image, widget: image }
               - { label: Bildbeschreibung (für Blinde und Suchmaschinen), name: image_alt, widget: string }
-              - { label: Hinweis auf dem Foto, name: badge, widget: string, required: false }
               - label: Knöpfe
                 name: buttons
                 widget: list
@@ -173,14 +189,22 @@ collections:
             fields:
               - { label: Titel, name: title, widget: string }
               - { label: Text, name: text, widget: text }
-          - label: Spendenbereich
-            name: donate
+          - label: Bereich „So können Sie helfen“
+            name: help
             widget: object
-            hint: Die Kontodaten kommen aus den Website-Einstellungen.
+            required: false
             fields:
               - { label: Überschrift, name: title, widget: string }
-              - { label: Text, name: text, widget: text }
-              - { label: Fußnote, name: footnote, widget: text, required: false }
+              - label: Kacheln
+                name: tiles
+                widget: list
+                max: 3
+                summary: "{{title}}"
+                fields:
+                  - { label: Symbol, name: icon, widget: select, options: [{ label: Herz, value: heart }, { label: Geschenk, value: gift }, { label: Menschen, value: people }] }
+                  - { label: Titel, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+              - { label: Satz vor den Knöpfen, name: question, widget: string, required: false, hint: "Danach folgen die Knöpfe „Spenden“ und „Kontakt aufnehmen“." }
           - { label: Überschrift „Aus unserer Arbeit“, name: more_title, widget: string }
           - label: Links „Aus unserer Arbeit“
             name: more
@@ -205,9 +229,16 @@ collections:
     summary: "{{date | date('MMM YYYY')}} · {{title}} ({{country}})"
     description: >-
       Jedes Projekt erscheint automatisch in der Zeitleiste auf der Projektseite,
-      sortiert nach Datum. Das neueste Projekt wird dort groß hervorgehoben.
+      sortiert nach Datum. Das als „Aktuelles Projekt“ markierte Projekt wird auf
+      der Startseite, der Projektübersicht und der Spendenseite groß gezeigt.
     fields:
       - { label: Titel, name: title, widget: string }
+      - label: Aktuelles Projekt
+        name: current
+        widget: boolean
+        required: false
+        default: false
+        hint: "Für dieses Projekt sammeln wir gerade. Nur bei einem Projekt anhaken – sind es mehrere, zählt das neueste."
       - label: Datum (Projektbeginn bzw. letzte Förderung)
         name: date
         widget: datetime
@@ -240,6 +271,44 @@ collections:
           - { label: Seite erzeugen, name: render, widget: select, options: [always, never], default: always }
       - { label: Text, name: body, widget: markdown }
 
+  - name: aktuelles
+    label: Aktuelles (Beiträge)
+    label_singular: Beitrag
+    icon: newspaper
+    folder: content/aktuelles
+    media_folder: /assets/images
+    public_folder: images
+    path: "{{slug}}"
+    slug: "{{fields.title}}"
+    create: true
+    sortable_fields: { fields: [date, title], default: { field: date, direction: descending } }
+    summary: "{{date | date('MMM YYYY')}} · {{title}}"
+    description: >-
+      Jeder Beitrag erscheint als Kachel auf der Seite „Aktuelles“, der neueste
+      zuerst, und bekommt eine eigene Seite.
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - label: Datum
+        name: date
+        widget: datetime
+        time_format: false
+        format: YYYY-MM-DD
+        hint: Bestimmt die Reihenfolge; angezeigt wird nur das Jahr.
+      - { label: Art, name: category, widget: select, options: [Spendenaktion, Veranstaltung, Aus der Stiftung, Projektbericht, Jahresrückblick] }
+      - { label: Kurzfassung, name: lead, widget: text, hint: "Ein bis zwei Sätze – steht auf der Kachel und oben im Beitrag." }
+      - { label: Foto, name: image, widget: image, required: false, hint: "Leer = farbige Fläche mit der Art des Beitrags." }
+      - { label: Bildbeschreibung (für Blinde und Suchmaschinen), name: image_alt, widget: string, required: false }
+      - label: Erlös für Projekt
+        name: project
+        widget: relation
+        collection: projekte
+        value_field: "{{slug}}"
+        search_fields: [title]
+        display_fields: [title]
+        required: false
+        hint: Optional – erscheint als Kasten „Der Erlös ist für dieses Projekt bestimmt“.
+      - { label: Text, name: body, widget: markdown }
+
   - name: seiten
     label: Weitere Seiten
     icon: description
@@ -249,9 +318,102 @@ collections:
           { label: Einleitungssatz, name: lead, widget: text, required: false },
           { label: Text, name: body, widget: markdown } ] }
       - { name: vision, label: Unsere Vision, file: content/unsere-vision.md, fields: *page_fields }
-      - { name: fundraising, label: Fundraising, file: content/fundraising.md, fields: *page_fields }
-      - { name: hilfe, label: Ihre Hilfe, file: content/ihre-hilfe.md, fields: *page_fields }
-      - { name: wir, label: Wir, file: content/wir.md, fields: *page_fields }
+      - name: fundraising
+        label: Aktuelles
+        file: content/fundraising.md
+        fields:
+          - { label: Titel (Menü, Browser-Tab), name: title, widget: string }
+          - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
+          - { label: Überschrift, name: headline, widget: string, required: false, hint: "Leer = Titel" }
+          - { label: Einleitungssatz, name: lead, widget: text, required: false }
+          - { label: "Veranstaltungen – Überschrift", name: events_title, widget: string, required: false }
+          - label: Bevorstehende Veranstaltungen
+            name: events
+            widget: list
+            required: false
+            summary: "{{when}} · {{title}}"
+            hint: Vergangene Veranstaltungen hier löschen und als Beitrag unter „Aktuelles (Beiträge)“ anlegen.
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Wann, name: when, widget: string, hint: "z. B. „13. Dezember 2026“ oder „Termin folgt“" }
+              - { label: Text, name: text, widget: text, required: false }
+              - { label: Linktext, name: link_label, widget: string, required: false }
+              - { label: Link, name: link_url, widget: string, required: false }
+          - { label: "Beiträge – Überschrift", name: posts_title, widget: string, required: false, hint: "Die Beiträge selbst stehen unter „Aktuelles (Beiträge)“." }
+          - { label: "Ältere Meldungen – Überschrift", name: archive_title, widget: string, required: false }
+          - { label: Ältere Meldungen, name: body, widget: markdown }
+      - name: wir
+        label: Über uns
+        file: content/wir.md
+        fields:
+          - { label: Titel (Menü, Browser-Tab), name: title, widget: string }
+          - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
+          - { label: Überschrift, name: headline, widget: string, required: false, hint: "Leer = Titel" }
+          - { label: Einleitungssatz, name: lead, widget: text, required: false }
+          - label: Abschnitte
+            name: sections
+            widget: list
+            summary: "{{title}}"
+            hint: Jeder Abschnitt hat Text und optional ein Foto daneben.
+            fields:
+              - { label: Überschrift, name: title, widget: string, required: false }
+              - { label: Text, name: text, widget: markdown }
+              - { label: Foto, name: image, widget: image, required: false }
+              - { label: Bildbeschreibung (für Blinde und Suchmaschinen), name: image_alt, widget: string, required: false }
+              - { label: Bildunterschrift, name: caption, widget: string, required: false }
+              - { label: Fotogröße, name: image_size, widget: select, default: side, options: [{ label: "Schmal neben dem Text", value: side }, { label: "Halbe Breite neben dem Text", value: half }, { label: "Ganze Breite unter dem Text", value: full }] }
+              - { label: Foto links, name: image_left, widget: boolean, default: false, hint: "Nur für Fotos neben dem Text." }
+              - { label: Hintergrund, name: tone, widget: select, default: plain, options: [{ label: Normal, value: plain }, { label: Farbig hinterlegt, value: band }] }
+              - { label: Sprungmarke, name: anchor, widget: string, required: false, hint: "Nur ändern, wenn Sie wissen, wofür: Andere Seiten verlinken diesen Abschnitt damit (z. B. /wir.html#in-erinnerung-an-herbert-schoenebeck)." }
+          - label: Knopf am Ende
+            name: button
+            widget: object
+            required: false
+            fields:
+              - { label: Text, name: label, widget: string }
+              - { label: Link, name: url, widget: string }
+          - { label: Text am Ende, name: body, widget: markdown, required: false }
+      - name: hilfe
+        label: So können Sie helfen
+        file: content/ihre-hilfe.md
+        fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: Kleine Zeile oben, name: kicker, widget: string, required: false }
+          - { label: Einleitungssatz, name: lead, widget: text, required: false }
+          - { label: "Spenden – kleine Zeile", name: donate_kicker, widget: string, required: false }
+          - { label: "Spenden – Überschrift", name: donate_heading, widget: string, required: false }
+          - { label: Überschrift über den Kontodaten, name: donate_title, widget: string, hint: "Die Kontodaten selbst kommen aus den Website-Einstellungen." }
+          - { label: "„So kommt Ihre Spende an“ – kleine Zeile", name: steps_kicker, widget: string, required: false }
+          - { label: "„So kommt Ihre Spende an“ – Überschrift", name: steps_title, widget: string, required: false }
+          - label: Schritte
+            name: steps
+            widget: list
+            required: false
+            summary: "{{title}}"
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+          - label: Aufklappbarer Bereich (Spendenbescheinigung)
+            name: receipt
+            widget: object
+            required: false
+            fields:
+              - { label: Titel (immer sichtbar), name: title, widget: string }
+              - { label: Text (aufgeklappt), name: text, widget: markdown }
+          - { label: "„Selbst aktiv werden“ – kleine Zeile", name: active_kicker, widget: string, required: false }
+          - { label: "„Selbst aktiv werden“ – Überschrift", name: active_title, widget: string, required: false }
+          - label: Kacheln
+            name: active
+            widget: list
+            required: false
+            summary: "{{title}}"
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Text, name: text, widget: text }
+              - { label: Linktext, name: link_label, widget: string, required: false }
+              - { label: Link, name: link_url, widget: string, required: false, hint: "z. B. /gregors-40-geburtstag.html" }
+          - { label: Frage vor dem Kontakt-Knopf, name: active_question, widget: string, required: false }
+          - { label: Text am Ende, name: body, widget: markdown, required: false }
       - { name: kontakt, label: Kontakt, file: content/kontakt.md, fields: *page_fields }
       - { name: impressum, label: Impressum, file: content/impressum.md, fields: *page_fields }
       - { name: datenschutz, label: Datenschutz, file: content/datenschutz.md, fields: *page_fields }

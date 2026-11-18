@@ -10,18 +10,19 @@
       {{ with .text }}<p class="lead">{{ . }}</p>{{ end }}
       <div class="btn-row">
         {{- range .buttons }}
-        <a class="btn {{ if .primary }}btn-primary{{ else }}btn-ghost{{ end }}" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>
+        <a class="btn {{ if .primary }}btn-cta{{ else }}btn-ghost{{ end }}" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>
         {{- end }}
       </div>
     </div>
     <figure class="hero-media">
-      <div class="hero-blob" aria-hidden="true"></div>
       {{ partial "img.html" (dict "src" .image "alt" .image_alt "sizes" "(min-width: 60em) 45vw, 100vw" "class" "hero-img" "eager" true) }}
       {{ with .badge }}<figcaption class="hero-badge">{{ . }}</figcaption>{{ end }}
     </figure>
   </div>
 </section>
 {{- end }}
+
+{{ partial "current-project.html" (dict "donate" true) }}
 
 {{- with .Params.mission }}
 <section class="mission">
@@ -72,8 +73,8 @@
   <div class="container narrow award-inner">
     <svg class="award-icon" viewBox="0 0 64 64" aria-hidden="true">
       <path d="M22 4h20l-6 20h-8z" fill="var(--c-primary)"/>
-      <circle cx="32" cy="40" r="18" fill="var(--c-accent)"/>
-      <circle cx="32" cy="40" r="11" fill="none" stroke="var(--c-primary)" stroke-width="3"/>
+      <circle cx="32" cy="40" r="18" fill="var(--c-gold)"/>
+      <circle cx="32" cy="40" r="11" fill="none" stroke="var(--c-gold-dark)" stroke-width="3"/>
     </svg>
     <div>
       <h2>{{ .title }}</h2>
@@ -83,17 +84,25 @@
 </section>
 {{- end }}
 
-{{- with .Params.donate }}
-<section class="donate">
-  <div class="container donate-grid">
-    <div>
-      <h2>{{ .title }}</h2>
-      <p>{{ .text }}</p>
-      {{ with $s.donate_button }}<a class="btn btn-light" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}
+{{- with .Params.help }}
+<section class="help-section">
+  <div class="container">
+    {{ with .title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+    <div class="tiles tiles-3">
+      {{- range .tiles }}
+      <div class="tile">
+        {{ with .icon }}<span class="tile-icon">{{ partial "icon.html" . }}</span>{{ end }}
+        <h3>{{ .title }}</h3>
+        <p>{{ .text }}</p>
+      </div>
+      {{- end }}
     </div>
-    {{ partial "bank-card.html" . }}
+    {{ with .question }}<p class="help-question">{{ . }}</p>{{ end }}
+    <div class="btn-row">
+      {{ with $s.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}
+      <a class="btn btn-ghost" href="{{ partial "site-url.html" "/kontakt.html" }}">Kontakt aufnehmen</a>
+    </div>
   </div>
-  {{ with .footnote }}<p class="container donate-footnote">{{ . }}</p>{{ end }}
 </section>
 {{- end }}
 

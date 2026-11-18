@@ -2,6 +2,8 @@
 # can't enter free colours. Contrast checked for: text on bg/surface,
 # on_primary on primary, primary on bg (links/buttons) >= 4.5:1.
 # accent is decorative only (shapes, highlights behind dark text).
+# Optional cta / cta_dark / on_cta: colour of the donate buttons and small
+# headings above titles (cta on bg >= 4.5:1); missing = primary colours.
 # When adding a palette here, also add it to the select in
 # static/admin/config.yml.
 
@@ -30,6 +32,22 @@ himmel:
   text: "#1b2631"
   muted: "#55626f"
   border: "#dce5ee"
+
+petrol:
+  label: Petrol (Petrol, Terrakotta, Sand)
+  primary: "#12404a"
+  primary_dark: "#0b2b33"
+  on_primary: "#ffffff"
+  accent: "#b24526"
+  accent_soft: "#f1e8da"
+  cta: "#b24526"
+  cta_dark: "#9a3a1e"
+  on_cta: "#ffffff"
+  bg: "#fbf7f0"
+  surface: "#fbf7f0"
+  text: "#1d2a2d"
+  muted: "#475a5e"
+  border: "#e6dccb"
 
 wald:
   label: Wald (Grün, Orange)

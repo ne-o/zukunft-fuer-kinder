@@ -3,29 +3,38 @@
 # into CSS variables; everything else is used by header, footer and the
 # donation box.
 
-palette: sonne        # key from data/palettes.yaml
-heading_font: nunito  # key from data/fonts.yaml
-body_font: system     # key from data/fonts.yaml
+palette: petrol       # key from data/palettes.yaml
+heading_font: fraunces  # key from data/fonts.yaml
+body_font: figtree    # key from data/fonts.yaml
 
-logo: ""              # optional image (assets/images/...); empty = text logo
+logo: images/logo-zukunft-fuer-kinder.png  # optional image (assets/images/...); empty = text logo
+logo_light: images/logo-zukunft-fuer-kinder-hell.png
 site_name: Zukunft für Kinder
 site_name_small: Schönebeck-Stiftung
 
 menu:
-  - label: Unsere Vision
-    url: /unsere-vision.html
-  - label: Projekte
-    url: /projekte.html
-  - label: Fundraising
-    url: /fundraising.html
-  - label: Wir
+  - label: Startseite
+    url: /
+  - label: Über uns
     url: /wir.html
-  - label: Kontakt
-    url: /kontakt.html
+  - label: Unsere Projekte
+    url: /projekte.html
+  - label: Aktuelles
+    url: /fundraising.html
+  - label: So können Sie helfen
+    url: /ihre-hilfe.html
 
 donate_button:
-  label: Jetzt helfen
+  label: Spenden
   url: /ihre-hilfe.html
+
+costs:
+  fixed_per_year: 428.40
+  fee_percent: 3
+  text: >-
+    Die Kosten fallen für die Verwaltung und Betreuung der Stiftung und der
+    Projekte an. Wir arbeiten ehrenamtlich und tragen die Kosten für
+    Spendenbescheinigungen und Porto selbst.
 
 contact:
   name: Schönebeck Stiftung – Zukunft für Kinder
@@ -38,7 +47,8 @@ bank:
   iban: DE07 7002 0500 3780 6600 66
   bic: BFSWDE33MUE
   bank_name: SozialBank AG
-  reference: Spende Schönebeck Stiftung – Zukunft für Kinder
+  reference: Spende Schönebeck Stiftung - Zukunft für Kinder
+  note: Das Spendenkonto ist unserer Stiftung zugeordnet. Der Empfängername lautet „Stiftung Hilfe mit Plan“.
 
 footer_note: >-
   Treuhänderin der Stiftung ist die Stiftung Hilfe mit Plan.

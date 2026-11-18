@@ -1,0 +1,26 @@
+{{- /* "Unsere Kosten" on the donation page, from data/settings.yaml costs:
+   fixed_per_year (euros) and fee_percent. The example for a 100 EUR
+   donation is calculated, so editors only change the two numbers. */ -}}
+{{- with hugo.Data.settings.costs }}{{ $c := . }}{{ if or .fixed_per_year .fee_percent }}
+<section class="costs costs-card" aria-labelledby="costs-title">
+  <h2 id="costs-title">{{ .title | default "Unsere Kosten – offen gelegt" }}</h2>
+  <div class="facts-grid">
+    {{- with .fixed_per_year }}
+    <div class="fact">
+      <span class="fact-value">{{ partial "number.html" (dict "n" . "decimals" 2) }} €</span>
+      <span class="fact-label">Fixkosten pro Jahr</span>
+    </div>
+    {{- end }}
+    {{- with .fee_percent }}
+    <div class="fact">
+      <span class="fact-value">{{ partial "number.html" (dict "n" .) }} %</span>
+      <span class="fact-label">Gebühr auf Spenden und Erträge</span>
+    </div>
+    {{- end }}
+  </div>
+  {{- with .fee_percent }}
+  <p class="costs-example">Bei 100 € Spende beträgt die Gebühr {{ partial "number.html" (dict "n" .) }} €.{{ if $c.fixed_per_year }} Die jährlichen Fixkosten der Stiftung fallen separat an.{{ end }}</p>
+  {{- end }}
+  {{ with .text }}<p>{{ . }}</p>{{ end }}
+</section>
+{{- end }}{{ end }}

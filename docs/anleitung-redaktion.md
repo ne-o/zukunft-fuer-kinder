@@ -77,7 +77,8 @@ Links stehen die Bereiche der Website:
 | **Einstellungen** | Farben, Schriften, Logo, Menü, Kontaktdaten, Spendenkonto - für die ganze Website |
 | **Startseite** | Texte, Fotos, Zahlen und Kacheln der Startseite |
 | **Projekte** | ein Eintrag pro Projekt, mit Berichten (PDF) |
-| **Weitere Seiten** | Vision, Wir, Ihre Hilfe, Kontakt, Impressum, Datenschutz usw. |
+| **Aktuelles (Beiträge)** | ein Eintrag pro Meldung (Spendenaktion, Veranstaltung, Projektbericht …) |
+| **Weitere Seiten** | Vision, Über uns, So können Sie helfen, Aktuelles, Kontakt, Impressum, Datenschutz usw. |
 | **Nepal-Besuch 2016 (Unterseiten)** | die Seiten des Reiseberichts |
 | **English pages** | die englischen Seiten |
 
@@ -103,7 +104,10 @@ Website zu sehen. Laden Sie die Seite dann neu (Taste F5).
 Felder eines Projekts:
 - **Titel**, **Land** - erscheinen in der Projektübersicht.
 - **Datum** - bestimmt die Reihenfolge in der Zeitleiste auf der
-  Projektseite. Das neueste Projekt wird dort groß hervorgehoben.
+  Projektseite.
+- **Aktuelles Projekt** - anhaken beim Projekt, für das wir gerade
+  sammeln: Es erscheint groß auf der Startseite, der Projektübersicht und
+  der Spendenseite. Nur eines anhaken; sind es mehrere, zählt das neueste.
 - **Hinweis** - kleiner Zusatz, z. B. „Fortführung von September 2022“.
 - **Vorschaubild** - Foto für die Projektübersicht. Ohne Foto erscheint
   eine farbige Fläche mit dem Ländernamen.
@@ -173,7 +177,16 @@ Das Feld **Text** funktioniert wie ein einfaches Textprogramm:
 ## 8. Andere Seiten und Einstellungen
 - **Startseite** und **Weitere Seiten** bearbeiten Sie genauso wie ein
   Projekt. Neue allgemeine Seiten lassen sich hier nicht anlegen - nur
-  neue Projekte. Bitte wenden Sie sich dafür an die technische Betreuung.
+  neue Projekte und Beiträge. Bitte wenden Sie sich dafür an die
+  technische Betreuung.
+- **Aktuelles (Beiträge)**: Mit **New** legen Sie eine neue Meldung an.
+  Jeder Beitrag erscheint als Kachel auf der Seite „Aktuelles“ (der
+  neueste zuerst) und bekommt eine eigene Seite. Die **Kurzfassung** steht
+  auf der Kachel; **Erlös für Projekt** verlinkt optional das Projekt, für
+  das gesammelt wurde. Ohne Foto erscheint eine farbige Fläche.
+- **Weitere Seiten -> Aktuelles**: die bevorstehenden Veranstaltungen und
+  darunter die älteren Meldungen. Ist eine Veranstaltung vorbei, löschen
+  Sie sie dort und legen einen Beitrag darüber an.
 - **Einstellungen -> Website-Einstellungen** gelten für die **ganze**
   Website: Farbschema, Schriften, Logo, Menü, Spenden-Knopf, Kontakt und
   Spendenkonto. Die Farbschemata sind auf gute Lesbarkeit geprüft. Bitte

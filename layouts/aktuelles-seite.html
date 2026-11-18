@@ -1,0 +1,50 @@
+{{ define "main" }}
+{{- /* Aktuelles (/fundraising.html): upcoming events (front matter
+   "events"), the posts from content/aktuelles as cards (newest first), then
+   the page text with the older news. */ -}}
+{{ partial "page-header.html" (dict "page" . "wide" true) }}
+
+{{- with .Params.events }}
+<section class="container events-section">
+  {{ with $.Params.events_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+  <div class="tiles">
+    {{- range . }}
+    <div class="tile">
+      {{ with .when }}<p class="kicker">{{ . }}</p>{{ end }}
+      <h3>{{ .title }}</h3>
+      {{ with .text }}<p>{{ . }}</p>{{ end }}
+      {{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default "Mehr erfahren" }}</a>{{ end }}
+    </div>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- with (site.GetPage "/aktuelles").RegularPages.ByDate.Reverse }}
+<section class="cards-section">
+  <div class="container">
+    {{ with $.Params.posts_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+    <div class="cards news-cards">
+      {{- range . }}
+      <article class="card">
+        {{ with .Params.image }}{{ partial "img.html" (dict "src" . "alt" "" "sizes" "(min-width: 60em) 30vw, (min-width: 40em) 50vw, 100vw" "class" "card-img") }}{{ else }}<div class="img-fallback card-img" aria-hidden="true">{{ .Params.category }}</div>{{ end }}
+        <div class="card-body">
+          <p class="kicker">{{ delimit (slice .Params.category (.Date.Format "2006")) " · " }}</p>
+          <h3>{{ .Title }}</h3>
+          {{ with .Params.lead }}<p>{{ . }}</p>{{ end }}
+          <a class="card-link" href="{{ .RelPermalink }}">Zum Beitrag<span class="visually-hidden">: {{ .Title }}</span></a>
+        </div>
+      </article>
+      {{- end }}
+    </div>
+  </div>
+</section>
+{{- end }}
+
+{{- with .Content }}
+<section class="container narrow archive-section">
+  {{ with $.Params.archive_title }}<h2 class="section-title">{{ . }}</h2>{{ end }}
+  <div class="prose">{{ . }}</div>
+</section>
+{{- end }}
+{{ end }}

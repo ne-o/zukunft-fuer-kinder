@@ -1,0 +1,9 @@
+{{- /* Small line icons for tiles. Context: icon name (heart, gift, people). */ -}}
+{{- $paths := dict
+  "heart" `<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>`
+  "gift" `<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18M12 9v11M12 9c-1.5-3-5-4-5-1.5S10 9 12 9zm0 0c1.5-3 5-4 5-1.5S14 9 12 9z"/>`
+  "people" `<circle cx="9" cy="8" r="3"/><path d="M3.5 19c.5-3.3 2.6-5 5.5-5s5 1.7 5.5 5"/><circle cx="16.5" cy="9" r="2.4"/><path d="M15.5 14.2c2.6-.3 4.6 1.2 5 4.3"/>`
+-}}
+{{- with index $paths (. | default "heart") }}
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ . | safeHTML }}</svg>
+{{- end }}

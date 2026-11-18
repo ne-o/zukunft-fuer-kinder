@@ -24,7 +24,11 @@
   (printf "--c-text:%s" $p.text)
   (printf "--c-muted:%s" $p.muted)
   (printf "--c-border:%s" $p.border)
+  (printf "--c-cta:%s" ($p.cta | default $p.primary))
+  (printf "--c-cta-dark:%s" ($p.cta_dark | default $p.primary_dark))
+  (printf "--c-on-cta:%s" ($p.on_cta | default $p.on_primary))
   (printf "--font-heading:%s" $fh.stack)
+  (printf "--heading-weight:%v" ($fh.heading_weight | default 800))
   (printf "--font-body:%s" $fb.stack)
 -}}
 {{- $css = printf "%s:root{%s}" $css (delimit $vars ";") }}

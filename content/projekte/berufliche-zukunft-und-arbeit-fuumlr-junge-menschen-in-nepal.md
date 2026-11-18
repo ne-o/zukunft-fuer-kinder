@@ -1,5 +1,6 @@
 ---
 title: Berufliche Zukunft und Arbeit für junge Menschen in Nepal
+current: true
 date: '2024-02-01'
 country: Nepal
 note: Fortführung von September 2022

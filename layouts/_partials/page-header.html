@@ -1,9 +1,12 @@
-{{- /* Usage: partial "page-header.html" (dict "page" . "kicker" "…") */ -}}
+{{- /* Usage: partial "page-header.html" (dict "page" . "kicker" "…" "wide" true)
+   wide: aligned with full-width content instead of the narrow column.
+   Front matter may set kicker (small line above) and headline (instead of
+   the title as the big heading). */ -}}
 {{- $p := .page -}}
 <header class="page-header">
-  <div class="container narrow">
-    {{ with .kicker }}<p class="kicker">{{ . }}</p>{{ end }}
-    <h1>{{ $p.Title }}</h1>
+  <div class="container{{ if not .wide }} narrow{{ end }}">
+    {{ with .kicker | default $p.Params.kicker }}<p class="kicker">{{ . }}</p>{{ end }}
+    <h1>{{ $p.Params.headline | default $p.Title }}</h1>
     {{ with $p.Params.lead }}<p class="lead">{{ . }}</p>{{ end }}
   </div>
 </header>

@@ -17,3 +17,16 @@ lora:
   name: Lora Variable
   file: /fonts/lora.woff2
   stack: '"Lora Variable", Georgia, "Times New Roman", serif'
+
+fraunces:
+  label: Fraunces (warm, mit Serifen)
+  name: Fraunces Variable
+  file: /fonts/fraunces.woff2
+  stack: '"Fraunces Variable", Georgia, "Times New Roman", serif'
+  heading_weight: 600
+
+figtree:
+  label: Figtree (klar, modern)
+  name: Figtree Variable
+  file: /fonts/figtree.woff2
+  stack: '"Figtree Variable", system-ui, -apple-system, "Segoe UI", sans-serif'

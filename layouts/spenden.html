@@ -1,10 +1,56 @@
 {{ define "main" }}
-{{ partial "page-header.html" (dict "page" .) }}
-<div class="container narrow">
-  <section class="donate-box">
-    <h2>Ihre Spende überweisen Sie bitte an:</h2>
+{{- /* "So können Sie helfen": bank account (copy buttons) + current project
+   bar; a band with how a donation arrives (steps), costs and the foldable
+   receipts section; own initiatives. Every block is optional front matter. */ -}}
+{{ partial "page-header.html" (dict "page" . "wide" true) }}
+
+<section class="container donate-section">
+  {{ with .Params.donate_kicker }}<p class="kicker">{{ . }}</p>{{ end }}
+  {{ with .Params.donate_heading }}<h2>{{ . }}</h2>{{ end }}
+  <div class="donate-card">
+    <h3>{{ .Params.donate_title | default "Per Überweisung spenden" }}</h3>
     {{ partial "bank-card.html" . }}
-  </section>
-  <div class="prose">{{ .Content }}</div>
-</div>
+  </div>
+  {{ partial "current-project.html" (dict "variant" "bar") }}
+</section>
+
+<section class="band help-band">
+  <div class="container">
+    {{- with .Params.steps }}
+    {{ with $.Params.steps_kicker }}<p class="kicker">{{ . }}</p>{{ end }}
+    {{ with $.Params.steps_title }}<h2>{{ . }}</h2>{{ end }}
+    <ol class="steps">
+      {{- range . }}
+      <li><h3>{{ .title }}</h3><p>{{ .text }}</p></li>
+      {{- end }}
+    </ol>
+    {{- end }}
+    {{ partial "costs.html" . }}
+    {{- with .Params.receipt }}
+    <details class="fold">
+      <summary>{{ .title }}</summary>
+      <div class="prose">{{ $.RenderString (dict "display" "block") (.text | default "") }}</div>
+    </details>
+    {{- end }}
+    {{ with .Content }}<div class="prose help-note">{{ . }}</div>{{ end }}
+  </div>
+</section>
+
+{{- with .Params.active }}
+<section class="container active-section">
+  {{ with $.Params.active_kicker }}<p class="kicker">{{ . }}</p>{{ end }}
+  {{ with $.Params.active_title }}<h2>{{ . }}</h2>{{ end }}
+  <div class="tiles">
+    {{- range . }}
+    <div class="tile"><h3>{{ .title }}</h3><p>{{ .text }}</p>{{ if .link_url }}<a class="card-link" href="{{ partial "site-url.html" .link_url }}">{{ .link_label | default "Mehr erfahren" }}</a>{{ end }}</div>
+    {{- end }}
+  </div>
+  {{- with $.Params.active_question }}
+  <div class="ask-row">
+    <p>{{ . }}</p>
+    <a class="btn btn-cta" href="{{ partial "site-url.html" "/kontakt.html" }}">Kontakt aufnehmen</a>
+  </div>
+  {{- end }}
+</section>
+{{- end }}
 {{ end }}

@@ -40,6 +40,10 @@ Editors change the look only through the settings form, never free CSS:
 - `data/settings.yaml` - chosen palette and fonts, logo, menu, contact,
   bank account.
 - `data/palettes.yaml` - the tested colour palettes (contrast checked).
+  Optional `cta`/`cta_dark`/`on_cta`: donate buttons and the small
+  uppercase line above titles (default: the primary colours).
+- `data/fonts.yaml` `heading_weight` (optional, default 800): weight of
+  headings in that font - serif fonts look better lighter (Fraunces: 600).
 - `data/fonts.yaml` - the font choices, self-hosted in `static/fonts/`.
 
 A new palette or font goes into those files *and* into the select options
@@ -52,8 +56,15 @@ here, not as comments in content or data files.
 
 `data/settings.yaml` keys: `palette` (key from `palettes.yaml`),
 `heading_font`/`body_font` (keys from `fonts.yaml`), `logo` (image path,
-empty = text logo), `site_name`, `site_name_small`, `menu` (label + url),
-`donate_button`, `contact`, `bank`, `footer_note`.
+empty = text logo; with a logo the name isn't printed next to it, so the
+logo should contain it), `logo_light` (variant for the dark footer,
+empty = name as text), `site_name`, `site_name_small`, `menu` (label + url),
+`donate_button`, `contact`, `bank`, `costs`, `footer_note`.
+
+`costs` (box "Unsere Kosten" on `/ihre-hilfe.html`, `_partials/costs.html`):
+`fixed_per_year` (euros, a number), `fee_percent` (a number - the
+"Bei 100 € Spende …" example is calculated from it), `text`. Both numbers
+empty: no box.
 
 ## Working on the site
 Open this folder in its devcontainer (`.devcontainer/`: Hugo, Python,
@@ -112,7 +123,16 @@ Run it by hand: Actions -> Pages -> Run workflow.
   - `_index.md` - start page.
   - `projekte/` - projects. `date` orders the timeline; `downloads` lists
     the reports; entries with `build.render: never` appear in the timeline
-    without a page of their own. `_index.md` is the overview's intro.
+    without a page of their own. `current: true` (CMS checkbox "Aktuelles
+    Projekt") features the project on the start page, the overview and the
+    donation page (`_partials/current-project.html`; several marked: the
+    newest wins, none: no feature). `_index.md` is the overview's intro.
+  - `aktuelles/` - news posts (`category`, `lead` = card text, optional
+    `image`, `project` = slug of a project the proceeds went to). Listed
+    as cards on `/fundraising.html` (the "Aktuelles" page, layout
+    `aktuelles-seite.html`: front matter `events` = upcoming events, then
+    the cards, then the page text with the older news); each post has its
+    own page (`aktuelles/page.html`). The section has no list page.
   - `reise-2016/` - subpages of the 2016 trip report.
   - `english/` - English pages.
 - URLs: every page is `/<file name>.html`, also for pages in subfolders
@@ -130,7 +150,20 @@ Run it by hand: Actions -> Pages -> Run workflow.
   page in the CMS can't drop it.
 - `layouts/` - the theme (Hugo >= 0.146 layout structure):
   - `home.html`, `page.html`, `kontakt.html`, `spenden.html`,
-    `projekte/section.html` (overview + timeline), `projekte/page.html`.
+    `projekte/section.html` (overview + timeline), `projekte/page.html`,
+    `ueber-uns.html` (`/wir.html`: `sections` = text with an optional photo
+    beside it, `tone: band` for a coloured background, `anchor` = id
+    for links like `/wir.html#in-erinnerung-an-herbert-schoenebeck`).
+  - `spenden.html` (`/ihre-hilfe.html`): bank account with copy buttons
+    (`assets/js/copy.js`, hidden where the browser can't copy; IBAN copied
+    without spaces), current project, `steps`, costs, `receipt` as a
+    foldable `<details>` section, `active` tiles (optional
+    `link_label`/`link_url`) - all front matter.
+  - Pages may set `kicker` and `headline` (big heading instead of the title).
+  - Start page `help`: tiles with an icon (`_partials/icon.html`: heart,
+    gift, people), then the donate and contact buttons.
+  - Header: the donate button sits outside the collapsible menu, so it
+    stays visible (right-most) on narrow screens.
   - `_markup/render-image.html` - Markdown images from `assets/` become
     responsive WebP; several images in one paragraph form a gallery. Each
     image links to its full size; `assets/js/lightbox.js` (loaded only on

@@ -1,0 +1,37 @@
+{{- /* The project marked "Aktuelles Projekt" in the CMS (front matter
+   current: true), shown on the start page, the project overview and the
+   donation page. Several marked: the newest wins. None marked: nothing.
+   Context: dict "donate" (bool: donate button next to the link),
+   "variant" ("bar": slim dark bar instead of the large card). */ -}}
+{{- $marked := where (site.GetPage "/projekte").RegularPages "Params.current" true -}}
+{{- with index $marked.ByDate.Reverse 0 }}
+{{- if eq $.variant "bar" }}
+<div class="project-bar">
+  <div>
+    <p class="kicker">Für dieses Projekt sammeln wir gerade</p>
+    <p class="project-bar-title">{{ .Title }}</p>
+  </div>
+  {{ if .RelPermalink }}<a class="btn btn-light btn-small" href="{{ .RelPermalink }}">Mehr zum Projekt</a>{{ end }}
+</div>
+{{- else }}
+<section class="current-project" aria-labelledby="current-project-title">
+  <div class="container">
+  <h2 class="section-title" id="current-project-title">Für dieses Projekt sammeln wir gerade</h2>
+  <article class="feature">
+    <div class="feature-media">
+      {{ if .Params.image }}{{ partial "img.html" (dict "src" .Params.image "alt" "" "sizes" "(min-width: 60em) 36rem, 100vw" "class" "feature-img") }}{{ else }}<div class="img-fallback">{{ .Params.country }}</div>{{ end }}
+    </div>
+    <div class="feature-body">
+      {{ with .Params.country }}<p class="kicker">{{ . }}</p>{{ end }}
+      <h3 class="feature-title">{{ if .RelPermalink }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ else }}{{ .Title }}{{ end }}</h3>
+      <p>{{ .Summary | plainify | truncate 260 }}</p>
+      <div class="btn-row">
+        {{ if .RelPermalink }}<a class="btn btn-ghost" href="{{ .RelPermalink }}">Zum Projekt</a>{{ end }}
+        {{ if $.donate }}{{ with hugo.Data.settings.donate_button }}<a class="btn btn-cta" href="{{ partial "site-url.html" .url }}">{{ .label }}</a>{{ end }}{{ end }}
+      </div>
+    </div>
+  </article>
+  </div>
+</section>
+{{- end }}
+{{- end }}

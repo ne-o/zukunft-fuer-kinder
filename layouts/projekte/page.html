@@ -2,6 +2,9 @@
 {{ partial "page-header.html" (dict "page" . "kicker" (printf "Projekt · %s · %s" .Params.country (.Date | time.Format "January 2006"))) }}
 <div class="container narrow">
   {{ with .Params.note }}<p class="notice">{{ . }}</p>{{ end }}
+  {{- if .Params.current }}{{ with hugo.Data.settings.donate_button }}
+  <p class="notice">Für dieses Projekt sammeln wir gerade. <a href="{{ partial "site-url.html" .url }}">{{ .label }}</a></p>
+  {{- end }}{{ end }}
   {{- with .Params.downloads }}
   <section class="downloads" aria-labelledby="downloads-title">
     <h2 id="downloads-title">Berichte und Downloads</h2>

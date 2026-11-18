@@ -4,13 +4,12 @@ description: Die Schönebeck-Stiftung „Zukunft für Kinder“ fördert seit 20
 
 hero:
   kicker: Schönebeck-Stiftung · seit 2007
-  headline: Jedes Kind verdient eine Zukunft.
+  headline: Zukunft für Kinder
   text: >-
     Wir fördern Bildung, Aufklärung und Gesundheitsvorsorge für Kinder und
     Jugendliche – vor allem in Nepal und gemeinsam mit Plan Deutschland.
   image: images/kinder-lachen-nepal.jpg
   image_alt: Lachende Schulkinder in Nepal
-  badge: Ihre Spende geht vollständig in die Projekte*
   buttons:
     - label: Jetzt helfen
       url: /ihre-hilfe.html
@@ -52,7 +51,7 @@ cards:
       Wir danken allen Förderern, die uns 2024 unterstützt haben. Mit Plan
       Deutschland stellen wir sicher, dass Ihre Mittel zielgerichtet und
       nachhaltig eingesetzt werden.
-    link_label: Mehr zum Fundraising
+    link_label: Zu Aktuelles
     link_url: /fundraising.html
   - title: Helfen heißt teilen
     image: images/gespraechsrunde-nepal.jpg
@@ -74,14 +73,19 @@ award:
     zusammen mit unseren Unterstützern erreichen. Das ist ein toller Ansporn
     weiterzumachen – nur gemeinsam sind wir stark!
 
-donate:
-  title: Helfen Sie mit
-  text: >-
-    Jeder noch so kleine Beitrag hilft. Für Spenden bis 300 Euro genügt der
-    vereinfachte Spendennachweis zusammen mit Ihrem Kontoauszug.
-  footnote: >-
-    * Nach Abzug der Verwaltungskosten durch das Stiftungszentrum. Reisen des
-    Stiftungsvorstands werden komplett privat bezahlt.
+help:
+  title: So können Sie helfen
+  tiles:
+    - icon: heart
+      title: Spenden
+      text: Mit einer einmaligen oder regelmäßigen Spende fördern Sie unsere Projekte direkt.
+    - icon: gift
+      title: Eigene Aktion starten
+      text: 'Feiern, backen, laufen, sammeln: Machen Sie Ihren Anlass zur Spendenaktion.'
+    - icon: people
+      title: Gemeinsam fördern
+      text: Vereine und Unternehmen können Projekte langfristig begleiten.
+  question: Sie möchten eine Aktion mit uns planen oder haben Fragen? Schreiben Sie uns gerne.
 
 more_title: Aus unserer Arbeit
 more:

@@ -1,0 +1,10 @@
+{{- /* A number in German notation: 3 -> "3", 2.5 -> "2,5", 428.4 -> "428,40"
+   with decimals 2. Context: dict "n" (number), "decimals" (optional: fixed
+   number of decimals; default: as few as needed, at most 2). */ -}}
+{{- $n := float .n -}}
+{{- $d := .decimals -}}
+{{- if not $d -}}
+  {{- $d = 0 -}}
+  {{- if ne (math.Round $n) $n }}{{ $d = cond (eq (math.Round (mul $n 10)) (mul $n 10)) 1 2 }}{{ end -}}
+{{- end -}}
+{{- return lang.FormatNumber $d $n -}}

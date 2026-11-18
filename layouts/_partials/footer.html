@@ -2,9 +2,21 @@
 <footer class="site-footer">
   <div class="container footer-grid">
     <div>
+      {{- with $s.logo_light }}{{ with resources.Get . }}{{ $l := .Resize "x160 webp" }}
+      <img class="footer-logo" src="{{ $l.RelPermalink }}" alt="{{ $s.site_name_small }} „{{ $s.site_name }}“" height="80" width="{{ div (mul $l.Width 80) $l.Height }}" loading="lazy">
+      {{- end }}{{ else }}
       <p class="footer-brand">{{ $s.site_name_small }} „{{ $s.site_name }}“</p>
+      {{- end }}
       {{ with $s.footer_note }}<p class="footer-note">{{ . }}</p>{{ end }}
     </div>
+    <nav aria-labelledby="footer-quick">
+      <h2 class="footer-title" id="footer-quick">Schnellzugriff</h2>
+      <ul class="footer-links">
+        {{- range $s.menu }}
+        <li><a href="{{ partial "site-url.html" .url }}">{{ .label }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
     {{- with $s.contact }}
     <div>
       <h2 class="footer-title">Kontakt</h2>
@@ -14,12 +26,7 @@
         <a href="mailto:{{ . }}">{{ . }}</a>
         {{- end }}
       </address>
-    </div>
-    {{- end }}
-    {{- with $s.bank }}
-    <div>
-      <h2 class="footer-title">Spendenkonto</h2>
-      <p>{{ .recipient }}<br>IBAN {{ .iban }}<br>BIC {{ .bic }} · {{ .bank_name }}</p>
+      <a class="btn btn-outline-light btn-small" href="{{ partial "site-url.html" "/kontakt.html" }}">Kontakt aufnehmen</a>
     </div>
     {{- end }}
   </div>
@@ -28,7 +35,7 @@
     <nav aria-label="Rechtliches">
       <a href="{{ partial "site-url.html" "/impressum.html" }}">Impressum</a>
       <a href="{{ partial "site-url.html" "/datenschutz.html" }}">Datenschutz</a>
-      <a href="{{ partial "site-url.html" "/home-engl.html" }}" lang="en">English</a>
+      {{ partial "lang-switch.html" . }}
     </nav>
   </div>
 </footer>

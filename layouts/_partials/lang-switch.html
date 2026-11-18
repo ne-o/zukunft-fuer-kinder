@@ -1,0 +1,8 @@
+{{- /* Deutsch | English - the English pages are a separate small set
+   (content/english, page_lang "en"), so the switch goes to their start. */ -}}
+{{- $en := eq .Params.page_lang "en" -}}
+<p class="lang-switch">
+  <a href="{{ partial "site-url.html" "/" }}" lang="de"{{ if not $en }} aria-current="true"{{ end }}>Deutsch</a>
+  <span aria-hidden="true">|</span>
+  <a href="{{ partial "site-url.html" "/home-engl.html" }}" lang="en"{{ if $en }} aria-current="true"{{ end }}>English</a>
+</p>

@@ -2,6 +2,9 @@
 title: Welcome
 ---
 
+**We support projects for education and health that open up new prospects for children and young people in Nepal.** [Discover our projects](/projekte.html) (in German) · [About us](/wir-engl.html)
+
+
 _The Schönebeck-Foundation „Zukunft für Kinder“ (future for children) wants to help creating a world in which children don't suffer poverty and develop healthily and freely. A world in which children are treated with dignity and respect. That's why the needs, rights and wishes of children are the focus of projects which are supported by our foundation. _(Extract from our statutes)
 
 ![](images/archiv/3554295-3.webp)
@@ -33,6 +36,38 @@ This is a great incentive to continue, because only together we are strong!
 **Summer 2019:**
 [Impressionen](/impression-shree.html) of his visit to Germany by Shreeram KC, Communications Manager Plan International Nepal.
 
-This website uses marketing and tracking technologies. Opting out of this will opt you out of all cookies, except for those needed to run the website. Note that some products may not work as well without tracking cookies.
+## How to help
 
-Opt Out of Cookies
+With your support, we promote education and better opportunities for children and young people.
+
+- **Donate:** with a one-off or regular gift, you support our projects directly.
+- **Start your own campaign:** a birthday, an anniversary or a party – ask your guests for a donation instead of presents. You can find an example in [Gregor's story](/gregors-40-geburtstag.html) (in German).
+- **Support together:** clubs and companies can support a project together with us, for example with a fundraiser at an event, a tournament or within the team.
+
+### Donate by bank transfer
+
+**Recipient:** Stiftung Hilfe mit Plan
+**IBAN:** DE07 7002 0500 3780 6600 66
+**BIC:** BFSWDE33MUE
+**Bank:** SozialBank AG
+**Reference:** Spende Schönebeck Stiftung - Zukunft für Kinder
+
+This donation account is assigned to our foundation. The recipient name is “Stiftung Hilfe mit Plan”.
+
+### How your donation arrives
+
+1. **Your donation arrives:** if you donate by bank transfer, your gift arrives in the foundation's account at SozialBank.
+2. **We pool the donations:** we collect donations until the amount needed for the project has been reached.
+3. **The funds reach the project:** the funds are passed on to the project via Plan International.
+
+### Our costs – openly shown
+
+**€428.40** fixed costs per year and **3 %** fee on donations and income: on a €100 donation, the fee is €3. The foundation's annual fixed costs are incurred separately.
+
+These costs cover the administration and support of the foundation and its projects. We work on a voluntary basis and cover the costs of donation receipts and postage ourselves.
+
+### Donation receipts
+
+For donations up to €300, a simplified proof of donation is enough for German tax returns: print the [form (in German)](/downloads/vereinfachterspendennachweis.pdf) and keep it with your bank statement. For donations above €300 you automatically receive a donation receipt, usually as a combined receipt early in the following year – please put your **name and full address** in the transfer reference.
+
+Would you like to plan a campaign with us, or do you have questions? [Get in touch](/kontakt.html).

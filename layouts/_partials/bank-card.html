@@ -1,9 +1,28 @@
-{{- /* Donation account from the settings - one place for start page and "Ihre Hilfe". */ -}}
+{{- /* Donation account from the settings - one place for start page and
+   "So können Sie helfen". Copy buttons appear only where the browser can
+   copy (assets/js/copy.js); the IBAN is copied without spaces. */ -}}
 {{- with hugo.Data.settings.bank }}
+<div class="bank">
 <dl class="bank-card">
-  <dt>Empfänger</dt><dd>{{ .recipient }}</dd>
-  <dt>IBAN</dt><dd class="mono">{{ .iban }}</dd>
-  <dt>BIC</dt><dd class="mono">{{ .bic }} <span>({{ .bank_name }})</span></dd>
-  <dt>Verwendungszweck</dt><dd>{{ .reference }}</dd>
+  {{- range $r := slice
+      (dict "label" "Empfänger" "value" .recipient "copy" .recipient)
+      (dict "label" "IBAN" "value" .iban "copy" (replace .iban " " "") "mono" true)
+      (dict "label" "BIC" "value" .bic "copy" .bic "mono" true)
+      (dict "label" "Bank" "value" .bank_name)
+      (dict "label" "Verwendungszweck" "value" .reference "copy" .reference) }}
+  {{- if .value }}
+  <div class="bank-row">
+    <dt>{{ .label }}</dt>
+    <dd{{ if .mono }} class="mono"{{ end }}>{{ .value }}</dd>
+    {{- with .copy }}
+    <button type="button" class="copy-btn" data-copy="{{ . }}" aria-label="{{ $r.label }} kopieren" hidden>Kopieren</button>
+    {{- end }}
+  </div>
+  {{- end }}
+  {{- end }}
 </dl>
+{{- with .note }}<p class="bank-note">{{ . }}</p>{{ end }}
+</div>
+{{- $js := resources.Get "js/copy.js" | minify | fingerprint }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
 {{- end }}
