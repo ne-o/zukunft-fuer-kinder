@@ -16,6 +16,13 @@
   {{- if ne site.BaseURL site.Params.production_url }}
   <meta name="robots" content="noindex">
   {{- end }}
+  {{- /* Favicons: the logo's emblem (static/, cut from
+     assets/images/logo-zukunft-fuer-kinder.png - recreate them if the logo
+     changes, see README). */}}
+  <link rel="icon" href="{{ partial "site-url.html" "/favicon.ico" }}" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="{{ partial "site-url.html" "/icon-192.png" }}" type="image/png" sizes="192x192">
+  <link rel="icon" href="{{ partial "site-url.html" "/icon-512.png" }}" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="{{ partial "site-url.html" "/apple-touch-icon.png" }}">
   {{- partial "theme-vars.html" . }}
   {{- $css := resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

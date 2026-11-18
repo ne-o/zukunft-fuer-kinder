@@ -64,6 +64,20 @@ logo should contain it), `logo_light` (variant for the dark footer,
 empty = name as text), `site_name`, `site_name_small`, `menu` (label + url),
 `donate_button`, `contact`, `bank`, `costs`, `footer_note`.
 
+Favicons (`static/favicon.ico` 16/32/48 px, `icon-192.png`, `icon-512.png`,
+`apple-touch-icon.png` 180 px on the palette's background `#fbf7f0`; linked
+in `baseof.html`) are the logo's emblem without the lettering. They don't
+follow a logo change in the CMS - recreate them from the new logo (the
+emblem is the part left of the lettering; crop, trim, pad to a square):
+
+    convert assets/images/logo-zukunft-fuer-kinder.png -crop 310x360+0+0 +repage -trim +repage cut.png
+    d=$(identify -format '%[fx:round(max(w,h)*1.04)]' cut.png)
+    convert cut.png -background none -gravity center -extent ${d}x${d} emblem.png
+    convert emblem.png -resize 512x512 static/icon-512.png
+    convert emblem.png -resize 192x192 static/icon-192.png
+    convert emblem.png -resize 156x156 -background '#fbf7f0' -gravity center -extent 180x180 -alpha remove static/apple-touch-icon.png
+    convert emblem.png \( -clone 0 -resize 16x16 \) \( -clone 0 -resize 32x32 \) \( -clone 0 -resize 48x48 \) -delete 0 static/favicon.ico
+
 `costs` (box "Unsere Kosten" on `/ihre-hilfe.html`, `_partials/costs.html`):
 `fixed_per_year` (euros, a number), `fee_percent` (a number - the
 "Bei 100 € Spende …" example is calculated from it), `text`. Both numbers
