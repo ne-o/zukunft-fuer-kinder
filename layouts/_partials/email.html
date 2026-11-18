@@ -1,0 +1,17 @@
+{{- /* An email address without "@" in the HTML (against address harvesters):
+   "kontakt (at) zukunft-fuer-kinder.net" as text, the two halves in data
+   attributes; assets/js/email.js turns it into a mailto: link in the
+   browser. Without JavaScript the "(at)" form stays readable.
+   Context: dict "address" (plain address, may start with "mailto:"),
+   "label" (optional link text; ignored if it is the address itself),
+   "class" (optional CSS class for the link). */ -}}
+{{- $addr := strings.TrimPrefix "mailto:" .address | strings.TrimSpace -}}
+{{- $parts := split $addr "@" -}}
+{{- if eq (len $parts) 2 -}}
+{{- $shown := printf "%s (at) %s" (index $parts 0) (index $parts 1) -}}
+{{- $label := .label | plainify | strings.TrimSpace -}}
+{{- if or (eq $label $addr) (eq $label .address) }}{{ $label = "" }}{{ end -}}
+<span class="email{{ with .class }} {{ . }}{{ end }}" data-u="{{ index $parts 0 }}" data-d="{{ index $parts 1 }}"{{ with $label }} data-label="{{ . }}"{{ end }}>{{ $label | default $shown }}</span>
+{{- else -}}
+{{ .label | default $addr }}
+{{- end -}}

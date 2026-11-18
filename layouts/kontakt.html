@@ -11,7 +11,7 @@
     {{- with .email }}
     <div class="info-card">
       <h2>{{ T "by_email" }}</h2>
-      <p><a href="mailto:{{ . }}">{{ . }}</a></p>
+      <p>{{ partial "email.html" (dict "address" .) }}</p>
     </div>
     {{- end }}
   </div>

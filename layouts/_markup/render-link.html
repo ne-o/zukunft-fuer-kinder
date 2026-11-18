@@ -1,6 +1,9 @@
 {{- /* Markdown links. Links to PDFs get a file icon and their size, so editors
-   only need to link the file. */ -}}
-{{- if strings.HasSuffix (lower .Destination) ".pdf" -}}
+   only need to link the file. Email links (also plain addresses, which
+   Markdown links automatically) are written without "@" (email.html). */ -}}
+{{- if strings.HasPrefix (lower .Destination) "mailto:" -}}
+  {{ partial "email.html" (dict "address" .Destination "label" .Text) }}
+{{- else if strings.HasSuffix (lower .Destination) ".pdf" -}}
   {{ partial "file-link.html" (dict "url" .Destination "label" .Text) }}
 {{- else -}}
   <a href="{{ partial "site-url.html" .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text }}</a>

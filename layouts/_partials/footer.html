@@ -24,7 +24,7 @@
       <address>
         {{ .name }}<br>{{ .street }}<br>{{ .city }}<br>
         {{- with .email }}
-        <a href="mailto:{{ . }}">{{ . }}</a>
+        {{ partial "email.html" (dict "address" .) }}
         {{- end }}
       </address>
       <a class="btn btn-outline-light btn-small" href="{{ partial "page-url.html" "/kontakt" }}">{{ T "get_in_touch" }}</a>

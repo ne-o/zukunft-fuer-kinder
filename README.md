@@ -213,6 +213,12 @@ Run it by hand: Actions -> Pages -> Run workflow.
 - Per-page structure (layout, URL, aliases, language) lives in
   `[[cascade]]` entries in `hugo.toml`, not in front matter, so saving a
   page in the CMS can't drop it.
+- Email addresses never appear with "@" in the HTML (against address
+  harvesters): `_partials/email.html` writes "kontakt (at) …" with the two
+  halves in data attributes, `assets/js/email.js` (on every page) turns it
+  into a `mailto:` link. The footer and Kontakt page use the partial; email
+  links in Markdown - `[x](mailto:…)`, `<…@…>` or a plain typed address -
+  go through `_markup/render-link.html`, so editors write them normally.
 - `layouts/` - the theme (Hugo >= 0.146 layout structure):
   - `home.html`, `page.html`, `kontakt.html`, `spenden.html`,
     `projekte/section.html` (overview + timeline), `projekte/page.html`,

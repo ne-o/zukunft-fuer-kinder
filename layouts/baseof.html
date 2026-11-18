@@ -34,6 +34,8 @@
     {{ block "main" . }}{{ end }}
   </main>
   {{ partial "footer.html" . }}
+  {{- $mail := resources.Get "js/email.js" | minify | fingerprint }}
+  <script src="{{ $mail.RelPermalink }}" integrity="{{ $mail.Data.Integrity }}" defer></script>
   {{- if strings.Contains .Content `class="zoom"` }}
   {{- $js := resources.Get "js/lightbox.js" | minify | fingerprint }}
   <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" data-label="{{ T "image_view" }}" data-close="{{ T "close" }}" data-prev="{{ T "previous_image" }}" data-next="{{ T "next_image" }}" defer></script>
