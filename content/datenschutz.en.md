@@ -24,7 +24,7 @@ If you contact us by email, we store the data you provide (your email address an
 
 ## 5. Donations
 
-If you send us a donation using the bank details given on our website, we store your name, your bank details and your address and pass them on for processing on our behalf to Haus des Stiftens gGmbH, Landshuter Allee 11, 80637 Munich, Germany. On our behalf, Haus des Stiftens gGmbH keeps the financial accounts and issues the respective donation receipt (Zuwendungsbestätigung), which you will usually receive from the Schönebeck Stiftung „Zukunft für Kinder“ by email or by post.
+If you send us a donation using the bank details given on our website, we store your name, your bank details and your address in order to record your donation and issue your donation receipt (Zuwendungsbestätigung). The Schönebeck Stiftung „Zukunft für Kinder“ issues the receipt itself and will usually send it to you by email or by post.
 
 ## 6. Disclosure of data
 
@@ -41,7 +41,7 @@ You have the right to obtain information about the data stored about you at any 
 ## 9. Controller for data processing
 
 You can request the correction or deletion of your data at any time, unless – in the case of deletion – statutory retention obligations and periods apply (see section 7). If you wish to object to the processing of your data, or if you have any other questions about data protection, please contact:
-Herbert Schönebeck
+Henriette Kolandt-Schönebeck
 Schönebeck Stiftung „Zukunft für Kinder“
 Eschenweg 9, 86836 Untermeitingen, Germany
 [kontakt@zukunft-fuer-kinder.net](mailto:kontakt@zukunft-fuer-kinder.net)

@@ -22,7 +22,7 @@ Bei Ihrer Kontaktaufnahme mit uns per E-Mail werden die von Ihnen mitgeteilten D
 
 ## 5. Spenden
 
-Wenn Sie uns über die auf unseren Seiten angegebene Bankverbindung eine Spende zukommen lassen, speichern wir Ihren Namen, Ihre Bankverbindung und Ihre Adresse und leiten diese zur Auftragsdatenverarbeitung an die Haus des Stiftens gGmbH, Landshuter Allee 11, 80637 München weiter. Die Haus des Stiftens gGmbH wird in unserem Auftrag die Finanzbuchhaltung und die jeweilige Zuwendungsbescheinigung (Spendenquittung) erstellen, die Sie in der Regel durch die Schönebeck Stiftung „Zukunft für Kinder“ per Email oder auf dem Postweg zugestellt bekommen.
+Wenn Sie uns über die auf unseren Seiten angegebene Bankverbindung eine Spende zukommen lassen, speichern wir Ihren Namen, Ihre Bankverbindung und Ihre Adresse, um Ihre Spende zu verbuchen und Ihnen die Zuwendungsbestätigung (Spendenquittung) auszustellen. Diese erstellt die Schönebeck Stiftung „Zukunft für Kinder“ selbst und sendet sie Ihnen in der Regel per E-Mail oder auf dem Postweg zu.
 
 ## 6. Datenweitergabe
 
@@ -39,7 +39,7 @@ Sie haben das Recht, jederzeit Auskunft zu den über Sie gespeicherten Daten zu 
 ## 9. Verantwortlicher für die Datenverarbeitung
 
 Sie können jederzeit die Korrektur oder die Löschung Ihrer Daten verlangen, sofern für Letzteres keine gesetzlichen Aufbewahrungspflichten und -fristen bestehen oder diese nicht mehr bestehen (siehe Ziffer 7). Falls Sie der Verarbeitung von Daten widersprechen wollen oder bei sonstigen Fragen zum Datenschutz wenden Sie sich an folgende Kontaktperson:
-Herbert Schönebeck
+Henriette Kolandt-Schönebeck
 Schönebeck Stiftung „Zukunft für Kinder“
 Eschenweg 9, 86836 Untermeitingen
 [kontakt@zukunft-fuer-kinder.net](mailto:kontakt@zukunft-fuer-kinder.net)
